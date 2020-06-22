@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { TextField } from '@material-ui/core';
 
-class index extends Component {
-    constructor(props) {
-        super(props);
-        
-    }
-   
+class index extends Component {   
     render() {
         return (
             <form noValidate autoComplete="off">
