@@ -5,13 +5,14 @@ import {
   Route
 } from "react-router-dom";
 
-import PublicRoute from './components/router/publicRoute';
-import PrivateRoute from './components/router/privateRoute';
-import Header from './layout/header';
-import Footer from './layout/footer';
+import PublicRoute from './Components/Router/PublicRouteComponent';
+import PrivateRoute from './Components/Router/PrivateRouteComponent';
 
-import Home from './components/home';
-import Login from './components/login';
+import Header from './Layout/HeaderComponent';
+import Footer from './Layout/FooterComponent';
+
+import Dashboard from './Components/Dashboard/DashboardComponent';
+import Login from './Components/Login/LoginComponent';
 function App() {
   return (
     <div className="App">
@@ -19,7 +20,7 @@ function App() {
        <Router>
        <Switch>
           <PublicRoute restricted={true} component={Login} path="/login" exact />
-          <PrivateRoute component={Home} path="/dashboard" exact />
+          <PrivateRoute component={Dashboard} path="/dashboard" exact />
         </Switch>
         </Router>
        <Footer />
