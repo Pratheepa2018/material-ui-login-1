@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 
 import PublicRoute from './Components/Router/PublicRouteComponent';
-import PrivateRoute from './Components/Router/PrivateRouteComponent';
+//import PrivateRoute from './Components/Router/PrivateRouteComponent';
 import Header from './Layout/HeaderComponent';
 import Footer from './Layout/FooterComponent';
 
