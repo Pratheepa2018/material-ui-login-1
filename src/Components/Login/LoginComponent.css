@@ -1,0 +1,17 @@
+.loginbox{
+    margin: 64px 32px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.bgimg {
+    background-size: cover;
+    background-color: #fafafa;
+    background-image: url(https://source.unsplash.com/random);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.tre_bg{
+    background-color: rgba(0, 0, 0, .5);
+    color: #fff;
+}

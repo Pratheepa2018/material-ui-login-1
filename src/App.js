@@ -16,12 +16,15 @@ function App() {
   return (
     <div className="App">
        <Header />
+       <div className='main'>
        <Router>
        <Switch>
+          <PublicRoute restricted={true} component={Login} path="/" exact />
           <PublicRoute restricted={true} component={Login} path="/login" exact />
           <PrivateRoute component={Dashboard} path="/dashboard" exact />
         </Switch>
         </Router>
+        </div>
        <Footer />
     </div>
   );
