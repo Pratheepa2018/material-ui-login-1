@@ -6,11 +6,11 @@ import {
   Button, Tabs, Tab, Box,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Breadcrumbs from './BreadCrumbs';
-
+import 'react-notifications/lib/notifications.css';
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -38,7 +38,8 @@ class Header extends React.Component {
           <img src="https://itservices.collabera.com/wp-content/uploads/2019/04/Logo.png" alt="logo" className={classes.logo} />
         </IconButton>
         <div className={classes.grow} />
-        <Button color="inherit" href="/signup">Signup</Button>                                   
+        <Button color="inherit" href="/signup">Signup</Button>   
+        <NotificationContainer/>                                
       </Toolbar>
       <Toolbar className={classes.appSubBar} >
       <Tabs>

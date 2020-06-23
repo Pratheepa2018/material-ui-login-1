@@ -3,6 +3,7 @@ import { Button, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid }
 import Typography from '@material-ui/core/Typography';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import './LoginComponent.css'
+import { NotificationManager} from 'react-notifications';
 
 class LoginComponent extends Component {
     state = {
@@ -35,8 +36,16 @@ class LoginComponent extends Component {
                 body: JSON.stringify(values),
             }).then((response) => {
                 return response.json();
-            });
-            return response;
+            }).then(data => {
+                if (data.status === "Success") {
+                    return this.props.history.push('/dashboard')
+                }
+                else {
+                  return NotificationManager.warning(data.message);
+                }
+
+            })
+
         } catch (e) {
             return {
                 responseStatus: false,
@@ -120,7 +129,7 @@ class LoginComponent extends Component {
                         </ValidatorForm>
                     </Box>
                 </Grid>
-
+                
                 <Grid item xs={false} sm={6} md={7} alignItems="center" >
                     <Box m={2} p={3} className='tre_bg'>
                         <h2>The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.</h2>

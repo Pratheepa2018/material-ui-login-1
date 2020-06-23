@@ -11,6 +11,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-material-ui-form-validator": "^2.0.10",
+    "react-notifications": "^1.6.0",
     "react-router-breadcrumbs-hoc": "^3.3.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1"
