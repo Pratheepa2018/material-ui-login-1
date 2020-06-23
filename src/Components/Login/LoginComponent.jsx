@@ -5,7 +5,7 @@ import './LoginComponent.css'
 
 class index extends Component {
     render() {
-        const classes = { root: 'root', image: "img", paper: 'paper', avatar: 'avater' }
+        const classes = { root: 'root', image: "img", paper: 'paper'}
         return (
             <Grid container component="main" className='bgimg' alignItems="center" justifyContent="center">
                 <Grid item xs={12} sm={6} md={5} p={2} component={Paper} elevation={2} square>

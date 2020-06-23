@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './DashboardComponent.css';
 import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
-import { Grid, Container, Card, CardContent,Icon ,Typography, CardActions, Button, Box } from '@material-ui/core/';
+import { Grid, Card, CardContent ,Typography, CardActions, Button } from '@material-ui/core/';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 
 const cards = [
@@ -14,7 +14,6 @@ const cards = [
  class DashboardComponent extends Component {
 
     render() {
-        const { classes } = this.props;
         return (
             <div>
                 <FullWidthBanner 
@@ -24,7 +23,7 @@ const cards = [
                  image="https://www.bpmthread.com/wp-content/uploads/2017/11/business-banner-4-1200x300.jpg"
                  imageText="alt text" />
            
-            <Container className='dash_box' maxWidth="lg">
+            <Grid className='dash_box'>
                  
                   
                 <Grid container spacing={4}>
@@ -61,7 +60,7 @@ const cards = [
                         </Grid>
                     ))}
                 </Grid>
-            </Container>
+            </Grid>
             </div>
         );
     }
