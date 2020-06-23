@@ -1,20 +1,68 @@
 import React, { Component } from 'react';
 import { Button, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import { ValidatorForm } from 'react-material-ui-form-validator';
 import './LoginComponent.css'
 
-class index extends Component {
+class LoginComponent extends Component {
+    state = {
+        LoginName: '',
+        password: ''
+    }
+    handleEmailChange = (event) => {
+        const LoginName = event.target.value;
+        this.setState({ LoginName });
+    }
+    handlePasswordChange = (event) => {
+        const password = event.target.value;
+        this.setState({ password });
+    }
+
+    handleSignIn = async () => {
+        const values = {
+            LoginName: this.state.LoginName,
+            password: this.state.password
+        }
+
+        try {
+            let response = await fetch(`https://cdplogin.azurewebsites.net/login`, {
+                method: 'POST',
+                crossDomain: true,
+                compress: true,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                body: JSON.stringify(values),
+            }).then((response) => {
+                return response.json();
+            });
+            return response;
+        } catch (e) {
+            return {
+                responseStatus: false,
+                responseMessage: "Something went wrong."
+            };
+        }
+
+    }
+
+
     render() {
-        const classes = { root: 'root', image: "img", paper: 'paper'}
+        const classes = { root: 'root', image: "img", paper: 'paper' }
+        const { LoginName, password } = this.state;
+
         return (
             <Grid container component="main" className='bgimg' alignItems="center" justifyContent="center">
                 <Grid item xs={12} sm={6} md={5} p={2} component={Paper} elevation={2} square>
-                <Box className='loginbox' pt={4} pb={4}>
+                    <Box className='loginbox' pt={4} pb={4}>
 
-                <Typography component="h1" variant="h5">
+                        <Typography component="h1" variant="h5">
                             Sign in
                 </Typography>
-                        <form className={classes.form} noValidate>
+                        <ValidatorForm ref="form"
+                            onSubmit={this.handleSignIn}
+                            onError={errors => console.log(errors)}
+                            className={classes.form} >
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -24,7 +72,11 @@ class index extends Component {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                onChange={this.handleEmailChange}
                                 autoFocus
+                                value={LoginName}
+                                validators={['required', 'isEmail']}
+                                errorMessages={['this field is required', 'email is not valid']}
                             />
                             <TextField
                                 variant="outlined"
@@ -36,6 +88,8 @@ class index extends Component {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                value={password}
+                                onChange={this.handlePasswordChange}
                             />
                             <FormControlLabel
                                 control={<Checkbox value="remember" color="primary" />}
@@ -49,7 +103,7 @@ class index extends Component {
                                 className={classes.submit}
                             >
                                 Sign In
-                  </Button> 
+                  </Button>
                             <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
@@ -63,11 +117,11 @@ class index extends Component {
                                 </Grid>
                             </Grid>
 
-                        </form>
+                        </ValidatorForm>
                     </Box>
                 </Grid>
 
-                <Grid item xs={false} sm={6} md={7}  alignItems="center" >
+                <Grid item xs={false} sm={6} md={7} alignItems="center" >
                     <Box m={2} p={3} className='tre_bg'>
                         <h2>The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.</h2>
                         <p>The grid creates visual consistency between layouts while allowing flexibility across a wide variety of designs. Material Design’s responsive UI is based on a 12-column grid layout.</p>
@@ -79,4 +133,4 @@ class index extends Component {
         );
     }
 }
-export default index;
+export default LoginComponent;
