@@ -49,7 +49,7 @@ class index extends Component {
                                 className={classes.submit}
                             >
                                 Sign In
-                  </Button>
+                  </Button> 
                             <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
@@ -57,7 +57,7 @@ class index extends Component {
                       </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link href="/signup" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
