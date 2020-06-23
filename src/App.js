@@ -12,6 +12,7 @@ import Footer from './Layout/FooterComponent';
 
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import Login from './Components/Login/LoginComponent';
+
 function App() {
   return (
     <div className="App">
