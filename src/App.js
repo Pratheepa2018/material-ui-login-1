@@ -12,6 +12,7 @@ import Footer from './Layout/FooterComponent';
 
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import Login from './Components/Login/LoginComponent';
+import SignUp from './Components/Signup/SignUpComponent';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
        <Switch>
           <PublicRoute restricted={true} component={Login} path="/" exact />
           <PublicRoute restricted={true} component={Login} path="/login" exact />
+          <PublicRoute restricted={true} component={SignUp} path="/signup" exact />
           <PrivateRoute component={Dashboard} path="/dashboard" exact />
         </Switch>
         </Router>
