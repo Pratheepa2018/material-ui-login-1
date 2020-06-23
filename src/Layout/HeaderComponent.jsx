@@ -1,5 +1,11 @@
 import React from 'react';
-import { AppBar,Toolbar, IconButton, Button, Tabs, Tab } from '@material-ui/core';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Button, Tabs, Tab, Box,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -12,6 +18,10 @@ const styles = theme => ({
   appBar: {
     backgroundColor: '#4169e1',
   },
+  appSubBar: {
+    backgroundColor: '#fff',
+    color:'#000'
+  },
   logo: {
     maxWidth: 160,
   },
@@ -19,14 +29,18 @@ const styles = theme => ({
 class Header extends React.Component {
   render() {
     const { classes } = this.props;
-    return (<AppBar position="static" className={classes.appBar}>
-      <Toolbar>
-        <IconButton href='/' aria-label="Collabera Logo" >
+    return (
+    <div>
+      <AppBar position="sticky" >
+      <Toolbar className={classes.appBar}>
+      
+        <IconButton aria-label="Collabera Logo" >
           <img src="https://itservices.collabera.com/wp-content/uploads/2019/04/Logo.png" alt="logo" className={classes.logo} />
         </IconButton>
         <div className={classes.grow} />
         <Button color="inherit" href="/signup">Signup</Button>                                   
       </Toolbar>
+      <Toolbar className={classes.appSubBar} >
       <Tabs>
         <Tab color="inherit" label="Home" />
         <Tab color="inherit" label="Solutions" />
@@ -35,9 +49,11 @@ class Header extends React.Component {
         <Tab color="inherit" label="About" />
         <Tab color="inherit" label="Contact us" />
       </Tabs>
-      <Breadcrumbs />
+      
+      </Toolbar>
     </AppBar>
-
+    <Box p={2}><Breadcrumbs /></Box>
+    </div>
     );
   }
 }
