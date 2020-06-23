@@ -83,5 +83,4 @@ class index extends Component {
         );
     }
 }
-
 export default index;
