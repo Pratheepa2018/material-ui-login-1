@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Button, Tabs, Tab
-} from '@material-ui/core';
+import { AppBar,Toolbar, IconButton, Button, Tabs, Tab } from '@material-ui/core';
 
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -26,11 +21,11 @@ class Header extends React.Component {
     const { classes } = this.props;
     return (<AppBar position="static" className={classes.appBar}>
       <Toolbar>
-        <IconButton aria-label="Collabera Logo" >
+        <IconButton href='/' aria-label="Collabera Logo" >
           <img src="https://itservices.collabera.com/wp-content/uploads/2019/04/Logo.png" alt="logo" className={classes.logo} />
         </IconButton>
         <div className={classes.grow} />
-        <Button color="inherit">Signup</Button>
+        <Button color="inherit" href="/signup">Signup</Button>                                   
       </Toolbar>
       <Tabs>
         <Tab color="inherit" label="Home" />

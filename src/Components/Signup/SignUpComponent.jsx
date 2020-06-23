@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
+import { Button, TextField, Link, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 
 class SignUp extends Component {
