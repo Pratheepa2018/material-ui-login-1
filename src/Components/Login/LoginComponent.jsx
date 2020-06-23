@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import { Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
+import {  Button, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import './LoginComponent.css'
 
 class index extends Component {
-    constructor(props) {
-        super(props);
 
-    }
     render() {
-        const classes = { root: 'root', image: "img", paper: 'paper', avatar: 'avater' }
+        const classes = { root: 'root', image: "img", paper: 'paper'}
         return (
             <Grid container component="main" className='bgimg' alignItems="center">
                 <Grid item xs={12} sm={6} md={5} p={2} component={Paper} elevation={2} square>
