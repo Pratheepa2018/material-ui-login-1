@@ -24,7 +24,7 @@ const cards = [
                  image="https://www.bpmthread.com/wp-content/uploads/2017/11/business-banner-4-1200x300.jpg"
                  imageText="alt text" />
            
-            <Container className='dash_box' maxWidth="lg">
+            <Grid className='dash_box'>
                  
                   
                 <Grid container spacing={4}>
@@ -61,7 +61,7 @@ const cards = [
                         </Grid>
                     ))}
                 </Grid>
-            </Container>
+            </Grid>
             </div>
         );
     }
