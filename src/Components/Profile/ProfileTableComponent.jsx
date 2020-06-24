@@ -10,6 +10,7 @@ import { Paper, Checkbox, Toolbar } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
+import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 
 const StyledTableCell = withStyles((theme) => ({
     head: {
@@ -59,7 +60,13 @@ export default function CustomizedTables() {
     const classes = useStyles();
 
     return (
+        <div>
+            <FullWidthBanner
+                    title="My Profile"
+                    image="https://constructify.com/wp-content/uploads/2018/09/blog-1200x300.jpg"
+                    imageText="Full Banner" />
 
+       
         <TableContainer component={Paper} className={classes.paper} >
             <Toolbar>
                 <AddBoxIcon color="primary" fontSize="large"  />
@@ -100,5 +107,6 @@ export default function CustomizedTables() {
                 </TableBody>
             </Table>
         </TableContainer>
+        </div>
     );
 }
