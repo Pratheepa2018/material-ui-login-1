@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch
-} from "react-router-dom";
-
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PublicRoute from './Components/Router/PublicRouteComponent';
-//import PrivateRoute from './Components/Router/PrivateRouteComponent';
 import Header from './Layout/HeaderComponent';
 import Footer from './Layout/FooterComponent';
 
@@ -16,6 +11,7 @@ import SignUp from './Components/Signup/SignUpComponent';
 import CDPConnectorProfileDashboard from './Components/CDP/CDPConnectorProfileDashboard';
 import Connectors from './Components/Connectors/ConnectorsTableComponent'
 import Profile from './Components/Profile/ProfileTableComponent';
+import NewConnector from './Components/Connector/NewConnectorComponent';
 
 function App() {
   return (
@@ -33,12 +29,13 @@ function App() {
           <PublicRoute restricted={true} component={Profile} path="/subscribedservices/CDP/profile" exact />
           <PublicRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
           <PublicRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
+          <PublicRoute restricted={false} component={NewConnector} path="/new-connector" exact />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
         <Footer />
         </React.Fragment>
         </Router>        
-        </div>       
+      </div>       
     </div>
   );
 }
