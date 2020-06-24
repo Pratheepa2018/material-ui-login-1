@@ -4,12 +4,11 @@ import { Link } from "react-router-dom";
 import withBreadcrumbs from "react-router-breadcrumbs-hoc";
 
 const PureBreadcrumbs = ({ breadcrumbs }) => {
-    console.log('here', breadcrumbs);
     return (
 
         <Breadcrumbs>
             {breadcrumbs.map(({ breadcrumb, match }, index) => (
-                <div key={match.url} className='sd'>
+                <div key={match.url} >
                     <Link to={match.url || ""}>{breadcrumb }</Link>
                 </div>
             ))}
