@@ -41,13 +41,13 @@ class Header extends React.Component {
         <NotificationContainer/>                                
       </Toolbar>
       <Toolbar className={classes.appSubBar} >
-      <Tabs>
-        <Tab color="inherit" label="Home" />
-        <Tab color="inherit" label="Solutions" />
-        <Tab color="inherit" label="Support" />
-        <Tab color="inherit" label="Devlopers" />
-        <Tab color="inherit" label="About" />
-        <Tab color="inherit" label="Contact us" />
+      <Tabs value={'/login'}>
+        <Tab value ={'/login'} color="inherit" label="Home" />
+        <Tab value ={'/solutions'} color="inherit" label="Solutions" />
+        <Tab value ={'/support'} color="inherit" label="Support" />
+        <Tab value ={'/devlopers'} color="inherit" label="Devlopers" />
+        <Tab value ={'/about'} color="inherit" label="About" />
+        <Tab value = {'/contact'} color="inherit" label="Contact us" />
       </Tabs>
       
       </Toolbar>

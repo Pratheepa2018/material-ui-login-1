@@ -6,9 +6,10 @@ import { Paper, Link, Typography } from '@material-ui/core';
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-        backgroundColor: '#4169e1'
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2),
+        backgroundColor: '#4169e1',
+        marginTop: '20px'
     },
     footer: {
         backgroundColor: theme.palette.background.paper,
