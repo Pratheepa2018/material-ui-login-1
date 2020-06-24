@@ -9,7 +9,7 @@ import PublicRoute from './Components/Router/PublicRouteComponent';
 import Header from './Layout/HeaderComponent';
 import Footer from './Layout/FooterComponent';
 
-import Dashboard from './Components/Dashboard/DashboardComponent';
+import SubscribedServices from './Components/Dashboard/DashboardComponent';
 import Login from './Components/Login/LoginComponent';
 import CollaberaDevOpsPlatform from './Components/CDP/CollaberaDevOpsPlatform'
 import SignUp from './Components/Signup/SignUpComponent';
@@ -27,12 +27,12 @@ function App() {
        <Switch>
           <PublicRoute restricted={true} component={Login} path="/" exact />
           <PublicRoute restricted={true} component={Login} path="/login" exact />
-          <PublicRoute restricted={true} component={Dashboard} path="/dashboard" exact />
+          <PublicRoute restricted={true} component={SubscribedServices} path="/subscribedservices" exact />
           <PublicRoute restricted={false} component={SignUp} path="/signup" exact />
-          <PublicRoute restricted={true} component={Connectors} path="/connectors" exact />
-          <PublicRoute restricted={true} component={Profile} path="/profile" exact />
-          <PublicRoute restricted={false} component={CollaberaDevOpsPlatform} path="/collaberadevopsplatform" exact />
-          <PublicRoute restricted={false} component={CDPConnectorProfileDashboard} path="/cdpconnectorprofile" exact />
+          <PublicRoute restricted={true} component={Connectors} path="/subscribedservices/CDP/connectors" exact />
+          <PublicRoute restricted={true} component={Profile} path="/subscribedservices/CDP/profile" exact />
+          <PublicRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
+          <PublicRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
         <Footer />

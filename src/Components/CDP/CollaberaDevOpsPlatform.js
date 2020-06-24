@@ -5,9 +5,9 @@ import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import GridComponent from '../Grid/GridComponent'
 
 const cards = [
-    { id: 1, title: 'Data Testing Framework', discription: 'discription not available', image: './assets/images/data.jpg', learnMorelink: '#', letsGolink: './cdpconnectorprofile' },
-    { id: 2, title: 'API Testing Framework', discription: 'discription not available', image: './assets/images/api.jpg', learnMorelink: '#', letsGolink: '' },
-    { id: 3, title: 'UI Testing Framework', discription: 'discription not available', image: './assets/images/ui.jpg', learnMorelink: '#', letsGolink: '' },
+    { id: 1, title: 'Data Testing Framework', discription: 'discription not available', image: '../assets/images/data.jpg', learnMorelink: '#', letsGolink: './CDP/cdpconnectorprofile' },
+    { id: 2, title: 'API Testing Framework', discription: 'discription not available', image: '../assets/images/api.jpg', learnMorelink: '#', letsGolink: '' },
+    { id: 3, title: 'UI Testing Framework', discription: 'discription not available', image: '../assets/images/ui.jpg', learnMorelink: '#', letsGolink: '' },
 ]
 
 class CollaberaDevOpsPlatform extends Component {

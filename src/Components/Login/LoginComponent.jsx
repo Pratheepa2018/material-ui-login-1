@@ -38,7 +38,7 @@ export default class LoginComponent extends Component {
         return response.json();
       }).then(data => {
         if (data.status === "Success") {
-            return this.props.history.push('/dashboard')
+            return this.props.history.push('/subscribedservices')
         }
         else {
           return NotificationManager.warning(data.message);

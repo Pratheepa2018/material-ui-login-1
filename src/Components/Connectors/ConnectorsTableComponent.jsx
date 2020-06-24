@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
-import { lighten, makeStyles } from '@material-ui/core/styles';
+import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
 import {Table ,Box, Button, Modal } from '@material-ui/core/';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -19,7 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {DeleteForever, AddBox, Edit} from '@material-ui/icons';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
-import Model from '../Model/ModelComponent'
+// import Model from '../Model/ModelComponent'
 
 function createData(name, Description) {
     return { name, Description };
@@ -66,9 +66,9 @@ function stableSort(array, comparator) {
 
 const headCells = [
     
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'name', numeric: true, disablePadding: true, label: 'Name' },
   { id: 'Description', numeric: true, disablePadding: false, label: 'Description' },
-  {id: '', label: ''}
+  {id: 'action', numeric: false, label: 'Actions'}
 ];
 
 function EnhancedTableHead(props) {
@@ -76,22 +76,30 @@ function EnhancedTableHead(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
+  const StyledTableCell = withStyles((theme) => ({
+    head: {
+        backgroundColor: '#4169e1',
+        color: theme.palette.common.white,
+    },
+    body: {
+        fontSize: 14,
+    },
+}))(TableCell);
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        <StyledTableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
+            inputProps={{ 'aria-label': 'select all Connectors' }}
           />
-        </TableCell>
+        </StyledTableCell>
         {headCells.map((headCell) => (
-          <TableCell
+          <StyledTableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
+            align={headCell.numeric ? 'left' : 'right'}
             padding={headCell.disablePadding ? 'none' : 'default'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
@@ -107,7 +115,7 @@ function EnhancedTableHead(props) {
                 </span>
               ) : null}
             </TableSortLabel>
-          </TableCell>
+          </StyledTableCell>
         ))}
       </TableRow>
     </TableHead>
@@ -285,7 +293,7 @@ export default function EnhancedTable() {
                 title="My Connectors"
                 image="https://constructify.com/wp-content/uploads/2018/09/banner-career-1200x300.jpg"
                 imageText="Full Banner" />
-    <Box padding={2}>
+    <Box padding={6}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
