@@ -5,12 +5,12 @@ import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import GridComponent from '../Grid/GridComponent'
 
 const cards = [
-    { id: 1, title: 'Data Testing Framework', discription: 'discription not available', image: './assets/images/data.jpg', learnMorelink: '#', letsGolink: './cdpconnectorprofile' },
-    { id: 2, title: 'API Testing Framework', discription: 'discription not available', image: './assets/images/api.jpg', learnMorelink: '#', letsGolink: '' },
-    { id: 3, title: 'UI Testing Framework', discription: 'discription not available', image: './assets/images/ui.jpg', learnMorelink: '#', letsGolink: '' },
+    { id: 1, title: 'Connectors', discription: 'discription not available', image: './assets/images/data.jpg', learnMorelink: '#', letsGolink: './connectors' },
+    { id: 2, title: 'Profiles', discription: 'discription not available', image: './assets/images/api.jpg', learnMorelink: '#', letsGolink: './profile' },
+   
 ]
 
-class CollaberaDevOpsPlatform extends Component {
+class CDPConnectorProfileDashboard extends Component {
     render() {
         return (
             <div>
@@ -32,4 +32,4 @@ class CollaberaDevOpsPlatform extends Component {
     }
 }
 
-export default CollaberaDevOpsPlatform;
+export default CDPConnectorProfileDashboard;
