@@ -8,9 +8,9 @@ const PureBreadcrumbs = ({ breadcrumbs }) => {
     return (
 
         <Breadcrumbs>
-            {breadcrumbs.map(({ Breadcrumbs, location }, index) => (
-                <div key={location.pathname} className='sd'>
-                    <Link to={location.pathname || ""}>{location.pathname}</Link>
+            {breadcrumbs.map(({ breadcrumb, match }, index) => (
+                <div key={match.url} className='sd'>
+                    <Link to={match.url || ""}>{breadcrumb }</Link>
                 </div>
             ))}
         </Breadcrumbs>
