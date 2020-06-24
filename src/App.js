@@ -11,6 +11,7 @@ import Footer from './Layout/FooterComponent';
 
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import Login from './Components/Login/LoginComponent';
+import CollaberaDevOpsPlatform from './Components/CDP/CollaberaDevOpsPlatform'
 import SignUp from './Components/Signup/SignUpComponent';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <PublicRoute restricted={true} component={Login} path="/login" exact />
           <PublicRoute restricted={true} component={Dashboard} path="/dashboard" exact />
           <PublicRoute restricted={false} component={SignUp} path="/signup" exact />
+          <PublicRoute restricted={false} component={CollaberaDevOpsPlatform} path="/collaberadevopsplatform" exact />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
         <Footer />
