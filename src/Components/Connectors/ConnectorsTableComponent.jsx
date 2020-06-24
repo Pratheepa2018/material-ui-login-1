@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import {Table ,Box, Button, Modal } from '@material-ui/core/';
+import {Table ,Box, Button, Link } from '@material-ui/core/';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -174,7 +174,10 @@ const EnhancedTableToolbar = (props) => {
       ) : (
         <Button e aria-label="Add" variant="outlined" color="primary">
             <AddBox />
+            <Link href="/subscribedservices/CDP/new-connector" variant="body2">
             <span> Add New Connectors</span>
+                    </Link>
+            
             
           </Button>
       )}

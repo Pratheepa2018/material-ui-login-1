@@ -29,7 +29,7 @@ function App() {
           <PublicRoute restricted={true} component={Profile} path="/subscribedservices/CDP/profile" exact />
           <PublicRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
           <PublicRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
-          <PublicRoute restricted={false} component={NewConnector} path="/new-connector" exact />
+          <PublicRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
         <Footer />
