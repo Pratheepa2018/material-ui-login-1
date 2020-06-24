@@ -5,8 +5,7 @@ import {
   IconButton,
   Button, Tabs, Tab, Box,
 } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {NotificationContainer} from 'react-notifications';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Breadcrumbs from './BreadCrumbs';
@@ -34,7 +33,7 @@ class Header extends React.Component {
       <AppBar position="sticky" >
       <Toolbar className={classes.appBar}>
       
-        <IconButton aria-label="Collabera Logo" >
+        <IconButton aria-label="Collabera Logo"  href='/'>
           <img src="https://itservices.collabera.com/wp-content/uploads/2019/04/Logo.png" alt="logo" className={classes.logo} />
         </IconButton>
         <div className={classes.grow} />

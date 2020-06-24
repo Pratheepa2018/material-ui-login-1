@@ -12,6 +12,8 @@ import Footer from './Layout/FooterComponent';
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import Login from './Components/Login/LoginComponent';
 import SignUp from './Components/Signup/SignUpComponent';
+import Connectors from './Components/Connectors/ConnectorsTableComponent'
+import Profile from './Components/Profile/ProfileTableComponent';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <PublicRoute restricted={true} component={Login} path="/login" exact />
           <PublicRoute restricted={true} component={Dashboard} path="/dashboard" exact />
           <PublicRoute restricted={false} component={SignUp} path="/signup" exact />
+          <PublicRoute restricted={true} component={Connectors} path="/connectors" exact />
+          <PublicRoute restricted={true} component={Profile} path="/profile" exact />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
         <Footer />

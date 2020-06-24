@@ -26,7 +26,7 @@ export default class LoginComponent extends Component {
     }
 
     try {
-      let response = await fetch(`https://cdplogin.azurewebsites.net/login`, {
+       await fetch(`https://cdplogin.azurewebsites.net/login`, {
         method: 'POST',
         crossDomain: true,
         compress: true,
