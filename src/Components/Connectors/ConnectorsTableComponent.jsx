@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { Paper, Checkbox, Toolbar } from '@material-ui/core';
+import { Paper, Checkbox, Toolbar, Link } from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit';
@@ -62,7 +62,9 @@ export default function CustomizedTables() {
 
         <TableContainer component={Paper} className={classes.paper} >
             <Toolbar>
-                <AddBoxIcon color="primary" fontSize="large"  />
+                <Link href="/new-connector">
+                    <AddBoxIcon color="primary" fontSize="large"  />
+                </Link>
                 <DeleteForeverIcon color="primary" fontSize="large" />
             </Toolbar>
             <Table className={classes.table} aria-label="customized table">
@@ -92,7 +94,9 @@ export default function CustomizedTables() {
                             </StyledTableCell>
                             <StyledTableCell align="right">{row.Description}</StyledTableCell>
                             <TableCell padding="checkbox">
-                            <EditIcon color="primary" />
+                            <Link href="/new-connector">
+                                <EditIcon color="primary" />
+                            </Link>
                             <DeleteForeverIcon color="primary" />
                             </TableCell>
                         </StyledTableRow>
