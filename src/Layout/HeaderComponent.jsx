@@ -3,37 +3,50 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Button, Tabs, Tab, Box,Popover, MenuItem, Link
+  Typography, Tabs, Tab,Popover, MenuItem, Link, Divider
 } from '@material-ui/core';
 import {NotificationContainer} from 'react-notifications';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Breadcrumbs from './BreadCrumbs';
 import 'react-notifications/lib/notifications.css';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import PublicIcon from '@material-ui/icons/Public';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import FindReplaceIcon from '@material-ui/icons/FindReplace';
+
 const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
   appBar: {
-    backgroundColor: '#4169e1',
+    backgroundColor: '#fff',
   },
   appSubBar: {
-    backgroundColor: '#fff',
-    color:'#000'
+    backgroundColor: '#000',
+    color:'#fff',
+    padding: '0px',
+    margin: '0px',
+    textAlign: 'center',
   },
   logo: {
     maxWidth: 160,
   },
+  headerMenu: {
+      fontSize: 'larger',
+    fontWeight: '600',
+    color: 'darkblue',
+    display: 'flex',
+  },
+  paddingTypo:{
+    padding: '8px'
+  }
+
 });
 class Header extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      value: "One",
-      label: "Three",
-      content: "One",
       anchorEl: null
     };
 
@@ -64,20 +77,37 @@ class Header extends React.Component {
       <Toolbar className={classes.appBar}>
       
         <IconButton aria-label="Collabera Logo"  href='/'>
-          <img src="https://itservices.collabera.com/wp-content/uploads/2019/04/Logo.png" alt="logo" className={classes.logo} />
+          <img src="./assets/images/collabera-blue.jpg" alt="logo" className={classes.logo} />
         </IconButton>
         <div className={classes.grow} />
-        <Button color="inherit" href="/signup">Signup</Button>   
+        
+        <div className = {classes.headerMenu}>
+        <Typography className = {classes.paddingTypo} >Contact Us</Typography>
+        <Divider orientation="vertical" flexItem style={{ backgroundColor: "red" }} />
+        <Typography className = {classes.paddingTypo} >Resource Center</Typography> 
+        <Divider orientation="vertical" flexItem style={{ backgroundColor: "red" }} />
+        <Typography className = {classes.paddingTypo} >About</Typography>
+        <Divider orientation="vertical" flexItem style={{ backgroundColor: "red" }} />
+        <Typography  className = {classes.paddingTypo}>Call: 1800-827-2796</Typography>
+        </div>
+      
+      <PublicIcon style= {{color : 'green'}} />
+      <Divider orientation="vertical"  />
+      <FindReplaceIcon color="primary" />
+      <Divider orientation="vertical"  />
+      <ExitToAppIcon color="primary" />
+
         <NotificationContainer/>                                
       </Toolbar>
       <Toolbar className={classes.appSubBar} >
       <Tabs value={'/login'}>
-        <Tab value ={'/login'} color="inherit" label="Home" />
-        <Tab value ={'/solutions'} color="inherit" label="Solutions"  onClick={this.handleClick} />
-        <Tab value ={'/support'} color="inherit" label="Support" />
+        <Tab value ={'/solution'} color="inherit" label="Solution" onClick={this.handleClick} />
+        <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
+        <Tab value ={'/insights'} color="inherit" label="Insights"  />
+        <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
+       <Tab value ={'/client-support'} color="inherit" label="Client Support" />
+        <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
         <Tab value ={'/devlopers'} color="inherit" label="Devlopers" />
-        <Tab value ={'/about'} color="inherit" label="About" />
-        <Tab value = {'/contact'} color="inherit" label="Contact us" />
       </Tabs>
       <Popover
           open={open}
@@ -110,7 +140,7 @@ class Header extends React.Component {
       
       </Toolbar>
     </AppBar>
-    <Box p={2}><Breadcrumbs /></Box>
+    
     </div>
     );
   }

@@ -20,9 +20,6 @@ class DashboardComponent extends Component {
         return (
             <div>
                 <FullWidthBanner
-                    title="Dashboard"
-                    description="Dashboard Sub headding"
-                    linkText="Learn more"
                     image="../assets/images/globle.jpg"
                     imageText="alt text" />
                 <Grid className='dash_box'>
