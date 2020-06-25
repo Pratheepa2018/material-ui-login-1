@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography, Tabs, Tab,Popover, MenuItem, Link, Divider
+import { AppBar, Toolbar, IconButton, Button, Tabs, Tab, Box,Popover, MenuItem, Link
 } from '@material-ui/core';
 import {NotificationContainer} from 'react-notifications';
 import PropTypes from 'prop-types';
@@ -13,6 +9,9 @@ import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import PublicIcon from '@material-ui/icons/Public';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import FindReplaceIcon from '@material-ui/icons/FindReplace';
+import Auth from './Authentication';
+
+
 
 const styles = theme => ({
   grow: {
@@ -45,7 +44,6 @@ const styles = theme => ({
 class Header extends React.Component {
   constructor() {
     super();
-
     this.state = {
       anchorEl: null
     };
@@ -67,10 +65,14 @@ class Header extends React.Component {
       anchorEl: null
     });
   }
+  componentWillMount() {
+    console.log('Hello');
+  }
 
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
+    const auth = Auth.isAuthenticated();
     return (
     <div>
       <AppBar position="sticky" >
@@ -97,6 +99,7 @@ class Header extends React.Component {
       <Divider orientation="vertical"  />
       <ExitToAppIcon color="primary" />
 
+        <Button color="inherit" href="/signup">Signup</Button>
         <NotificationContainer/>                                
       </Toolbar>
       <Toolbar className={classes.appSubBar} >
