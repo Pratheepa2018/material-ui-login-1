@@ -1,37 +1,40 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, Link, Typography } from '@material-ui/core';
+import { Paper, Link, Typography, Divider } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing(2),
         paddingBottom: theme.spacing(2),
-        backgroundColor: '#4169e1',
-        marginTop: '20px'
+        backgroundColor: '#042380',
+        color: 'white',
+        marginTop: '20px',
     },
-    footer: {
-        backgroundColor: theme.palette.background.paper,
-    },
-    grow: {
-        flexGrow: 1,
-    },
+ 
 });
 
 function Footer(props) {
     const { classes } = props;
 
     return (
-        <footer className={classes.footer}>
+        <footer>
             <Paper className={classes.root} elevation={1}>
-            <div style={{ display: "flex" }}>
-                <Typography >
-                    Collabera MarketPlace Platform(TM)  @2020 All right reserved
-        </Typography>
-        <div className={classes.grow}/>
-                <Link href="#" color="inherit">Privacy Policy </Link>
+                <div style={{ display: "flex" }}>
+                    <Typography >
+                        Collabera MarketPlace Platform(TM)
+                    </Typography>
+                    <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
+                    <Typography >
+                        All right reserved
+                    </Typography>
+                    <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
+                    <Link href="#" color={"inherit"}>Privacy & Legal </Link>
+                    <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
+                    <Link href="#" color={"inherit"}>Onboarding. Sell. Service. Markets. Success </Link>
                 </div>
+
             </Paper>
         </footer>
     );

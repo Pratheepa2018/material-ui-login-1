@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import './FullWidthBanner.css';
 
+import Breadcrumbs from '../../Layout/BreadCrumbs';
 
 class FullWidthBanner extends React.Component {
     
@@ -18,6 +19,7 @@ class FullWidthBanner extends React.Component {
       <Grid container>
         <Grid item md={6}>
           <div className='textbody'>
+          <h1><Breadcrumbs /></h1>
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
               {title}
             </Typography>

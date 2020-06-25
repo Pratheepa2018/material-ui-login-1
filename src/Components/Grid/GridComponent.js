@@ -6,10 +6,10 @@ import './GridComponent.css';
 
 class GridComponent extends Component {
     render() {
-        const {card}=this.props;
+        const {card, gridSize, textAlign}=this.props;
         return (
-            <Grid item key={card.id} xs={12} sm={6} md={4}>
-                            <Card className='grid_card'>
+            <Grid item key={card.id} xs={12} sm={6} md={gridSize ? gridSize : 4} alignItems="center" justify="center">
+                            <Card className={`grid_card ${textAlign}`}  >
                                 <img src={card.image} alt={card.imageText} className='grid_img' />
                                 <CardContent className='grid_content'>
                                     <Typography gutterBottom variant="h5" component="h2">
@@ -20,14 +20,16 @@ class GridComponent extends Component {
                                 </Typography>
                                 </CardContent>
                                 <CardActions>
+                                    {card.learnMorelink && (
                                 <Button
                                         variant="contained"
                                         color="primary"
                                         endIcon={<KeyboardArrowRightIcon>send</KeyboardArrowRightIcon>}
-                                        href={card.letsGolink}
+                                        href={card.learnMorelink}
                                     >
                                         Learn More
                                     </Button>
+                                    )}
                                     <Button
                                         variant="contained"
                                         color="primary"
