@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Button, Tabs, Tab, Box,Popover, MenuItem, Link
+import { AppBar, Toolbar, IconButton, Button, Tabs, Tab, Box,Popover, MenuItem, Link
 } from '@material-ui/core';
 import {NotificationContainer} from 'react-notifications';
 import PropTypes from 'prop-types';
@@ -11,6 +7,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Breadcrumbs from './BreadCrumbs';
 import 'react-notifications/lib/notifications.css';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import Auth from './Authentication';
+
+
+
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -29,7 +29,6 @@ const styles = theme => ({
 class Header extends React.Component {
   constructor() {
     super();
-
     this.state = {
       value: "One",
       label: "Three",
@@ -54,10 +53,14 @@ class Header extends React.Component {
       anchorEl: null
     });
   }
+  componentWillMount() {
+    console.log('Hello');
+  }
 
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
+    const auth = Auth.isAuthenticated();
     return (
     <div>
       <AppBar position="sticky" >
@@ -67,7 +70,7 @@ class Header extends React.Component {
           <img src="https://itservices.collabera.com/wp-content/uploads/2019/04/Logo.png" alt="logo" className={classes.logo} />
         </IconButton>
         <div className={classes.grow} />
-        <Button color="inherit" href="/signup">Signup</Button>   
+        <Button color="inherit" href="/signup">Signup</Button>
         <NotificationContainer/>                                
       </Toolbar>
       <Toolbar className={classes.appSubBar} >
