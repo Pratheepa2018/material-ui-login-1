@@ -1,18 +1,19 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Button, Tabs, Tab, Box,Popover, MenuItem, Link
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography, Tabs, Tab,Popover, MenuItem, Link, Divider
 } from '@material-ui/core';
 import {NotificationContainer} from 'react-notifications';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import 'react-notifications/lib/notifications.css';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import Auth from './Authentication';
 import PublicIcon from '@material-ui/icons/Public';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import FindReplaceIcon from '@material-ui/icons/FindReplace';
-import Auth from './Authentication';
-
-
-
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -39,7 +40,6 @@ const styles = theme => ({
   paddingTypo:{
     padding: '8px'
   }
-
 });
 class Header extends React.Component {
   constructor() {
@@ -47,18 +47,15 @@ class Header extends React.Component {
     this.state = {
       anchorEl: null
     };
-
     this.handleClick = this.handleClick.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-
   handleClick(event) {
     event.stopPropagation();
     this.setState({
       anchorEl: event.currentTarget
     });
   }
-
 
   handleClose() {
     this.setState({
@@ -68,7 +65,6 @@ class Header extends React.Component {
   componentWillMount() {
     console.log('Hello');
   }
-
   render() {
     const { classes } = this.props;
     const open = Boolean(this.state.anchorEl);
@@ -98,8 +94,6 @@ class Header extends React.Component {
       <FindReplaceIcon color="primary" />
       <Divider orientation="vertical"  />
       <ExitToAppIcon color="primary" />
-
-        <Button color="inherit" href="/signup">Signup</Button>
         <NotificationContainer/>                                
       </Toolbar>
       <Toolbar className={classes.appSubBar} >
@@ -148,9 +142,7 @@ class Header extends React.Component {
     );
   }
 }
-
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(styles)(Header);
