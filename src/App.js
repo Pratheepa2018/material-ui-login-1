@@ -4,7 +4,7 @@ import PublicRoute from './Components/Router/PublicRouteComponent';
 import Header from './Layout/HeaderComponent';
 import Footer from './Layout/FooterComponent';
 
-import SubscribedServices from './Components/Dashboard/DashboardComponent';
+import SubscribedServices from './Components/SubscribedServices/SubscribedServicesComponent';
 import Login from './Components/Login/LoginComponent';
 import CollaberaDevOpsPlatform from './Components/CDP/CollaberaDevOpsPlatform'
 import SignUp from './Components/Signup/SignUpComponent';
@@ -12,7 +12,7 @@ import CDPConnectorProfileDashboard from './Components/CDP/CDPConnectorProfileDa
 import Connectors from './Components/Connectors/ConnectorsTableComponent'
 import Profile from './Components/Profile/ProfileTableComponent';
 import NewConnector from './Components/Connector/NewConnectorComponent';
-
+import Dashboard from './Components/Dashboard/DashboardComponent';
 function App() {
   return (
     <div className="App">      
@@ -23,6 +23,7 @@ function App() {
        <Switch>
           <PublicRoute restricted={true} component={Login} path="/" exact />
           <PublicRoute restricted={true} component={Login} path="/login" exact />
+          <PublicRoute restricted={true} component={Dashboard} path="/dashboard" exact />
           <PublicRoute restricted={true} component={SubscribedServices} path="/subscribedservices" exact />
           <PublicRoute restricted={false} component={SignUp} path="/signup" exact />
           <PublicRoute restricted={true} component={Connectors} path="/subscribedservices/CDP/connectors" exact />

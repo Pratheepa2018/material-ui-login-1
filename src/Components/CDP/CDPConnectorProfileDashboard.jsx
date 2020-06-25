@@ -18,7 +18,7 @@ class CDPConnectorProfileDashboard extends Component {
                     title="Collabera DevOps Platform(CDP)"
                     description="description"
                     linkText="Learn more"
-                    image="https://constructify.com/wp-content/uploads/2018/09/services-1200x300.jpg"
+                    image="../assets/images/globle.jpg"
                     imageText="alt text" />
                 <Grid className='cdp_box'>
                     <Grid container spacing={4}>

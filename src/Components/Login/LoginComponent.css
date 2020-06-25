@@ -7,9 +7,9 @@
 .bgimg {
     background-size: cover;
     background-color: #fafafa;
-    background-image: url(https://source.unsplash.com/random);
+    background-image: url('/assets/images/login.jpg');
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: left top;
 }
 .tre_bg{
     background-color: rgba(0, 0, 0, .5);

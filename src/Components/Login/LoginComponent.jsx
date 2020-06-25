@@ -38,7 +38,7 @@ export default class LoginComponent extends Component {
         return response.json();
       }).then(data => {
         if (data.status === "Success") {
-            return this.props.history.push('/subscribedservices')
+            return this.props.history.push('/dashboard')
         }
         else {
           return NotificationManager.warning(data.message);
@@ -57,9 +57,12 @@ export default class LoginComponent extends Component {
     const classes = { root: 'root', image: "img", paper: 'paper' }
     const { LoginName, password } = this.state;
     return (
-      <Grid container component="main" className='bgimg' alignItems="center" justifyContent="center">
-        <Grid item xs={12} sm={6} md={5} p={2} component={Paper} elevation={2} square>
-          <Box className='loginbox' pt={4} pb={4}>
+      <Grid container component="main" className='bgimg' alignItems="center" justifyContent="right" justify="flex-end">
+       
+        
+      
+        <Grid item xs={12} sm={12} md={5} p={2}  elevation={2} square >
+          <Box className='loginbox' padding={4} marginLeft={5} marginRight={5} marginTop={8} marginBottom={8} component={Paper}>
             <Typography component="h1" variant="h5">Sign in</Typography>
             <ValidatorForm ref="form"
               onSubmit={this.handleSignIn}
@@ -119,15 +122,7 @@ export default class LoginComponent extends Component {
             </ValidatorForm>
           </Box>
         </Grid>
-          
-        <Grid item xs={false} sm={6} md={7} alignItems="center" >
-          <Box m={2} p={3} className='tre_bg'>
-            <h2>The Material Design responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.</h2>
-            <p>The grid creates visual consistency between layouts while allowing flexibility across a wide variety of designs. Material Design’s responsive UI is based on a 12-column grid layout.</p>
-            <h2>Auto-layout</h2>
-            <p>The Auto-layout makes the items equitably share the available space. That also means you can set the width of one item and the others will automatically resize around it.</p>
-          </Box>
-        </Grid>
+        
       </Grid>
     );
   }

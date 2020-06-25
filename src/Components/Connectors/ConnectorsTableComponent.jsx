@@ -294,7 +294,7 @@ export default function EnhancedTable() {
     <div className={classes.root}>
         <FullWidthBanner
                 title="My Connectors"
-                image="https://constructify.com/wp-content/uploads/2018/09/banner-career-1200x300.jpg"
+                image="../assets/images/globle.jpg"
                 imageText="Full Banner" />
     <Box padding={6}>
       <Paper className={classes.paper}>

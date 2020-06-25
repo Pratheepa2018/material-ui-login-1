@@ -14,19 +14,19 @@ class ModelComponent extends React.Component {
     }
 
     handleClose(){
-
+        this.setState({
+            isOpen:false
+        })
     }
-
-    
     
     render() {
-        alert(this.props);
+        
         return (
             <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         className="globleModel"
-        open={true}
+        open={this.props.isOpen}
         onClose={this.handleClose}
         closeAfterTransition
         BackdropComponent={Backdrop}
@@ -34,7 +34,7 @@ class ModelComponent extends React.Component {
           timeout: 500,
         }}
       >
-        <Fade in={true}>
+        <Fade in={this.props.isOpen}>
           <div className='modelBody'>
             <h2 id="transition-modal-title">Transition modal</h2>
             <p id="transition-modal-description">react-transition-group animates me.</p>
