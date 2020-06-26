@@ -8,7 +8,8 @@ export default function Logout() {
   const history = useHistory();
   function handleLogout() {
     localStorage.removeItem("token");
-    history.push('/login');
+    // history.push('/login');
+    window.location.reload(false)
   }
   return(
     <Button color="inherit" onClick={handleLogout} className="logoutBtn">

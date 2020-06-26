@@ -32,6 +32,11 @@ function App() {
           <PrivateRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
           <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
           <PrivateRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
+          <PublicRoute
+              restricted={false}
+              path="*"
+              component={() => "404 Not Found"}
+            />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
         <Footer />
