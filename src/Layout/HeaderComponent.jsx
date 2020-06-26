@@ -80,7 +80,7 @@ class Header extends React.Component {
       <AppBar position="sticky" >
       <Toolbar className={classes.appBar}>
         <Button aria-label="Collabera Logo"  href='/'>
-          <img src="./assets/images/collabera-blue.jpg" alt="logo" className={classes.logo} />
+          <img src="/assets/images/collabera-blue.jpg" alt="logo" className={classes.logo} />
         </Button>
         <div className={classes.grow} />
         

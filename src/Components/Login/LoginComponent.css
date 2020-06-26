@@ -15,3 +15,8 @@
     background-color: rgba(0, 0, 0, .5);
     color: #fff;
 }
+
+.MuiOutlinedInput-root {
+    position: relative;
+    border-radius: 15px;
+}

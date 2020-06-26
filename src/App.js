@@ -39,7 +39,7 @@ function App() {
             />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
-        <Footer />
+        <Footer test={'test'}/>
         </React.Fragment>
         </Router>        
       </div>       
