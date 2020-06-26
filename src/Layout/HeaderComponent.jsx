@@ -2,7 +2,6 @@ import React from 'react';
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography, Tabs, Tab,Popover, MenuItem, Link, Divider, Button
 } from '@material-ui/core';
 import {NotificationContainer} from 'react-notifications';

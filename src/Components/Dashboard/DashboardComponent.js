@@ -16,6 +16,8 @@ const cards = [
     
 ]
 class DashboardComponent extends Component {
+
+    
     render() {
         return (
             <div>

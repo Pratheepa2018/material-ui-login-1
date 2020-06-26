@@ -40,9 +40,6 @@ export default class LoginComponent extends Component {
         if(data.status === 'Success') {
           localStorage.setItem("token", 1);
           window.location.reload(false);
-          return this.props.history.push('/subscribedservices');
-          // setTimeout(() => {
-          // }, 3000);
         } else {
           return NotificationManager.warning(data.message);
         }
