@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Button, LinearProgress, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
+import Alert from '@material-ui/lab/Alert';
+import { Button  , LinearProgress, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import './LoginComponent.css'
@@ -11,7 +12,8 @@ export default class LoginComponent extends Component {
     this.state = {
       email: '',
       password: '',
-      submitting: false
+      submitting: false,
+      formError:''
     }
   }
   handleChanges = (e) => {
@@ -41,10 +43,12 @@ export default class LoginComponent extends Component {
           localStorage.setItem("token", 1);
           window.location.reload(false);
         } else {
+          this.setState({formError:data.message})
           return NotificationManager.warning(data.message);
         }
       })
     } catch (e) {
+      this.setState({formError: "Something went wrong."})
       return {
         responseStatus: false,
         responseMessage: "Something went wrong."
@@ -55,6 +59,7 @@ export default class LoginComponent extends Component {
   render() {
     const classes = { root: 'root', image: "img", paper: 'paper' }
     const { email, password, submitting} = this.state;
+    
     // const auth = Auth.isAuthenticated();
     return (
       <Grid container component="main" className='bgimg' alignItems="center" justifyContent="right" justify="flex-end">
@@ -68,6 +73,12 @@ export default class LoginComponent extends Component {
               onSubmit={this.handleSignIn}
               onError={errors => console.log(errors)}
               className={classes.form} >
+              {this.state.formError && (
+              <Alert severity="error">{this.state.formError}</Alert>
+              )
+              }
+
+
               <TextField
                 variant="outlined"
                 margin="normal"
