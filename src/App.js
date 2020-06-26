@@ -34,7 +34,7 @@ function App() {
           <PrivateRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
           {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
         </Switch>
-        <Footer />
+        <Footer test={'test'}/>
         </React.Fragment>
         </Router>        
       </div>       
