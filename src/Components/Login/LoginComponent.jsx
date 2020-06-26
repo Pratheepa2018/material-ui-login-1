@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import './LoginComponent.css'
 import { NotificationManager} from 'react-notifications';
-import Auth from '../../Layout/Authentication';
+// import Auth from '../../Layout/Authentication';
 export default class LoginComponent extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +39,10 @@ export default class LoginComponent extends Component {
         this.setState({submitting: false})
         if(data.status === 'Success') {
           localStorage.setItem("token", 1);
-          this.props.history.push('/subscribedservices');
+          window.location.reload(false);
+          return this.props.history.push('/subscribedservices');
+          // setTimeout(() => {
+          // }, 3000);
         } else {
           return NotificationManager.warning(data.message);
         }
@@ -55,7 +58,7 @@ export default class LoginComponent extends Component {
   render() {
     const classes = { root: 'root', image: "img", paper: 'paper' }
     const { email, password, submitting} = this.state;
-    const auth = Auth.isAuthenticated();
+    // const auth = Auth.isAuthenticated();
     return (
       <Grid container component="main" className='bgimg' alignItems="center" justifyContent="right" justify="flex-end">
        

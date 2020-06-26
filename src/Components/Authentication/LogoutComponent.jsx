@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
-import { Button } from '@material-ui/core';
-import { Redirect, useHistory } from 'react-router-dom';
+import React from 'react';
+import { Button} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // import LoginComponent from '../Login/LoginComponent';
 
 export default function Logout() {
@@ -10,6 +11,8 @@ export default function Logout() {
     history.push('/login');
   }
   return(
-    <Button color="inherit" onClick={handleLogout}>Logout</Button>
+    <Button color="inherit" onClick={handleLogout} className="logoutBtn">
+      <ExitToAppIcon color="primary" />
+    </Button>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PublicRoute from './Components/Router/PublicRouteComponent';
 import Header from './Layout/HeaderComponent';
@@ -19,7 +19,7 @@ function App() {
        <div className='main'>
        <Router>
          <React.Fragment>
-         <Header />
+         <Header/>
        <Switch>
           <PublicRoute restricted={true} component={Login} path="/" exact />
           <PublicRoute restricted={true} component={Login} path="/login" exact />
