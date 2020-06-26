@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
+import { Button, LinearProgress, TextField, FormControlLabel, Checkbox, Link, Paper, Box, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import './LoginComponent.css'
@@ -105,6 +105,9 @@ export default class LoginComponent extends Component {
                 !submitting ? 'Sign In' : 'Submitting'
               }
               </Button>
+              <Box paddingTop={1} paddingBottom={1}>
+              { !submitting ? " " : <LinearProgress /> }
+              </Box>
               <Grid container>
                 <Grid item xs>
                   <Link href="#" variant="body2">Forgot password?</Link>
