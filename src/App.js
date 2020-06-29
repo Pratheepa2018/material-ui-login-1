@@ -35,7 +35,7 @@ const styles = theme => ({
   },
 });
 function App(props) {
-  const { classes, theme } = props;
+  const { classes } = props;
   const [drawOpen, setDrawOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setDrawOpen(true);

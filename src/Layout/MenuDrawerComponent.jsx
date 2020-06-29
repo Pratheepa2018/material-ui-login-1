@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState, useEffect} from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -24,9 +24,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import TopMenu from './TopMenu';
-import Footer from './FooterComponent';
-// import './HeaderComponent.css';
-import { InsertChartOutlinedTwoTone } from '@material-ui/icons';
+import Auth from './Authentication'; 
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -96,12 +95,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
 export default function MiniDrawer(props) {
+    
     const classes = useStyles();
     const theme = useTheme();
-    const [drawOpen, setDrawOpen] = React.useState(false);
-    const [open, setOpen] = React.useState(false);
+    const [drawOpen, setDrawOpen] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+    useEffect(() => {
+        const auth = Auth.isAuthenticated();
+        if(auth) {
+            setIsAuthenticated(auth)
+          }
+      });
+   
+      
     const handleClick = () => {
         setOpen(!open);
     };
@@ -134,9 +145,9 @@ export default function MiniDrawer(props) {
                             [classes.hide]: drawOpen,
                         })}
                     >
-                        <MenuIcon />
+                        <MenuIcon color="inherit" />
                     </IconButton>
-                    <TopMenu />
+                    <TopMenu islogin={isAuthenticated}  />
                 </Toolbar>
            
             </AppBar>
@@ -163,7 +174,7 @@ export default function MiniDrawer(props) {
                 <List>
                     <ListItem button onClick={handleClick}>
                         <ListItemIcon>
-                            <AccountTreeIcon />
+                            <AccountTreeIcon color="inherit"  />
                         </ListItemIcon>
                         <ListItemText primary="Solutions" />
                         {open ? <ExpandLess /> : <ExpandMore />}
@@ -185,30 +196,27 @@ export default function MiniDrawer(props) {
                         </List>
                     </Collapse>
                     <ListItem button>
-                        <ListItemIcon><LinearScaleIcon /> </ListItemIcon>
+                        <ListItemIcon><LinearScaleIcon color="inherit"  /> </ListItemIcon>
                         <ListItemText>{'Insights'}</ListItemText>
                     </ListItem>
                     <ListItem button>
-                        <ListItemIcon><ContactSupportIcon /> </ListItemIcon>
+                        <ListItemIcon><ContactSupportIcon color="inherit"  /> </ListItemIcon>
                         <ListItemText>{'Support'}</ListItemText>
                     </ListItem>
                     <ListItem button>
-                        <ListItemIcon><CodeIcon /> </ListItemIcon>
+                        <ListItemIcon><CodeIcon color="inherit"  /> </ListItemIcon>
                         <ListItemText>{'Developers'}</ListItemText>
                     </ListItem>
                     <ListItem button>
-                        <ListItemIcon><InfoIcon /> </ListItemIcon>
+                        <ListItemIcon><InfoIcon color="inherit"  /> </ListItemIcon>
                         <ListItemText>{'About'}</ListItemText>
                     </ListItem>
                     <ListItem button>
-                        <ListItemIcon><PermPhoneMsgIcon /> </ListItemIcon>
+                        <ListItemIcon><PermPhoneMsgIcon color="white"  /> </ListItemIcon>
                         <ListItemText>{'ContactUs'}</ListItemText>
                     </ListItem>
                 </List>               
             </Drawer>
-            {/* <main className={classes.content}>
-          <div className={classes.toolbar} />
-          </main> */}
         </div>
 
     );

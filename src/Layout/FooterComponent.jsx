@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, Link, Typography, Divider, Box } from '@material-ui/core';
+import { Paper, Link, Box } from '@material-ui/core';
 import './HeaderComponent.css';
 
 const styles = theme => ({
