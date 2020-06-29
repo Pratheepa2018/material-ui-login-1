@@ -36,14 +36,23 @@ const styles = theme => ({
 });
 function App(props) {
   const { classes, theme } = props;
+  const [drawOpen, setDrawOpen] = React.useState(false);
+  const handleDrawerOpen = () => {
+    setDrawOpen(true);
+    //alert(1)
+};
+
+const handleDrawerClose = () => {
+    setDrawOpen(false);
+};
 
   return (
     <div className="App">
       <div className='main'>
         <Router>
           <React.Fragment>
-            <MenuBar />
-            <main className={classes.content}>
+            <MenuBar open={handleDrawerOpen} close={handleDrawerClose} />
+            <main className={drawOpen ? 'makeStyles-appBarShift-6' : classes.content} >
               <div className={classes.toolbar} />
                 <Switch>
                   <PublicRoute restricted={true} component={Login} path="/" exact />

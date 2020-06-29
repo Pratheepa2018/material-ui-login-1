@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   AppBar,
-  Toolbar,
+  Toolbar, Box,
   Popover, MenuItem, Link, Button
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
@@ -9,7 +9,8 @@ import { withStyles } from '@material-ui/core/styles';
 import 'react-notifications/lib/notifications.css';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import Auth from './Authentication'; 
-import TopMenu from './TopMenu'
+import TopMenu from './TopMenu';
+import './HeaderComponent.css';
 const styles = theme => ({
   grow: {
     flexGrow: 1,
@@ -76,7 +77,7 @@ class Header extends React.Component {
       <AppBar position="static" >
       <TopMenu islogin={isAuthenticated} />
       <Toolbar className={classes.appSubBar} >
-       
+       <Box className="menu_second">
         <Button  color="inherit" label="Solution" onClick={this.handleClick}>Solution</Button>
         
         <Button href ={'/insights'} color="inherit" label="Insights">Insights</Button>
@@ -113,7 +114,7 @@ class Header extends React.Component {
             Collabera Cloud Accelerators (CCA)
           </MenuItem>
         </Popover>
-      
+        </Box>
       </Toolbar>
     </AppBar>
     
