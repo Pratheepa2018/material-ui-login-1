@@ -71,7 +71,7 @@ const handleDrawerClose = () => {
             </main>
           </React.Fragment>
         </Router>
-        <Footer />
+        <Footer isdrawopen={drawOpen ? 'makeStyles-appBarShift-6' : classes.content} innerClass={classes.toolbar} />
       </div>
     </div>
   );

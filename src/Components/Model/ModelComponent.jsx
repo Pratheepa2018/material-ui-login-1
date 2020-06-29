@@ -18,6 +18,17 @@ class ModelComponent extends React.Component {
             isOpen:false
         })
     }
+
+   static getDerivedStateFromProps(props, state){
+     //alert(props)
+    if (props.isOpen !== state.isOpen) {
+      return {
+        selected: props.isOpen,
+      };
+    }
+
+    return null;
+   }
     
     render() {
         

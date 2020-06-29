@@ -6,3 +6,5 @@ body .MuiPaper-root .MuiAppBar-root
     background-color: #3f51b5;
     color: white;
 }
+footer .footerbody{ justify-content: center;}
+footer .footerbody a{padding: 2px 15px;}
