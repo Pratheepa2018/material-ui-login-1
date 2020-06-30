@@ -105,10 +105,10 @@ const useStyles = makeStyles((theme) => ({
       },
       sidemenu:{
         fontWeight:"600",
-        color: '#fff'
+         
       },
       iconStyle:{
-        color: '#fff'
+       
       }
 }));
 
