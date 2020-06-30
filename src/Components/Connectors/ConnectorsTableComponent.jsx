@@ -20,10 +20,7 @@ import { DeleteForever, AddBox, Edit } from '@material-ui/icons';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
-import Model from '../Model/ModelComponent'
-function createData(name, Description) {
-  return { name, Description };
-}
+import Model from '../Model/ModelComponent';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -54,7 +51,7 @@ const headCells = [
   { id: 'action', numeric: false, label: 'Actions' }
 ];
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -125,10 +122,6 @@ const useToolbarStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
   },
 }));
-const showMessage = () => {
-  //alert(1)
-  //openModel(true);
-}
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected, onDelete } = props;
@@ -225,7 +218,8 @@ export default function EnhancedTable(props) {
       .then((data) => {
         Object.keys(data).map((el, index) => {
           getData(data[el]);
-          getStatus(true)
+          getStatus(true);
+          return false;
         })
       });
   }, [allConnectorsURL])
@@ -270,8 +264,41 @@ export default function EnhancedTable(props) {
     const editUrl = `/subscribedservices/CDP/new-connector?edit=${id}`
     props.history.push(editUrl)
   }
+  const setDeleteData = () => {
+    if(selected.length > 1) {
+      const dataToDelete = []
+      selected.forEach(item => {
+        const obj = {};
+        obj["connecterId"] = item;
+        dataToDelete.push(obj);
+      });
+    } else {
+      const sendData = `connectorId=${selected[0]}`
+      return sendData;
+    }
+  }
   const onDeleteHandle = (modelState=true) =>{
     openModel(modelState);
+  }
+  const deleteConnector = async () =>{
+    const delteConnecterURL = `${common.api_url}/connector?${setDeleteData()}`;
+    console.log(delteConnecterURL);
+    try {
+      await fetch(delteConnecterURL, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      }).then(resp => resp.json())
+      .then(data => {
+        if(data.status === 'Success') {
+          window.location.reload(false)
+        }
+      })
+    } catch (e) { 
+      console.log(e);
+    }
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -307,7 +334,7 @@ export default function EnhancedTable(props) {
                   {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.connector_name);
+                      const isItemSelected = isSelected(row.connectorId);
                       const labelId = `enhanced-table-checkbox-${index}`;
                       return (
                         <TableRow
@@ -315,13 +342,13 @@ export default function EnhancedTable(props) {
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.connector_name}
+                          key={row.connectorId}
                           selected={isItemSelected}
                         >
                           <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
-                              onClick={(event) => handleClick(event, row.connector_name)}
+                              onClick={(event) => handleClick(event, row.connectorId)}
                               inputProps={{ 'aria-labelledby': labelId }}
                             />
                           </TableCell>
@@ -357,7 +384,7 @@ export default function EnhancedTable(props) {
           />
         </Paper>
       </Box>
-      <Model isOpen={isOpen} onDeleteHandle={onDeleteHandle} />
+      <Model isOpen={isOpen} deleteConnector={deleteConnector} />
     </div>
   );
 }
