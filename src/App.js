@@ -13,6 +13,7 @@ import CDPConnectorProfileDashboard from './Components/CDP/CDPConnectorProfileDa
 import Connectors from './Components/Connectors/ConnectorsTableComponent'
 import Profile from './Components/Profile/ProfileTableComponent';
 import NewConnector from './Components/Connector/NewConnectorComponent';
+import NewProfile from './Components/Profile/NewProfileComponent';
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -39,7 +40,6 @@ function App(props) {
   const [drawOpen, setDrawOpen] = React.useState(false);
   const handleDrawerOpen = () => {
     setDrawOpen(true);
-    //alert(1)
 };
 
 const handleDrawerClose = () => {
@@ -65,6 +65,7 @@ const handleDrawerClose = () => {
                   <PrivateRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
                   <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
                   <PrivateRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
+                  <PrivateRoute restricted={false} component={NewProfile} path="/subscribedservices/CDP/new-profile" exact />
                   {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
                   <PublicRoute
                     restricted={false}

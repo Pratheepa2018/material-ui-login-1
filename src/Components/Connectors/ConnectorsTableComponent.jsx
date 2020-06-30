@@ -21,12 +21,9 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
 import Model from '../Model/ModelComponent'
-
 function createData(name, Description) {
   return { name, Description };
 }
-
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -37,13 +34,11 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
-
 function getComparator(order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -53,14 +48,11 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
-
 const headCells = [
-
   { id: 'name', numeric: true, disablePadding: true, label: 'Name' },
   { id: 'Description', numeric: true, disablePadding: false, label: 'Description' },
   { id: 'action', numeric: false, label: 'Actions' }
 ];
-
 function EnhancedTableHead(props) {
   const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
@@ -79,7 +71,6 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <StyledTableCell padding="checkbox">
-
         </StyledTableCell>
         {headCells.map((headCell) => (
           <StyledTableCell
@@ -106,7 +97,6 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
@@ -116,7 +106,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
@@ -136,16 +125,13 @@ const useToolbarStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
   },
 }));
-
 const showMessage = () => {
   //alert(1)
   //openModel(true);
 }
-
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected } = props;
-
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -163,18 +149,14 @@ const EnhancedTableToolbar = (props) => {
               <span> Add New Connectors</span>
             </Link>
 
-
           </Button>
         )}
-
       {numSelected > 0 ? (
         <Tooltip title="Actions">
           <Button aria-label="delete" variant="outlined" color="secondary" onClick={showMessage}>
             <DeleteForever />
             <span> Delete </span>
           </Button>
-
-
 
         </Tooltip>
       ) : (
@@ -187,11 +169,9 @@ const EnhancedTableToolbar = (props) => {
     </Toolbar>
   );
 };
-
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -215,7 +195,6 @@ const useStyles = makeStyles((theme) => ({
     width: 1,
   },
 }));
-
 export default function EnhancedTable(props) {
   // const rows = [
   //   createData('MYSQLDB', 'CONNECTOR WORLD TO MYSQL DATABASE'),
@@ -248,13 +227,11 @@ export default function EnhancedTable(props) {
         })
       });
   }, [allConnectorsURL])
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.name);
@@ -263,11 +240,9 @@ export default function EnhancedTable(props) {
     }
     setSelected([]);
   };
-
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -280,30 +255,23 @@ export default function EnhancedTable(props) {
         selected.slice(selectedIndex + 1),
       );
     }
-
     setSelected(newSelected);
   };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
   const handleEdit = (event, id) => {
     const editUrl = `/subscribedservices/CDP/new-connector?edit=${id}`
     props.history.push(editUrl)
   }
 
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
   return (
     <div className={classes.root}>
       <FullWidthBanner
@@ -331,43 +299,35 @@ export default function EnhancedTable(props) {
                 rowCount={rows.length}
               />
               {dataStatus &&
-
                 <TableBody>
                   {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.connector_name);
                       const labelId = `enhanced-table-checkbox-${index}`;
-
                       return (
                         <TableRow
                           hover
-
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
                           key={row.connector_name}
                           selected={isItemSelected}
                         >
-
                           <TableCell padding="checkbox">
-                            {/* <Checkbox
+                            <Checkbox
                               checked={isItemSelected}
                               onClick={(event) => handleClick(event, row.connector_name)}
                               inputProps={{ 'aria-labelledby': labelId }}
-                            /> */}
+                            />
                           </TableCell>
                           <TableCell component="th" id={labelId} scope="row" padding="none" >
                             {row.connector_name}
                           </TableCell>
                           <TableCell align="left">{row.connector_desc}</TableCell>
-
                           <TableCell align="right">
                             <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.connectorId)}>
                               <Edit />
-                            </Button>
-                            <Button aria-label="delete" variant="outlined" color="primary">
-                              <DeleteForever />
                             </Button>
                             
                           </TableCell>
