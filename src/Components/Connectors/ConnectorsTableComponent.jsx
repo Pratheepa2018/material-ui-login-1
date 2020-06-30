@@ -151,14 +151,11 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const showMessage = () =>{
-  //alert(1)
-  //openModel(true);
-}
+
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, onDelete } = props;
 
   return (
     <Toolbar
@@ -183,7 +180,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Actions">
-          <Button aria-label="delete" variant="outlined" color="secondary" onClick={showMessage}>
+          <Button aria-label="delete" variant="outlined" color="secondary" onClick={onDelete}>
           <DeleteForever />
           <span> Delete </span>
           </Button>
@@ -204,6 +201,7 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  onDelete: PropTypes.func.isRequired
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -255,6 +253,11 @@ export default function EnhancedTable() {
     setSelected([]);
   };
 
+  const onDeleteHandle = (modelState=true) =>{
+    openModel(modelState);
+  }
+
+
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -298,7 +301,7 @@ export default function EnhancedTable() {
                 imageText="Full Banner" />
     <Box padding={6}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -373,7 +376,8 @@ export default function EnhancedTable() {
       </Paper>
       
       </Box>
-      <Model isOpen={isOpen} />
+      <Model isOpen={isOpen} onDeleteHandle={onDeleteHandle} />
+
     </div>
   );
 }
