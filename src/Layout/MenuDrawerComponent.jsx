@@ -25,6 +25,7 @@ import Collapse from '@material-ui/core/Collapse';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import TopMenu from './TopMenu';
 import Auth from './Authentication'; 
+import Tooltip from '@material-ui/core/Tooltip';
 
 const drawerWidth = 240;
 
@@ -93,9 +94,22 @@ const useStyles = makeStyles((theme) => ({
     nested: {
         paddingLeft: theme.spacing(4),
     },
+    arrow: {
+        color: theme.palette.common.black,
+      },
+      tooltip: {
+        backgroundColor: theme.palette.common.black,
+      },
+      sidemenu:{
+        fontWeight:"600",
+        color: 'black'
+      }
 }));
 
-
+function BootstrapTooltip(props) {
+    const classes = useStyles();  
+    return <Tooltip arrow classes={classes} {...props} />;
+  }
 
 export default function MiniDrawer(props) {
     
@@ -171,27 +185,35 @@ export default function MiniDrawer(props) {
                 </div>
                 <Divider />
 
-                <List>
+                <List className={classes.sidemenu}>
                     <ListItem button onClick={handleClick}>
                         <ListItemIcon>
                             <AccountTreeIcon color="inherit"  />
                         </ListItemIcon>
-                        <ListItemText primary="Solutions" />
+                        <ListItemText className={classes.sidemenu} primary="Solutions" />
                         {open ? <ExpandLess /> : <ExpandMore />}
                     </ListItem>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
                             <ListItem button className={classes.nested}>
-                                <ListItemText primary="CIP" secondary='Collabera Information Platform'/>
-                            </ListItem>
-                            <ListItem button className={classes.nested}>                              
-                                <ListItemText primary="CDP" secondary='Collabera DevOps Platform' />
+                            <BootstrapTooltip title="Collabera Information Platform">
+                                <ListItemText primary="CIP"/>
+                            </BootstrapTooltip>
                             </ListItem>
                             <ListItem button className={classes.nested}>
-                                <ListItemText primary="CCM" secondary='  Collabera Connectors MarketPlace '/>
+                            <BootstrapTooltip title="Collabera DevOps Platform">
+                                <ListItemText primary="CDP"/>
+                            </BootstrapTooltip>
                             </ListItem>
-                            <ListItem button className={classes.nested}>                              
-                                <ListItemText primary="CCA" secondary='Collabera Cloud Accelerators' />
+                            <ListItem button className={classes.nested}>
+                            <BootstrapTooltip title="Collabera Connectors MarketPlace">
+                                <ListItemText primary="CCM"/>
+                            </BootstrapTooltip>
+                            </ListItem>
+                            <ListItem button className={classes.nested}> 
+                            <BootstrapTooltip title="Collabera Cloud Accelerators">
+                                <ListItemText primary="CCA"/>
+                            </BootstrapTooltip>
                             </ListItem>
                         </List>
                     </Collapse>
