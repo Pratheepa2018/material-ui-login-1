@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
   },
   fabGreen: {
-   
+    borderRadius: '35px',
     color: theme.palette.common.white,
     backgroundColor: green[500],
     '&:hover': {
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(0.5, 0),
+    borderRadius: '35px',
   },
 
 }));
@@ -243,8 +244,9 @@ console.log('here', source)
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
-            variant="outlined"
+            variant="contained"
             size="small"
+            color="primary"
             className={classes.button}
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
@@ -253,7 +255,8 @@ console.log('here', source)
             &gt;
           </Button>
           <Button
-            variant="outlined"
+            variant="contained"
+            color="secondary"
             size="small"
             className={classes.button}
             onClick={handleCheckedLeft}
@@ -267,6 +270,7 @@ console.log('here', source)
       <Grid item>{customList('Chosen', right)}</Grid>
     </Grid>
     <Button onClick = {handleBtn} variant="contained"
+     border={1} borderRadius={16}
         color="primary"
         size="large"
        className= {classes.fab, classes.fabGreen}
