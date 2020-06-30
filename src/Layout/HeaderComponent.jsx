@@ -76,46 +76,7 @@ class Header extends React.Component {
       
       <AppBar position="static" >
       <TopMenu islogin={isAuthenticated} />
-      <Toolbar className={classes.appSubBar} >
-       <Box className="menu_second">
-        <Button  color="inherit" label="Solution" onClick={this.handleClick}>Solution</Button>
-        
-        <Button href ={'/insights'} color="inherit" label="Insights">Insights</Button>
-        
-       <Button href ={'/client-support'} color="inherit" label="Client Support" >Client Support</Button>
-        
-        <Button href ={'/devlopers'} color="inherit" label="Devlopers" >Devlopers</Button>
-       
-      <Popover
-          open={open}
-          anchorEl={this.state.anchorEl}
-          onClose={this.handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center"
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "center"
-          }}
-        >
-          <MenuItem>
-            Collabera Information Platform (CIP)
-          </MenuItem>
-          <MenuItem >
-          <Link href="/collaberadevopsplatform" >
-          Collabera DevOps Platform (CDP) <ArrowRightIcon />
-          </Link>
-          </MenuItem>
-          <MenuItem >
-            Collabera Connectors MarketPlace (CCM)
-          </MenuItem>
-          <MenuItem >
-            Collabera Cloud Accelerators (CCA)
-          </MenuItem>
-        </Popover>
-        </Box>
-      </Toolbar>
+     
     </AppBar>
     
     </div>

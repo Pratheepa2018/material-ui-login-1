@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PublicRoute from './Components/Router/PublicRouteComponent';
 import PrivateRoute from './Components/Router/PrivateRouteComponent';
@@ -15,6 +15,8 @@ import NewConnector from './Components/Connector/NewConnectorComponent';
 import NewProfile from './Components/Profile/NewProfileComponent';
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import { withStyles } from '@material-ui/core/styles';
+import Header from './Layout/HeaderComponent';
+import Auth from './Layout/Authentication'; 
 
 const styles = theme => ({
   root: {
@@ -44,13 +46,31 @@ function App(props) {
 const handleDrawerClose = () => {
     setDrawOpen(false);
 };
+const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+useEffect(() => {
+    const auth = Auth.isAuthenticated();
+    if(auth) {
+        setIsAuthenticated(auth)
+      }
+  });
   return (
     <div className="App">
       <div className='main'>
         <Router>
           <React.Fragment>
             <MenuBar open={handleDrawerOpen} close={handleDrawerClose} />
+            
+            {/* {isAuthenticated ?  
+           
+            <MenuBar open={handleDrawerOpen} close={handleDrawerClose} />
+          
+            : 
+           
+            <Header /> 
+            
+          
+            } */}
             <main className={drawOpen ? 'makeStyles-appBarShift-6' : classes.closemenu} >
               <div className={classes.toolbar} />
                 <Switch>

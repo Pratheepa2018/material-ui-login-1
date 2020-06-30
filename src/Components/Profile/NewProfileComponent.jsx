@@ -4,15 +4,31 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import { Button, ButtonGroup, Box, Container, Typography, FormControl, Select, MenuItem, Divider ,
   Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid  } from '@material-ui/core';
-
-
+  import SaveIcon from '@material-ui/icons/Save';
+  import { green } from '@material-ui/core/colors';
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
-    margin: 'auto',
+    width: '100%',
   },
+  grid:{
+    margin: 'auto',
+   
+  },
+  fab: {
+    textAlign: 'right',
+  },
+  fabGreen: {
+   
+    color: theme.palette.common.white,
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[600],
+    },
+  },
+
   formControl: {
-    margin: theme.spacing(1),
+    marginLeft: theme.spacing(30),
+    marginBottom: theme.spacing(5),
     minWidth: 120,
     maxWidth: 300,
   },
@@ -180,20 +196,21 @@ console.log('here', source)
     <div className={classes.root}>
 
       <FullWidthBanner
-        title="My Connectors"
+        title="Add New Profile"
         image="../../../assets/images/globle.jpg"
         imageText="Full Banner" />
 
-      <Container fixed>
-        <Typography component="div" style={{ height: '100vh' }} >
-          <Box padding={6}>
-
-            <ButtonGroup disableElevation variant="contained" color="primary">
-              <Button onClick = {handleBtn} variant="outlined" color="primary">Source</Button>
-              <Button>Target</Button>
-            </ButtonGroup>
+          <Box padding={6} >
+          <Box border={1} borderRadius={16} padding={6} >
             
-            <FormControl className={clsx(classes.formControl)}>
+          <div style = {{display: 'block'}}>
+      
+          <ButtonGroup  variant="contained" >
+              <Button onClick = {handleBtn}  color="primary">Source</Button>
+              <Button onClick = {handleBtn}  color="secondary">Target</Button>
+            </ButtonGroup>
+           
+            <FormControl  className={clsx(classes.formControl)}>
             <Select
               displayEmpty
               value={personName}
@@ -209,8 +226,6 @@ console.log('here', source)
                 <em>Select Target Connectors</em>
               </MenuItem>}
 
-              
-           
               {sourceConnectors.map((name) => (
                 <MenuItem key={name} value={name} >
                   {name}
@@ -219,7 +234,11 @@ console.log('here', source)
            
             </Select>
           </FormControl>
-          <Grid container spacing={2} justify="center" alignItems="center" className={classes.root}>
+        
+          </div>
+
+          <Grid container spacing={2} justify="center" alignItems="center" className={classes.grid}>
+       
       <Grid item>{customList('Choices', left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
@@ -247,10 +266,14 @@ console.log('here', source)
       </Grid>
       <Grid item>{customList('Chosen', right)}</Grid>
     </Grid>
+    <Button onClick = {handleBtn} variant="contained"
+        color="primary"
+        size="large"
+       className= {classes.fab, classes.fabGreen}
+        startIcon={<SaveIcon />}>Save Profile</Button>
+    </Box>  
           </Box>         
 
-        </Typography>
-      </Container>
 
     </div>
 
