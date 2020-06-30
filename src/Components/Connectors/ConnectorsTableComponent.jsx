@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import {Table ,Box, Button, Link } from '@material-ui/core/';
+import { Table, Box, Button, Link } from '@material-ui/core/';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -16,14 +16,14 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import {DeleteForever, AddBox, Edit} from '@material-ui/icons';
+import { DeleteForever, AddBox, Edit } from '@material-ui/icons';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
-// import Model from '../Model/ModelComponent'
+import Model from '../Model/ModelComponent'
 
 function createData(name, Description) {
-    return { name, Description };
+  return { name, Description };
 }
 
 
@@ -55,10 +55,10 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    
+
   { id: 'name', numeric: true, disablePadding: true, label: 'Name' },
   { id: 'Description', numeric: true, disablePadding: false, label: 'Description' },
-  {id: 'action', numeric: false, label: 'Actions'}
+  { id: 'action', numeric: false, label: 'Actions' }
 ];
 
 function EnhancedTableHead(props) {
@@ -68,18 +68,18 @@ function EnhancedTableHead(props) {
   };
   const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: '#4169e1',
-        color: theme.palette.common.white,
+      backgroundColor: '#4169e1',
+      color: theme.palette.common.white,
     },
     body: {
-        fontSize: 14,
+      fontSize: 14,
     },
-}))(TableCell);
+  }))(TableCell);
   return (
     <TableHead>
       <TableRow>
         <StyledTableCell padding="checkbox">
-        
+
         </StyledTableCell>
         {headCells.map((headCell) => (
           <StyledTableCell
@@ -125,20 +125,21 @@ const useToolbarStyles = makeStyles((theme) => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: '1 1 100%',
   },
 }));
 
-const showMessage = () =>{
-         
+const showMessage = () => {
+  //alert(1)
+  //openModel(true);
 }
 
 const EnhancedTableToolbar = (props) => {
@@ -156,33 +157,33 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Button e aria-label="Add" variant="outlined" color="primary">
+          <Button e aria-label="Add" variant="outlined" color="primary">
             <AddBox />
             <Link href="/subscribedservices/CDP/new-connector" variant="body2">
-            <span> Add New Connectors</span>
-                    </Link>
-            
-            
+              <span> Add New Connectors</span>
+            </Link>
+
+
           </Button>
-      )}
+        )}
 
       {numSelected > 0 ? (
         <Tooltip title="Actions">
           <Button aria-label="delete" variant="outlined" color="secondary" onClick={showMessage}>
-          <DeleteForever />
-          <span> Delete </span>
+            <DeleteForever />
+            <span> Delete </span>
           </Button>
-        
-          
-          
+
+
+
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )}
     </Toolbar>
   );
 };
@@ -229,11 +230,10 @@ export default function EnhancedTable(props) {
   const [dense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataStatus, getStatus] = useState(false)
-  const [data, getData] = useState();
+  const [rows, getData] = useState(false);
+  const [isOpen, openModel] = useState();
   const allConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=-1`
-  const rows = [];
   useEffect(() => {
-
     fetch(allConnectorsURL, {
       method: 'GET',
       headers: {
@@ -241,15 +241,14 @@ export default function EnhancedTable(props) {
         "Accept": "application/json"
       }
     }).then(resp => resp.json())
-    .then((data) => {
-      Object.keys(data).map((el, index) => {
-        getData(data[el]);
-        getStatus(true)
-        console.log(data[el]);
-      })
-    });
+      .then((data) => {
+        Object.keys(data).map((el, index) => {
+          getData(data[el]);
+          getStatus(true)
+        })
+      });
   }, [allConnectorsURL])
-  
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -298,9 +297,10 @@ export default function EnhancedTable(props) {
     const editUrl = `/subscribedservices/CDP/new-connector?edit=${id}`
     props.history.push(editUrl)
   }
-  
+
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -308,7 +308,7 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <FullWidthBanner
         title="My Connectors"
-        image="../assets/images/globle.jpg"
+        image="/assets/images/globle.jpg"
         imageText="Full Banner"
       />
       <Box padding={6}>
@@ -330,50 +330,53 @@ export default function EnhancedTable(props) {
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
               />
-              { dataStatus &&
+              {dataStatus &&
+
                 <TableBody>
-                  {
-                    data.map((element, index) => {
+                  {stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.name);
                       const labelId = `enhanced-table-checkbox-${index}`;
-                      const isItemSelected = isSelected(element.connector_name);
+
                       return (
                         <TableRow
                           hover
+
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={element.connector_name}
+                          key={row.name}
                           selected={isItemSelected}
                         >
-                          <TableCell padding="checkbox" onClick={(event) => handleClick(event, element.connector_name)}>
+
+                          <TableCell padding="checkbox">
                             <Checkbox
                               checked={isItemSelected}
+                              onClick={(event) => handleClick(event, row.name)}
                               inputProps={{ 'aria-labelledby': labelId }}
                             />
                           </TableCell>
-                          <TableCell component="td" id={labelId} scope="row" padding="none">
-                            {element.connector_name}
+                          <TableCell component="th" id={labelId} scope="row" padding="none" >
+                            {row.connector_name}
                           </TableCell>
-                          <TableCell component="td" id={labelId} scope="row" padding="none">
-                            {element.connector_desc}
-                          </TableCell>
+                          <TableCell align="left">{row.connector_desc}</TableCell>
+
                           <TableCell align="right">
-                            <Button aria-label="delete" variant="outlined" color="primary" onClick={(event) => handleEdit(event, element.connectorId)}>
+                            <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.connectorId)}>
                               <Edit />
                               <span> Edit </span>
                             </Button>
-                            </TableCell>
+                          </TableCell>
                         </TableRow>
-                      )
-                    })
-                  }
+                      );
+                    })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                      <TableCell  />
+                      <TableCell />
                     </TableRow>
                   )}
-                </TableBody>
-              }
+                </TableBody>}
             </Table>
           </TableContainer>
           <TablePagination
@@ -387,6 +390,7 @@ export default function EnhancedTable(props) {
           />
         </Paper>
       </Box>
+      <Model isOpen={isOpen} />
     </div>
   );
 }

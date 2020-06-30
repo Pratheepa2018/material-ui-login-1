@@ -16,7 +16,8 @@ export default class NewConnector extends Component {
       clientdb: '',
       dbuser: '',
       dbpassword: '',
-      editConnector: false
+      editConnector: false,
+      connectorId: -1
     }
     this.baseState = this.state;
   }
@@ -72,6 +73,19 @@ export default class NewConnector extends Component {
 
   handleUpdate = async () => {
     const saveConnectorURL = `${common.api_url}/connector`;
+    const { connectorId, connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
+    const fields = {
+      "connectorId": connectorId,
+      "connector_name": connector_name,
+      "connector_desc": connector_desc,
+      "connector_type": connector_type,
+      "tenant_id": 1,
+      "server_address": server_address,
+      "server_port": server_port,
+      "clientdb": clientdb,
+      "dbuser": dbuser,
+      "dbpassword": dbpassword 
+    }
     try {
       await fetch(saveConnectorURL, {
         method: 'PUT',
@@ -81,7 +95,7 @@ export default class NewConnector extends Component {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(this.createDataObject()),
+        body: JSON.stringify(fields),
       }).then(resp => resp.json())
       .then(data => {
         if(data.status === 'Success') {
@@ -101,6 +115,7 @@ export default class NewConnector extends Component {
         this.setState({editConnector: true})
         const id = window.location.search.split('?')[1].split('=')[1]
         const connectorId = parseInt(id);
+        this.setState({connectorId: connectorId})
         const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}` 
         console.log(ConnectorsURL);
         fetch(ConnectorsURL, {

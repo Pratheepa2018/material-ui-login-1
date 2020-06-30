@@ -1,12 +1,11 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, Link, Typography, Divider } from '@material-ui/core';
+import { Paper, Link, Typography, Divider, Box } from '@material-ui/core';
+import './HeaderComponent.css';
 
 const styles = theme => ({
     root: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing(2),
-        paddingBottom: theme.spacing(2),
+        
         backgroundColor: '#042380',
         color: 'white',
         marginTop: '20px',
@@ -18,22 +17,19 @@ function Footer(props) {
     const { classes } = props;
 
     return (
-        <footer>
-            <Paper className={classes.root} elevation={1}>
-                <div style={{ display: "flex" }}>
-                    <Typography >
+        <footer className={props.isdrawopen}>
+            <Paper className={classes.root + " footerbody " + props.innerClass} elevation={1}>
+                 <Box paddingLeft={4}>
+                    <Link  color={"inherit"}>
                         Collabera MarketPlace Platform(TM)
-                    </Typography>
-                    <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
-                    <Typography >
+                    </Link>
+                     <Link color={"inherit"}>
                         All right reserved
-                    </Typography>
-                    <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
-                    <Link href="#" color={"inherit"}>Privacy & Legal </Link>
-                    <Divider variant="middle" orientation="vertical" flexItem style={{ backgroundColor: "white" }} />
+                    </Link>
+                     <Link href="#" color={"inherit"}>Privacy & Legal </Link>
                     <Link href="#" color={"inherit"}>Onboarding. Sell. Service. Markets. Success </Link>
-                </div>
-
+                 
+                    </Box>
             </Paper>
         </footer>
     );
