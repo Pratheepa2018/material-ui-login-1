@@ -166,7 +166,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Button e aria-label="Add" variant="outlined" color="primary">
+        <Button e aria-label="Add" variant="outlined" color="primary" href="/subscribedservices/CDP/new-profile">
             <AddBox />
             <span> Add New Profile</span>
             
