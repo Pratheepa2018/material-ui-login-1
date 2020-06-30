@@ -27,9 +27,9 @@ const styles = theme => ({
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
-  content: {
+  closemenu: {
     flexGrow: 1,
-    paddingLeft: theme.spacing(5),
+    paddingLeft: "70px",
     paddingTop: theme.spacing(-5),
 
   },
@@ -51,7 +51,7 @@ const handleDrawerClose = () => {
         <Router>
           <React.Fragment>
             <MenuBar open={handleDrawerOpen} close={handleDrawerClose} />
-            <main className={drawOpen ? 'makeStyles-appBarShift-6' : classes.content} >
+            <main className={drawOpen ? 'makeStyles-appBarShift-6' : classes.closemenu} >
               <div className={classes.toolbar} />
                 <Switch>
                   <PublicRoute restricted={true} component={Login} path="/" exact />
@@ -76,7 +76,7 @@ const handleDrawerClose = () => {
             </main>
           </React.Fragment>
         </Router>
-        <Footer isdrawopen={drawOpen ? 'makeStyles-appBarShift-6' : classes.content} innerClass={classes.toolbar} />
+        <Footer isdrawopen={drawOpen ? 'makeStyles-appBarShift-6' : classes.closemenu} innerClass={classes.toolbar} />
       </div>
     </div>
   );
