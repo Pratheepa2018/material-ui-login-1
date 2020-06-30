@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Typography, Box, TextField, Button } from '@material-ui/core';
 import { common } from '../../Utils/Api.env';
+import { NotificationManager } from 'react-notifications';
 
 export default class NewConnector extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ export default class NewConnector extends Component {
       server_port: '',
       clientdb: '',
       dbuser: '',
-      dbpassword: ''
+      dbpassword: '',
+      editConnector: false
     }
     this.baseState = this.state;
   }
@@ -22,10 +24,8 @@ export default class NewConnector extends Component {
     const {name, value} = e.target;
     this.setState({ [name]: value })
   }
-  handleClear = () => {
-    this.setState(this.baseState);
-  }
-  handelSave = async () => {
+  
+  createDataObject = () => {
     const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
     const fields = {
       "connector_name": connector_name,
@@ -38,6 +38,14 @@ export default class NewConnector extends Component {
       "dbuser": dbuser,
       "dbpassword": dbpassword 
     }
+    return fields;
+  }
+
+  handleClear = () => {
+    this.setState(this.baseState);
+  }
+
+  handelSave = async () => {    
     const saveConnectorURL = `${common.api_url}/connector`;
     try {
       await fetch(saveConnectorURL, {
@@ -48,7 +56,7 @@ export default class NewConnector extends Component {
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
-        body: JSON.stringify(fields),
+        body: JSON.stringify(this.createDataObject()),
       }).then(resp => resp.json())
       .then((data) => {
         if(data.status === 'Success') {
@@ -61,34 +69,61 @@ export default class NewConnector extends Component {
       console.log(e, 'Oh no something went wrong!!!');
     }
   }
-  componentDidMount() {
-    const getKey = window.location.search.split('?')[1].split('=')[0];
-    if(getKey === 'edit') {
-      const id = window.location.search.split('?')[1].split('=')[1]
-      const connectorId = parseInt(id);
-      const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}` 
-      console.log(ConnectorsURL);
-      fetch(ConnectorsURL, {
-        method: 'GET',
+
+  handleUpdate = async () => {
+    const saveConnectorURL = `${common.api_url}/connector`;
+    try {
+      await fetch(saveConnectorURL, {
+        method: 'PUT',
+        crossDomain: true,
+        compress: true,
         headers: {
           "Content-Type": "application/json",
           "Accept": "application/json"
-        }
+        },
+        body: JSON.stringify(this.createDataObject()),
       }).then(resp => resp.json())
-      .then((data) => {
-        console.log(data);
-        Object.keys(data).map(element => {
-          const flag = Object.keys(data[element][0])
-          flag.map(item => {
-            this.setState({[item]: data[element][0][item]});
+      .then(data => {
+        if(data.status === 'Success') {
+          NotificationManager.success(data.message);
+          this.props.history.push('/subscribedservices/CDP/connectors');
+        }
+      })
+    } catch (e) {
+      console.log(e, 'Something went wrong');
+    }
+  }
+  componentDidMount() {
+    const searchKey = window.location.search;
+    if(searchKey.length > 0) {
+      const getKey = window.location.search.split('?')[1].split('=')[0];
+      if(getKey === 'edit') {
+        this.setState({editConnector: true})
+        const id = window.location.search.split('?')[1].split('=')[1]
+        const connectorId = parseInt(id);
+        const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}` 
+        console.log(ConnectorsURL);
+        fetch(ConnectorsURL, {
+          method: 'GET',
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          }
+        }).then(resp => resp.json())
+        .then((data) => {
+          Object.keys(data).map(element => {
+            const flag = Object.keys(data[element][0])
+            flag.map(item => {
+              this.setState({[item]: data[element][0][item]});
+            })
           })
-        })
-      });
+        });
+      }
     }
   }
 
   render() {
-    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
+    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector } = this.state;
     const buttonStyle ={
       fontSize: '12px',
       textTransform: 'capitalize'
@@ -229,6 +264,11 @@ export default class NewConnector extends Component {
                         fullWidth
                         value={dbpassword}
                         onChange={this.handleChanges}
+                        inputProps={{
+                          form: {
+                            autocomplete: 'off',
+                          },
+                        }}
                       />
                     </Grid>
                     <Grid item xs={3}>
@@ -241,7 +281,11 @@ export default class NewConnector extends Component {
                       <Button variant="contained" color="primary" fullWidth style={buttonStyle}>View Meta Data</Button>
                     </Grid>
                     <Grid item xs={3}>
+                      { !editConnector ? 
                       <Button variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handelSave}>Save Connector Details</Button>
+                      : 
+                      <Button variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleUpdate}>Update Connector</Button>
+                      }
                     </Grid>
                   </Grid>
                 </form>
