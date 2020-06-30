@@ -130,8 +130,11 @@ export default class NewConnector extends Component {
             const flag = Object.keys(data[element][0])
             flag.map(item => {
               this.setState({[item]: data[element][0][item]});
+              return false;
             })
+            return false;
           })
+          return false;
         });
       }
     }

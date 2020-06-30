@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PublicRoute from './Components/Router/PublicRouteComponent';
 import PrivateRoute from './Components/Router/PrivateRouteComponent';
-import Header from './Layout/HeaderComponent';
 import Footer from './Layout/FooterComponent';
 import MenuBar from './Layout/MenuDrawerComponent';
 import SubscribedServices from './Components/SubscribedServices/SubscribedServicesComponent';
