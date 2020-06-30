@@ -26,13 +26,14 @@ import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import TopMenu from './TopMenu';
 import Auth from './Authentication'; 
 import Tooltip from '@material-ui/core/Tooltip';
+import './MenuDrawerComponent.css'
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        backgroundColor: '#3f51b5',
+        
         color: 'white'
     },
     appBar: {
@@ -40,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
+            
         }),
     },
     appBarShift: {
@@ -63,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
     },
     drawerOpen: {
         width: drawerWidth,
+        background: '#1a2038',
         transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -102,7 +105,10 @@ const useStyles = makeStyles((theme) => ({
       },
       sidemenu:{
         fontWeight:"600",
-        color: 'black'
+        color: '#fff'
+      },
+      iconStyle:{
+        color: '#fff'
       }
 }));
 
@@ -167,7 +173,7 @@ export default function MiniDrawer(props) {
             </AppBar>
             <Drawer
                 variant="permanent"
-                className={clsx(classes.drawer, {
+                className={clsx(classes.drawer, {'main_drower': drawOpen}, {
                     [classes.drawerOpen]: drawOpen,
                     [classes.drawerClose]: !drawOpen,
                 })}
@@ -186,9 +192,9 @@ export default function MiniDrawer(props) {
                 <Divider />
 
                 <List className={classes.sidemenu}>
-                    <ListItem button onClick={handleClick}>
+                    <ListItem button onClick={handleClick} >
                         <ListItemIcon>
-                            <AccountTreeIcon color="inherit"  />
+                            <AccountTreeIcon   />
                         </ListItemIcon>
                         <ListItemText className={classes.sidemenu} primary="Solutions" />
                         {open ? <ExpandLess /> : <ExpandMore />}
