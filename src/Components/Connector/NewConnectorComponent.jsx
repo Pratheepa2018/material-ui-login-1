@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Typography, Box, TextField, Button } from '@material-ui/core';
 import { common } from '../../Utils/Api.env';
+
 export default class NewConnector extends Component {
   constructor(props) {
     super(props)
@@ -60,6 +61,31 @@ export default class NewConnector extends Component {
       console.log(e, 'Oh no something went wrong!!!');
     }
   }
+  componentDidMount() {
+    const getKey = window.location.search.split('?')[1].split('=')[0];
+    if(getKey === 'edit') {
+      const id = window.location.search.split('?')[1].split('=')[1]
+      const connectorId = parseInt(id);
+      const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}` 
+      console.log(ConnectorsURL);
+      fetch(ConnectorsURL, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      }).then(resp => resp.json())
+      .then((data) => {
+        Object.keys(data).map(element => {
+          const flag = Object.keys(data[element][0])
+          flag.map(item => {
+            console.log(item)
+          })
+        })  
+      });
+    }
+  }
+
   render() {
     const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
     const buttonStyle ={
