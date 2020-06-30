@@ -19,7 +19,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import {DeleteForever, AddBox, Edit} from '@material-ui/icons';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
-// import Model from '../Model/ModelComponent'
+import Model from '../Model/ModelComponent'
 
 function createData(name, Description) {
     return { name, Description };
@@ -37,7 +37,6 @@ const rows = [
     createData('d', 'CONNECTOR FOR AZURE DEVOPS'),
     createData('f', 'CONNECTOR TARGET FOR AMAZON WEBSERVICES'),
 ];
-
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -153,7 +152,8 @@ const useToolbarStyles = makeStyles((theme) => ({
 }));
 
 const showMessage = () =>{
-         
+  //alert(1)
+  //openModel(true);
 }
 
 const EnhancedTableToolbar = (props) => {
@@ -237,6 +237,7 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense] = React.useState(false);
+  const [isOpen, openModel] =React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
@@ -370,7 +371,9 @@ export default function EnhancedTable() {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+      
       </Box>
+      <Model isOpen={isOpen} />
     </div>
   );
 }

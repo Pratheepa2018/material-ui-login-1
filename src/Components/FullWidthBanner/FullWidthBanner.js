@@ -2,7 +2,6 @@ import React from 'react';
 import Box from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import './FullWidthBanner.css';
 
 import Breadcrumbs from '../../Layout/BreadCrumbs';
@@ -10,7 +9,7 @@ import Breadcrumbs from '../../Layout/BreadCrumbs';
 class FullWidthBanner extends React.Component {
     
     render() {
-        const { image, imageText, title, description, linkText}= this.props;
+        const { image, imageText, title}= this.props; //description, linkText
         return (
         <Box className='banner_body' style={{ backgroundImage: `url(${image})` }} p={{ xs: 4, sm: 6, md: 8 }}>
      
@@ -23,12 +22,12 @@ class FullWidthBanner extends React.Component {
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
               {title}
             </Typography>
-            <Typography variant="h5" color="inherit" paragraph>
+            {/* <Typography variant="h5" color="inherit" paragraph>
               {description}
             </Typography>
             <Link variant="subtitle1" href="#">
               {linkText}
-            </Link>
+            </Link> */}
           </div>
         </Grid>
       </Grid>

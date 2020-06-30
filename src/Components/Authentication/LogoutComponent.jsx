@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button} from '@material-ui/core';
+import { IconButton} from '@material-ui/core';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 export default function Logout() {
@@ -8,8 +8,8 @@ export default function Logout() {
     window.location.reload(false)
   }
   return(
-    <Button color="inherit" onClick={handleLogout} className="logoutBtn">
-      <ExitToAppIcon color="primary" />
-    </Button>
+    <IconButton onClick={handleLogout} className="logoutBtn" color="inherit">
+      <ExitToAppIcon />
+    </IconButton>
   )
 }
