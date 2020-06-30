@@ -47,6 +47,7 @@ const handleDrawerClose = () => {
 };
 
   return (
+
     <div className="App">
       <div className='main'>
         <Router>
@@ -73,6 +74,7 @@ const handleDrawerClose = () => {
         </Router>
         <Footer isdrawopen={drawOpen ? 'makeStyles-appBarShift-6' : classes.content} innerClass={classes.toolbar} />
       </div>
+
     </div>
   );
 }

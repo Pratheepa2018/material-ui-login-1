@@ -1,59 +1,53 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import React, { useEffect } from 'react';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import {DeleteForever} from '@material-ui/icons';
 
-class ModelComponent extends React.Component {
-    constructor(props) {
-        super(props);
-      this.state=({
-          isOpen: false
-      })    
-      this.handleClose= this.handleClose.bind(this);
-    }
+export default function AlertDialog(props) {
+  const [open, setOpen] = React.useState(false);
 
-    handleClose(){
-        this.setState({
-            isOpen:false
-        })
-    }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-   static getDerivedStateFromProps(props, state){
-     //alert(props)
-    if (props.isOpen !== state.isOpen) {
-      return {
-        selected: props.isOpen,
-      };
-    }
+  const handleClose = () => { 
+    props.onDeleteHandle(false);
+    setOpen(false);
+  };
 
-    return null;
-   }
-    
-    render() {
-        
-        return (
-            <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        className="globleModel"
-        open={this.props.isOpen}
-        onClose={this.handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+  useEffect(() => {
+    setOpen(props.isOpen)
+  });
+
+  return (
+    <div>
+       
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
       >
-        <Fade in={this.props.isOpen}>
-          <div className='modelBody'>
-            <h2 id="transition-modal-title">Transition modal</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
-          </div>
-        </Fade>
-      </Modal>
-        );
-    }
+        <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          Are you sure you want to permanently delete this item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} variant="outlined"  color="primary">
+            Cancle
+          </Button>
+          <Button onClick={handleClose} variant="outlined"  color="secondary" autoFocus>
+          <DeleteForever />
+           Delete Permanently
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 }
-
-export default ModelComponent;

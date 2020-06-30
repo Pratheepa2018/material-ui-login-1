@@ -2,7 +2,6 @@ import React from 'react';
 import { IconButton} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-// import LoginComponent from '../Login/LoginComponent';
 
 export default function Logout() {
   const history = useHistory();
