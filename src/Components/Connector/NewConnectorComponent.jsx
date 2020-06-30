@@ -76,12 +76,13 @@ export default class NewConnector extends Component {
         }
       }).then(resp => resp.json())
       .then((data) => {
+        console.log(data);
         Object.keys(data).map(element => {
           const flag = Object.keys(data[element][0])
           flag.map(item => {
-            console.log(item)
+            this.setState({[item]: data[element][0][item]});
           })
-        })  
+        })
       });
     }
   }
