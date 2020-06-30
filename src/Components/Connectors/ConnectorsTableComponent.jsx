@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import {Table ,Box, Button, Link } from '@material-ui/core/';
+import { Table, Box, Button, Link } from '@material-ui/core/';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -16,27 +16,18 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import {DeleteForever, AddBox, Edit} from '@material-ui/icons';
+import { DeleteForever, AddBox, Edit } from '@material-ui/icons';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
+import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
+import { common } from '../../Utils/Api.env';
 import Model from '../Model/ModelComponent'
 
 function createData(name, Description) {
-    return { name, Description };
+  return { name, Description };
 }
 
-const rows = [
-    createData('MYSQLDB', 'CONNECTOR WORLD TO MYSQL DATABASE'),
-    createData('MSSQLDB', 'CONNECTOR SELECTED FOR MSSQL'),
-    createData('MONGODB', 'CONNECTOR WITH MONGO AND NODEJS'),
-    createData('AZURE', 'CONNECTOR FOR AZURE DEVOPS'),
-    createData('AWS', 'CONNECTOR TARGET FOR AMAZON WEBSERVICES'),
-    createData('a', 'CONNECTOR WORLD TO MYSQL DATABASE'),
-    createData('s', 'CONNECTOR SELECTED FOR MSSQL'),
-    createData('c', 'CONNECTOR WITH MONGO AND NODEJS'),
-    createData('d', 'CONNECTOR FOR AZURE DEVOPS'),
-    createData('f', 'CONNECTOR TARGET FOR AMAZON WEBSERVICES'),
-];
+
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -64,10 +55,10 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-    
+
   { id: 'name', numeric: true, disablePadding: true, label: 'Name' },
   { id: 'Description', numeric: true, disablePadding: false, label: 'Description' },
-  {id: 'action', numeric: false, label: 'Actions'}
+  { id: 'action', numeric: false, label: 'Actions' }
 ];
 
 function EnhancedTableHead(props) {
@@ -77,23 +68,18 @@ function EnhancedTableHead(props) {
   };
   const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: '#4169e1',
-        color: theme.palette.common.white,
+      backgroundColor: '#4169e1',
+      color: theme.palette.common.white,
     },
     body: {
-        fontSize: 14,
+      fontSize: 14,
     },
-}))(TableCell);
+  }))(TableCell);
   return (
     <TableHead>
       <TableRow>
         <StyledTableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all Connectors' }}
-          />
+
         </StyledTableCell>
         {headCells.map((headCell) => (
           <StyledTableCell
@@ -139,19 +125,19 @@ const useToolbarStyles = makeStyles((theme) => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: '1 1 100%',
   },
 }));
 
-const showMessage = () =>{
+const showMessage = () => {
   //alert(1)
   //openModel(true);
 }
@@ -171,33 +157,33 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Button e aria-label="Add" variant="outlined" color="primary">
+          <Button e aria-label="Add" variant="outlined" color="primary">
             <AddBox />
             <Link href="/subscribedservices/CDP/new-connector" variant="body2">
-            <span> Add New Connectors</span>
-                    </Link>
-            
-            
+              <span> Add New Connectors</span>
+            </Link>
+
+
           </Button>
-      )}
+        )}
 
       {numSelected > 0 ? (
         <Tooltip title="Actions">
           <Button aria-label="delete" variant="outlined" color="secondary" onClick={showMessage}>
-          <DeleteForever />
-          <span> Delete </span>
+            <DeleteForever />
+            <span> Delete </span>
           </Button>
-        
-          
-          
+
+
+
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )}
     </Toolbar>
   );
 };
@@ -230,15 +216,38 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
+  // const rows = [
+  //   createData('MYSQLDB', 'CONNECTOR WORLD TO MYSQL DATABASE'),
+  //   createData('MSSQLDB', 'CONNECTOR SELECTED FOR MSSQL'),
+  //   createData('MONGODB', 'CONNECTOR WITH MONGO AND NODEJS'),
+  // ];
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense] = React.useState(false);
-  const [isOpen, openModel] =React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('calories');
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [dataStatus, getStatus] = useState(false)
+  const [rows, getData] = useState(false);
+  const [isOpen, openModel] = useState();
+  const allConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=-1`
+  useEffect(() => {
+    fetch(allConnectorsURL, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    }).then(resp => resp.json())
+      .then((data) => {
+        Object.keys(data).map((el, index) => {
+          getData(data[el]);
+          getStatus(true)
+        })
+      });
+  }, [allConnectorsURL])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -284,94 +293,105 @@ export default function EnhancedTable() {
     setPage(0);
   };
 
-  
+  const handleEdit = (event, id) => {
+    const editUrl = `/subscribedservices/CDP/new-connector?edit=${id}`
+    props.history.push(editUrl)
+  }
+
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
     <div className={classes.root}>
-        <FullWidthBanner
-                title="My Connectors"
-                image="../assets/images/globle.jpg"
-                imageText="Full Banner" />
-    <Box padding={6}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+      <FullWidthBanner
+        title="My Connectors"
+        image="/assets/images/globle.jpg"
+        imageText="Full Banner"
+      />
+      <Box padding={6}>
+        <Paper className={classes.paper}>
+          <EnhancedTableToolbar numSelected={selected.length} />
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              {dataStatus &&
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
+                <TableBody>
+                  {stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.connector_name);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="left">{row.Description}</TableCell> 
+                      return (
+                        <TableRow
+                          hover
 
-                      <TableCell align="right">
-                      <Button aria-label="delete" variant="outlined" color="primary">
-          <Edit />
-          <span> Edit </span>
-          </Button>
-                      </TableCell>
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.connector_name}
+                          selected={isItemSelected}
+                        >
+
+                          <TableCell padding="checkbox">
+                            {/* <Checkbox
+                              checked={isItemSelected}
+                              onClick={(event) => handleClick(event, row.connector_name)}
+                              inputProps={{ 'aria-labelledby': labelId }}
+                            /> */}
+                          </TableCell>
+                          <TableCell component="th" id={labelId} scope="row" padding="none" >
+                            {row.connector_name}
+                          </TableCell>
+                          <TableCell align="left">{row.connector_desc}</TableCell>
+
+                          <TableCell align="right">
+                            <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.connectorId)}>
+                              <Edit />
+                            </Button>
+                            <Button aria-label="delete" variant="outlined" color="primary">
+                              <DeleteForever />
+                            </Button>
+                            
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                      <TableCell />
                     </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell  />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
-      
+                  )}
+                </TableBody>}
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
       </Box>
       <Model isOpen={isOpen} />
     </div>
