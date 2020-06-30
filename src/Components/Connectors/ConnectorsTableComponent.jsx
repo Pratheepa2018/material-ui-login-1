@@ -131,7 +131,7 @@ const showMessage = () => {
 }
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, onDelete } = props;
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -153,7 +153,7 @@ const EnhancedTableToolbar = (props) => {
         )}
       {numSelected > 0 ? (
         <Tooltip title="Actions">
-          <Button aria-label="delete" variant="outlined" color="secondary" onClick={showMessage}>
+          <Button aria-label="delete" variant="outlined" color="secondary" onClick={onDelete}>
             <DeleteForever />
             <span> Delete </span>
           </Button>
@@ -171,6 +171,8 @@ const EnhancedTableToolbar = (props) => {
 };
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  
+  onDelete: PropTypes.func.isRequired
 };
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -268,7 +270,9 @@ export default function EnhancedTable(props) {
     const editUrl = `/subscribedservices/CDP/new-connector?edit=${id}`
     props.history.push(editUrl)
   }
-
+  const onDeleteHandle = (modelState=true) =>{
+    openModel(modelState);
+  }
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -281,7 +285,7 @@ export default function EnhancedTable(props) {
       />
       <Box padding={6}>
         <Paper className={classes.paper}>
-          <EnhancedTableToolbar numSelected={selected.length} />
+          <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle}  />
           <TableContainer>
             <Table
               className={classes.table}
@@ -353,7 +357,7 @@ export default function EnhancedTable(props) {
           />
         </Paper>
       </Box>
-      <Model isOpen={isOpen} />
+      <Model isOpen={isOpen} onDeleteHandle={onDeleteHandle} />
     </div>
   );
 }
