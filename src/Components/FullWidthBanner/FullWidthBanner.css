@@ -11,3 +11,13 @@
 }
 .desh_card{height: 100%;}
 .MuiBreadcrumbs-ol *{color: #fff;}
+
+.gif{
+    display: unset;
+    position: absolute;
+    right: 159px;
+}
+
+@media(max-width:767px){
+    .banner_body h1{font-size: 30px;}
+}

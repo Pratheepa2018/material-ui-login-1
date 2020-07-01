@@ -1,41 +1,10 @@
 import React from 'react';
-import {
-  AppBar,
-  Toolbar, Box,
-  Popover, MenuItem, Link, Button
-} from '@material-ui/core';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import {AppBar} from '@material-ui/core';
 import 'react-notifications/lib/notifications.css';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import Auth from './Authentication'; 
+import Auth from './Authentication';
 import TopMenu from './TopMenu';
 import './HeaderComponent.css';
-const styles = theme => ({
-  grow: {
-    flexGrow: 1,
-  },
-  appBar: {
-    backgroundColor: '#fff',
-  },
-  appSubBar: {
-    backgroundColor: '#fff',
-    color:'#000', 
-    textAlign: 'center',
-  },
-  logo: {
-    maxWidth: 160,
-  },
-  headerMenu: {
-      fontSize: 'larger',
-    fontWeight: '600',
-    color: 'darkblue',
-    display: 'flex',
-  },
-  paddingTypo:{
-    padding: '8px'
-  }
-});
+
 class Header extends React.Component {
   constructor() {
     super();
@@ -58,32 +27,24 @@ class Header extends React.Component {
       anchorEl: null
     });
   }
+
   componentWillMount() {
     const auth = Auth.isAuthenticated();
-    if(auth) {
-      this.setState({isAuthenticated: auth});
+    if (auth) {
+      this.setState({ isAuthenticated: auth });
     }
   }
-  // componentDidUpdate() {
-  //   this.setState({isAuthenticated:  this.props.isAuthenticated})
-  // }
+
   render() {
-    const { classes } = this.props;
     const { isAuthenticated } = this.state;
-    const open = Boolean(this.state.anchorEl);
     return (
-    <div>
-      
-      <AppBar position="static" >
-      <TopMenu islogin={isAuthenticated} />
-     
-    </AppBar>
-    
-    </div>
+      <div>
+        <AppBar position="fixed" >
+          <TopMenu islogin={isAuthenticated} />
+        </AppBar>
+      </div>
     );
   }
 }
-Header.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-export default withStyles(styles)(Header);
+
+export default (Header);

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
-import { Button, ButtonGroup, Box, Container, Typography, FormControl, Select, MenuItem, Divider ,
-  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid  } from '@material-ui/core';
+import { Button, ButtonGroup, Box, FormControl, Select, MenuItem, Divider ,
+  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid, Typography  } from '@material-ui/core';
   import SaveIcon from '@material-ui/icons/Save';
   import { green } from '@material-ui/core/colors';
 const useStyles = makeStyles((theme) => ({
@@ -11,11 +11,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   grid:{
-    margin: 'auto',
-   
-  },
-  fab: {
-    textAlign: 'right',
+    margin: 'auto',   
   },
   fabGreen: {
     borderRadius: '35px',
@@ -25,10 +21,16 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: green[600],
     },
   },
+  centerbox: {
+    padding: theme.spacing(2),
+    margin: 'auto',
+    maxWidth: 540,
+    border: '1px solid #ccc',
+    marginTop: '10px',
+    borderRadius: '3px'
+  },
 
   formControl: {
-    marginLeft: theme.spacing(30),
-    marginBottom: theme.spacing(5),
     minWidth: 120,
     maxWidth: 300,
   },
@@ -41,10 +43,14 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     overflow: 'auto',
   },
-  button: {
+  comparebutton: {
     margin: theme.spacing(0.5, 0),
-    borderRadius: '35px',
+    borderRadius: '50%',
+    minWidth: 'unset',
+    width: '40px',
+    height: '40px'
   },
+
 
 }));
 
@@ -126,6 +132,7 @@ const [checked, setChecked] = useState([]);
     setChecked(newChecked);
   };
 
+ 
   const numberOfChecked = (items) => intersection(checked, items).length;
 
   const handleToggleAll = (items) => () => {
@@ -147,6 +154,17 @@ const [checked, setChecked] = useState([]);
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
+
+const handleSaveProfile = () =>{
+ 
+  if(right.length === 0){
+    alert('No Data Choosen')
+  }
+  else{
+    alert(right)
+    console.log('daataTosend', right)
+  }
+}
 
   const customList = (title, items) => (
     <Card>
@@ -179,7 +197,7 @@ const [checked, setChecked] = useState([]);
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`test ${value + 1}`} />
+              <ListItemText id={labelId} primary={`Column ${value + 1}`} />
             </ListItem>
           );
         })}
@@ -192,25 +210,34 @@ const [checked, setChecked] = useState([]);
 
   });
 
-console.log('here', source)
   return (
     <div className={classes.root}>
 
       <FullWidthBanner
         title="Add New Profile"
         image="../../../assets/images/globle.jpg"
-        imageText="Full Banner" />
+        imageText="Full Banner"
+        exceptimage ="../../../assets/images/learnmore.gif" />
 
-          <Box padding={6} >
-          <Box border={1} borderRadius={16} padding={6} >
+          
+
+ 
+
+<div className={classes.centerbox}>
+
+        <Grid container  justify="space-around"  alignItems="center" className={classes.grid}>
             
-          <div style = {{display: 'block'}}>
-      
+          <Grid item >
+          <Box paddingBottom={1}>
           <ButtonGroup  variant="contained" >
               <Button onClick = {handleBtn}  color="primary">Source</Button>
               <Button onClick = {handleBtn}  color="secondary">Target</Button>
             </ButtonGroup>
-           
+            </Box>
+            </Grid>
+
+            <Grid item>
+            <Box paddingBottom={1}>
             <FormControl  className={clsx(classes.formControl)}>
             <Select
               displayEmpty
@@ -235,19 +262,23 @@ console.log('here', source)
            
             </Select>
           </FormControl>
-        
-          </div>
+          </Box>
+          </Grid>
+          </Grid>
+          
+              
 
-          <Grid container spacing={2} justify="center" alignItems="center" className={classes.grid}>
+          <Grid container spacing={1} justify="center" alignItems="center" className={classes.grid}>
        
       <Grid item>{customList('Choices', left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
+          
           <Button
             variant="contained"
             size="small"
             color="primary"
-            className={classes.button}
+            className={classes.comparebutton}
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
             aria-label="move selected right"
@@ -258,7 +289,7 @@ console.log('here', source)
             variant="contained"
             color="secondary"
             size="small"
-            className={classes.button}
+            className={classes.comparebutton}
             onClick={handleCheckedLeft}
             disabled={rightChecked.length === 0}
             aria-label="move selected left"
@@ -269,16 +300,23 @@ console.log('here', source)
       </Grid>
       <Grid item>{customList('Chosen', right)}</Grid>
     </Grid>
-    <Button onClick = {handleBtn} variant="contained"
+    <Grid container spacing={1} justify="center" alignItems="center" className={classes.grid}>
+       
+    <Grid justify="center">
+    <Box padding={1}>
+    <Button 
+     variant="contained"
      border={1} borderRadius={16}
         color="primary"
         size="large"
-       className= {classes.fab, classes.fabGreen}
+        onClick={handleSaveProfile}
+       className= {classes.fabGreen}
         startIcon={<SaveIcon />}>Save Profile</Button>
-    </Box>  
-          </Box>         
-
-
+        </Box>
+    </Grid>
+    </Grid>
+   
+    </div> 
     </div>
 
   );

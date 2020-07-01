@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react';
+import React , {useState} from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PublicRoute from './Components/Router/PublicRouteComponent';
 import PrivateRoute from './Components/Router/PrivateRouteComponent';
@@ -38,7 +38,7 @@ const styles = theme => ({
 });
 function App(props) {
   const { classes } = props;
-  const [drawOpen, setDrawOpen] = React.useState(false);
+  const [drawOpen, setDrawOpen] = useState(false);
   const handleDrawerOpen = () => {
     setDrawOpen(true);
 };
@@ -46,33 +46,15 @@ function App(props) {
 const handleDrawerClose = () => {
     setDrawOpen(false);
 };
-const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-useEffect(() => {
-    const auth = Auth.isAuthenticated();
-    if(auth) {
-        setIsAuthenticated(auth)
-      }
-  });
   return (
     <div className="App">
       <div className='main'>
         <Router>
-          <React.Fragment>
-            <MenuBar open={handleDrawerOpen} close={handleDrawerClose} />
-            
-            {/* {isAuthenticated ?  
-           
-            <MenuBar open={handleDrawerOpen} close={handleDrawerClose} />
-          
-            : 
-           
-            <Header /> 
-            
-          
-            } */}
-            <main className={drawOpen ? 'makeStyles-appBarShift-6' : classes.closemenu} >
-              <div className={classes.toolbar} />
+          <React.Fragment>            
+            { Auth.isAuthenticated() ? <MenuBar open={handleDrawerOpen} close={handleDrawerClose} /> : <Header />   }
+            <main className={drawOpen ? 'makeStyles-appBarShift-6' : Auth.isAuthenticated() && classes.closemenu} >
+              <div className={classes.toolbar} />  
                 <Switch>
                   <PublicRoute restricted={true} component={Login} path="/" exact />
                   <PublicRoute restricted={true} component={Login} path="/login" exact />
@@ -96,7 +78,7 @@ useEffect(() => {
             </main>
           </React.Fragment>
         </Router>
-        <Footer isdrawopen={drawOpen ? 'makeStyles-appBarShift-6' : classes.closemenu} innerClass={classes.toolbar} />
+        <Footer isdrawopen={drawOpen ? 'makeStyles-appBarShift-6' : Auth.isAuthenticated() && classes.closemenu} innerClass={classes.toolbar} />
       </div>
     </div>
   );

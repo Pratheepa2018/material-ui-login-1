@@ -9,7 +9,7 @@ import Breadcrumbs from '../../Layout/BreadCrumbs';
 class FullWidthBanner extends React.Component {
     
     render() {
-        const { image, imageText, title}= this.props; //description, linkText
+        const { image, imageText, title, exceptimage}= this.props; //description, linkText
         return (
         <Box className='banner_body' style={{ backgroundImage: `url(${image})` }} p={{ xs: 4, sm: 6, md: 8 }}>
      
@@ -28,6 +28,9 @@ class FullWidthBanner extends React.Component {
             <Link variant="subtitle1" href="#">
               {linkText}
             </Link> */}
+          </div>
+          <div className='gif'>
+            <img  src={exceptimage} alt= 'Except more'/>
           </div>
         </Grid>
       </Grid>
