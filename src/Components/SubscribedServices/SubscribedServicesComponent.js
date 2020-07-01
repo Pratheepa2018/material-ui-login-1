@@ -20,7 +20,8 @@ class SubscribedServicesComponent extends Component {
                     description="description"
                     linkText="Learn more"
                     image="../assets/images/globle.jpg"
-                    imageText="alt text" />
+                    imageText="alt text" 
+                    exceptimage ="../assets/images/learnmore.gif"/>
                 <Grid className='dash_box'>
                     <Grid container spacing={4}>
                         {cards.map((card) => (

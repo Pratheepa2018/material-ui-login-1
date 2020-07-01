@@ -285,8 +285,9 @@ export default function EnhancedTable() {
     <div className={classes.root}>
         <FullWidthBanner
                  title="My Profile"
-                 image="https://constructify.com/wp-content/uploads/2018/09/blog-1200x300.jpg"
-                 imageText="Full Banner" />
+                 image="../../../assets/images/globle.jpg"
+                 imageText="Full Banner" 
+                 exceptimage ="../../../assets/images/learnmore.gif"/>
     <Box padding={6}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />

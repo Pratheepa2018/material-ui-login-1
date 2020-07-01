@@ -18,8 +18,9 @@ class CollaberaDevOpsPlatform extends Component {
                     title="Collabera DevOps Platform (CDP)"
                     description="description"
                     linkText="Learn more"
-                    image="../assets/images/globle.jpg"
-                    imageText="alt text" />
+                    image="../../assets/images/globle.jpg"
+                    imageText="alt text"
+                    exceptimage ="../../assets/images/learnmore.gif"/>
                 <Grid className='cdp_box'>
                     <Grid container spacing={4}>
                         {cards.map((card) => (
