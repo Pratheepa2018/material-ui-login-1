@@ -15,7 +15,7 @@ class CollaberaDevOpsPlatform extends Component {
         return (
             <div>
                 <FullWidthBanner
-                    title="Collabera DevOps Platform(CDP)"
+                    title="Collabera DevOps Platform (CDP)"
                     description="description"
                     linkText="Learn more"
                     image="../assets/images/globle.jpg"
