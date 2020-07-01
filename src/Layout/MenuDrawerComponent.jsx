@@ -1,4 +1,4 @@
-import React ,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -24,227 +24,221 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import TopMenu from './TopMenu';
-import Auth from './Authentication'; 
+import Auth from './Authentication';
 import Tooltip from '@material-ui/core/Tooltip';
 import './MenuDrawerComponent.css'
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        
-        color: 'white'
+  root: {
+    display: 'flex',
+
+    color: 'white'
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: 36,
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    background: '#1a2038',
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
     },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-            
-        }),
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: 36,
-    },
-    hide: {
-        display: 'none',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-        whiteSpace: 'nowrap',
-    },
-    drawerOpen: {
-        width: drawerWidth,
-        background: '#1a2038',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerClose: {
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        overflowX: 'hidden',
-        width: theme.spacing(7) + 1,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9) + 1,
-        },
-    },
-    toolbar: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: theme.spacing(0, 1),
-        // necessary for content to be below app bar
-        ...theme.mixins.toolbar,
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-    },
-    nested: {
-        paddingLeft: theme.spacing(4),
-    },
-    arrow: {
-        color: theme.palette.common.black,
-      },
-      tooltip: {
-        backgroundColor: theme.palette.common.black,
-      },
-      sidemenu:{
-        fontWeight:"600",
-         
-      },
-      iconStyle:{
-       
-      }
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
+  arrow: {
+    color: theme.palette.common.black,
+  },
+  tooltip: {
+    backgroundColor: theme.palette.common.black,
+  },
+  sidemenu: {
+    fontWeight: "600",
+
+  },
+  iconStyle: {
+
+  }
 }));
 
 function BootstrapTooltip(props) {
-    const classes = useStyles();  
-    return <Tooltip arrow classes={classes} {...props} />;
-  }
+  const classes = useStyles();
+  return <Tooltip arrow classes={classes} {...props} />;
+}
 
 export default function MiniDrawer(props) {
-    
-    const classes = useStyles();
-    const theme = useTheme();
-    const [drawOpen, setDrawOpen] = useState(false);
-    const [open, setOpen] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-        const auth = Auth.isAuthenticated();
-        if(auth) {
-            setIsAuthenticated(auth)
-          }
-      }, []);
-   
-      
-    const handleClick = () => {
-        setOpen(!open);
-    };
-    const handleDrawerOpen = () => {
-        setDrawOpen(true);
-        props.open();
-    };
+  const classes = useStyles();
+  const theme = useTheme();
+  const [drawOpen, setDrawOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    const handleDrawerClose = () => {
-        setDrawOpen(false);
-        props.close();
-    };
+  useEffect(() => {
+    const auth = Auth.isAuthenticated();
+    if (auth) {
+      setIsAuthenticated(auth)
+    }
+  }, []);
 
-    return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: drawOpen,
-                })}
-            >
-                <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: drawOpen,
-                        })}
-                    >
-                        <MenuIcon color="inherit" />
-                    </IconButton>
-                    <TopMenu islogin={isAuthenticated}  />
-                </Toolbar>
-           
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {'main_drower': drawOpen}, {
-                    [classes.drawerOpen]: drawOpen,
-                    [classes.drawerClose]: !drawOpen,
-                })}
-                classes={{
-                    paper: clsx({
-                        [classes.drawerOpen]: drawOpen,
-                        [classes.drawerClose]: !drawOpen,
-                    }),
-                }}
-            >
-                <div className={classes.toolbar}>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                    </IconButton>
-                </div>
-                <Divider />
 
-                <List className={classes.sidemenu}>
-                    <ListItem button onClick={handleClick} >
-                        <ListItemIcon>
-                            <AccountTreeIcon   />
-                        </ListItemIcon>
-                        <ListItemText className={classes.sidemenu} primary="Solutions" />
-                        {open ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItem button className={classes.nested}>
-                            <BootstrapTooltip title="Collabera Information Platform">
-                                <ListItemText primary="CIP"/>
-                            </BootstrapTooltip>
-                            </ListItem>
-                            <ListItem button className={classes.nested}>
-                            <BootstrapTooltip title="Collabera DevOps Platform">
-                                <ListItemText primary="CDP"/>
-                            </BootstrapTooltip>
-                            </ListItem>
-                            <ListItem button className={classes.nested}>
-                            <BootstrapTooltip title="Collabera Connectors MarketPlace">
-                                <ListItemText primary="CCM"/>
-                            </BootstrapTooltip>
-                            </ListItem>
-                            <ListItem button className={classes.nested}> 
-                            <BootstrapTooltip title="Collabera Cloud Accelerators">
-                                <ListItemText primary="CCA"/>
-                            </BootstrapTooltip>
-                            </ListItem>
-                        </List>
-                    </Collapse>
-                    <ListItem button>
-                        <ListItemIcon><LinearScaleIcon color="inherit"  /> </ListItemIcon>
-                        <ListItemText>{'Insights'}</ListItemText>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><ContactSupportIcon color="inherit"  /> </ListItemIcon>
-                        <ListItemText>{'Support'}</ListItemText>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><CodeIcon color="inherit"  /> </ListItemIcon>
-                        <ListItemText>{'Developers'}</ListItemText>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><InfoIcon color="inherit"  /> </ListItemIcon>
-                        <ListItemText>{'About'}</ListItemText>
-                    </ListItem>
-                    <ListItem button>
-                        <ListItemIcon><PermPhoneMsgIcon color="white"  /> </ListItemIcon>
-                        <ListItemText>{'ContactUs'}</ListItemText>
-                    </ListItem>
-                </List>               
-            </Drawer>
+  const handleClick = () => {
+    setOpen(!open);
+  };
+  const handleDrawerOpen = () => {
+    setDrawOpen(true);
+    props.open();
+  };
+
+  const handleDrawerClose = () => {
+    setDrawOpen(false);
+    props.close();
+  };
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: drawOpen,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, {
+              [classes.hide]: drawOpen,
+            })}
+          >
+            <MenuIcon color="inherit" />
+          </IconButton>
+          <TopMenu islogin={isAuthenticated} />
+        </Toolbar>
+
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, { 'main_drower': drawOpen }, {
+          [classes.drawerOpen]: drawOpen,
+          [classes.drawerClose]: !drawOpen,
+        })}
+        classes={{
+          paper: clsx({
+            [classes.drawerOpen]: drawOpen,
+            [classes.drawerClose]: !drawOpen,
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
         </div>
+        <Divider />
 
-    );
+        <List className={classes.sidemenu}>
+          <ListItem button onClick={handleClick} >
+            <ListItemIcon>
+              <AccountTreeIcon />
+            </ListItemIcon>
+            <ListItemText className={classes.sidemenu} primary="Solutions" />
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="Collabera Information Platform" />
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="Collabera DevOps Platform" />
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                <ListItemText primary="Collabera Connectors MarketPlace" />
+              </ListItem>
+              <ListItem button className={classes.nested}>
+                {/* <BootstrapTooltip title="Collabera Cloud Accelerators">
+                </BootstrapTooltip> */}
+                <ListItemText primary="Collabera Cloud Accelerators" />
+              </ListItem>
+            </List>
+          </Collapse>
+          <ListItem button>
+            <ListItemIcon><LinearScaleIcon color="inherit" /> </ListItemIcon>
+            <ListItemText>{'Insights'}</ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon><ContactSupportIcon color="inherit" /> </ListItemIcon>
+            <ListItemText>{'Support'}</ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon><CodeIcon color="inherit" /> </ListItemIcon>
+            <ListItemText>{'Developers'}</ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon><InfoIcon color="inherit" /> </ListItemIcon>
+            <ListItemText>{'About'}</ListItemText>
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon><PermPhoneMsgIcon color="white" /> </ListItemIcon>
+            <ListItemText>{'ContactUs'}</ListItemText>
+          </ListItem>
+        </List>
+      </Drawer>
+    </div>
+
+  );
 }

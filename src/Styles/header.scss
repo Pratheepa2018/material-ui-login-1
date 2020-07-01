@@ -1,0 +1,60 @@
+@import './utils/mixins';
+header {
+  .MuiButtonBase-root {
+    background: transparent;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    &:hover {
+      background: transparent;
+    }
+
+    .MuiButton-label {
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      text-transform: capitalize;
+    }
+  }
+
+  .MuiTypography-root {
+    img {
+      max-width: 115px;
+    }
+  }
+
+}
+
+.MuiDrawer-root {
+  .MuiList-root {
+    .MuiSvgIcon-root {
+      fill: #000000;
+    }
+    .MuiButtonBase-root {
+      margin-bottom: 15px;
+
+      .MuiTypography-root {
+        color: #ffffff;
+      }
+    }
+    .MuiCollapse-container {
+
+      .MuiButtonBase-root {
+        margin-bottom: 0;
+        
+        .MuiTypography-root {
+          font-size: 15px;
+          white-space: normal;
+        }
+      }
+    }
+  }
+  &.makeStyles-drawerOpen-10 {
+    .MuiList-root {
+      .MuiSvgIcon-root {
+        fill: #ffffff;
+      }
+    }
+  }
+}

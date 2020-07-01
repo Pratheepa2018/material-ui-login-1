@@ -4,6 +4,7 @@ import 'react-notifications/lib/notifications.css';
 import Auth from './Authentication';
 import TopMenu from './TopMenu';
 import './HeaderComponent.css';
+import '../Styles/header.scss';
 
 class Header extends React.Component {
   constructor() {
