@@ -88,7 +88,7 @@ export default function CheckboxLabels() {
         <Box padding={1}>
 
 <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-<TextField id="outlined-basic" label="Profile title" variant="outlined" fullWidth />
+<TextField id="outlined-basic" label="Profile title" variant="outlined" size="small" fullWidth />
   </Paper>
   </Box>
         </Grid>
@@ -96,7 +96,7 @@ export default function CheckboxLabels() {
         <Box padding={1}>
 
 <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-<TextField id="outlined-basic" label="Profile description" variant="outlined" fullWidth />
+<TextField id="outlined-basic" label="Profile description" variant="outlined" size="small" fullWidth />
   </Paper>
   </Box>
         </Grid>
