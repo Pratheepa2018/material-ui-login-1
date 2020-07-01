@@ -9,6 +9,7 @@ const styles = theme => ({
         backgroundColor: '#042380',
         color: 'white',
         marginTop: '20px',
+
     },
  
 });
@@ -17,9 +18,9 @@ function Footer(props) {
     const { classes } = props;
 
     return (
-        <footer className={props.isdrawopen}>
+        <footer className={props.isdrawopen} >
             <Paper className={classes.root + " footerbody " + props.innerClass} elevation={1}>
-                 <Box paddingLeft={4}>
+                 <Box padding={2}>
                     <Link  color={"inherit"}>
                         Collabera MarketPlace Platform(TM)
                     </Link>

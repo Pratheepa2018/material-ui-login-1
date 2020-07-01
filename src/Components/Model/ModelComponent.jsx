@@ -17,7 +17,7 @@ export default function AlertDialog(props) {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
-    props.onDeleteHandle(false);
+    props.deleteConnector(false);
     setOpen(false);
   };
 
@@ -44,7 +44,7 @@ export default function AlertDialog(props) {
           <Button onClick={handleClose} variant="outlined" color="primary" style={buttonStyle}>
             Cancle
           </Button>
-          <Button onClick={() => props.deleteConnector()} variant="contained" color="secondary" autoFocus style={buttonStyle}>
+          <Button onClick={() => props.deleteConnector(false)} variant="contained" color="secondary" autoFocus style={buttonStyle}>
             Delete Permanently
           </Button>
         </DialogActions>

@@ -8,7 +8,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 
-
 export default class LoginComponent extends Component {
   constructor(props) {
     super(props);
@@ -76,8 +75,6 @@ export default class LoginComponent extends Component {
 
     return (
       <Grid container component="main" className='bgimg' alignItems="center" justifyContent="right" justify="flex-end">
-
-
 
         <Grid item xs={12} sm={12} md={5} p={2} elevation={2} square >
           <Box className='loginbox' padding={4} marginLeft={5} marginRight={5} marginTop={8} marginBottom={8} component={Paper}>

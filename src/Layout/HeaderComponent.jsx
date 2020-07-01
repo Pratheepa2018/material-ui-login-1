@@ -74,7 +74,7 @@ class Header extends React.Component {
     return (
     <div>
       
-      <AppBar position="static" >
+      <AppBar position="fixed" >
       <TopMenu islogin={isAuthenticated} />
      
     </AppBar>
