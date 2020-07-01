@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
-import { Button, ButtonGroup, Box, Container, Typography, FormControl, Select, MenuItem, Divider ,
-  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid  } from '@material-ui/core';
+import { Button, ButtonGroup, Box, FormControl, Select, MenuItem, Divider ,
+  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid, Typography  } from '@material-ui/core';
   import SaveIcon from '@material-ui/icons/Save';
   import { green } from '@material-ui/core/colors';
 const useStyles = makeStyles((theme) => ({
@@ -11,11 +11,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   grid:{
-    margin: 'auto',
-   
-  },
-  fab: {
-    textAlign: 'right',
+    margin: 'auto',   
   },
   fabGreen: {
     borderRadius: '35px',
@@ -41,9 +37,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     overflow: 'auto',
   },
-  button: {
+  comparebutton: {
     margin: theme.spacing(0.5, 0),
-    borderRadius: '35px',
+    borderRadius: '50%',
+    minWidth: 'unset',
+    width: '40px',
+    height: '40px'
   },
 
 }));
@@ -126,6 +125,7 @@ const [checked, setChecked] = useState([]);
     setChecked(newChecked);
   };
 
+ 
   const numberOfChecked = (items) => intersection(checked, items).length;
 
   const handleToggleAll = (items) => () => {
@@ -147,6 +147,17 @@ const [checked, setChecked] = useState([]);
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
+
+const handleSaveProfile = () =>{
+ 
+  if(right.length === 0){
+    alert('No Data Choosen')
+  }
+  else{
+    alert(right)
+    console.log('daataTosend', right)
+  }
+}
 
   const customList = (title, items) => (
     <Card>
@@ -179,7 +190,7 @@ const [checked, setChecked] = useState([]);
                   inputProps={{ 'aria-labelledby': labelId }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`test ${value + 1}`} />
+              <ListItemText id={labelId} primary={`Column ${value + 1}`} />
             </ListItem>
           );
         })}
@@ -192,7 +203,6 @@ const [checked, setChecked] = useState([]);
 
   });
 
-console.log('here', source)
   return (
     <div className={classes.root}>
 
@@ -247,7 +257,7 @@ console.log('here', source)
             variant="contained"
             size="small"
             color="primary"
-            className={classes.button}
+            className={classes.comparebutton}
             onClick={handleCheckedRight}
             disabled={leftChecked.length === 0}
             aria-label="move selected right"
@@ -258,7 +268,7 @@ console.log('here', source)
             variant="contained"
             color="secondary"
             size="small"
-            className={classes.button}
+            className={classes.comparebutton}
             onClick={handleCheckedLeft}
             disabled={rightChecked.length === 0}
             aria-label="move selected left"
@@ -269,12 +279,17 @@ console.log('here', source)
       </Grid>
       <Grid item>{customList('Chosen', right)}</Grid>
     </Grid>
-    <Button onClick = {handleBtn} variant="contained"
+    <div  style={{ display:'flex', justifyContent: 'flex-end' }}  >
+    <Button 
+     variant="contained"
      border={1} borderRadius={16}
         color="primary"
         size="large"
-       className= {classes.fab, classes.fabGreen}
+        onClick={handleSaveProfile}
+       className= {classes.fabGreen}
         startIcon={<SaveIcon />}>Save Profile</Button>
+    </div>
+  
     </Box>  
           </Box>         
 
