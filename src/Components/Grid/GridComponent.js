@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid, Card, CardContent, Typography, CardActions, Button } from '@material-ui/core/';
-import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import './GridComponent.css';
 
 

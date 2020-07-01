@@ -25,7 +25,6 @@ import Collapse from '@material-ui/core/Collapse';
 import LinearScaleIcon from '@material-ui/icons/LinearScale';
 import TopMenu from './TopMenu';
 import Auth from './Authentication';
-import Tooltip from '@material-ui/core/Tooltip';
 import './MenuDrawerComponent.css'
 
 const drawerWidth = 240;
@@ -33,7 +32,6 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-
     color: 'white'
   },
   appBar: {
@@ -111,11 +109,6 @@ const useStyles = makeStyles((theme) => ({
 
   }
 }));
-
-function BootstrapTooltip(props) {
-  const classes = useStyles();
-  return <Tooltip arrow classes={classes} {...props} />;
-}
 
 export default function MiniDrawer(props) {
 
@@ -201,18 +194,16 @@ export default function MiniDrawer(props) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button className={classes.nested}>
-                <ListItemText primary="Collabera Information Platform" />
+                <ListItemText primary="Collabera Information Platform (CIP)" />
               </ListItem>
               <ListItem button className={classes.nested}>
-                <ListItemText primary="Collabera DevOps Platform" />
+                <ListItemText primary="Collabera DevOps Platform (CDP)" />
               </ListItem>
               <ListItem button className={classes.nested}>
-                <ListItemText primary="Collabera Connectors MarketPlace" />
+                <ListItemText primary="Collabera Connectors MarketPlace (CCM)" />
               </ListItem>
               <ListItem button className={classes.nested}>
-                {/* <BootstrapTooltip title="Collabera Cloud Accelerators">
-                </BootstrapTooltip> */}
-                <ListItemText primary="Collabera Cloud Accelerators" />
+                <ListItemText primary="Collabera Cloud Accelerators (CCP)" />
               </ListItem>
             </List>
           </Collapse>

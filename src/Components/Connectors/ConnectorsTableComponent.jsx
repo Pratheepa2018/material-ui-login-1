@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import { Table, Box, Button, Link } from '@material-ui/core/';
+import { Table, Box, Button } from '@material-ui/core/';
+import Skeleton from '@material-ui/lab/Skeleton';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -308,6 +309,8 @@ export default function EnhancedTable(props) {
         imageText="Full Banner"
         exceptimage ="../../assets/images/learnmore.gif"
       />
+       {!dataStatus ? <Skeleton animation="wave" variant="text" className={classes.root} width={'100%'} height={400}/>
+      : 
       <Box padding={6}>
         <Paper className={classes.paper}>
           <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle}  />
@@ -327,7 +330,7 @@ export default function EnhancedTable(props) {
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
               />
-              {dataStatus &&
+             
                 <TableBody>
                   {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -368,7 +371,7 @@ export default function EnhancedTable(props) {
                       <TableCell />
                     </TableRow>
                   )}
-                </TableBody>}
+                </TableBody>
             </Table>
           </TableContainer>
           <TablePagination
@@ -381,7 +384,7 @@ export default function EnhancedTable(props) {
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Paper>
-      </Box>
+      </Box>}
       <Model isOpen={isOpen} deleteConnector={deleteConnector} />
     </div>
   );

@@ -313,7 +313,7 @@ export default function EnhancedTable(props) {
         imageText="Full Banner"
         exceptimage ="../../assets/images/learnmore.gif"
       />
-      {!dataStatus ? <Skeleton animation="wave" variant="text" className={classes.root} width={'100%'} height={400}/>
+      {!dataStatus ? <Skeleton animation="wave" variant="rect" className={classes.root} width={'100%'} height={400}/>
       : 
       <Box padding={6}>
         <Paper className={classes.paper}>

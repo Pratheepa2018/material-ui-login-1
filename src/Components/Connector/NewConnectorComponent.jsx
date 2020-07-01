@@ -273,7 +273,6 @@ export default class NewConnector extends Component {
                         autoFocus
                         fullWidth
                         value={server_port}
-                        validators={['required']}
                         validators={['required', 'matchRegexp:^[0-9]*$']}
                         errorMessages={['This field is required', 'Only integers are allowed']}
                         onChange={this.handleChanges}

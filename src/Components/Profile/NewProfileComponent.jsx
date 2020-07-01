@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import { Button, ButtonGroup, Box, FormControl, Select, MenuItem, Divider ,
-  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid, Typography  } from '@material-ui/core';
+  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid  } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import { green } from '@material-ui/core/colors';
 import { common } from '../../Utils/Api.env';
-import { NotificationManager } from 'react-notifications';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,18 +70,18 @@ const sourceConnectors = [
 ];
 
 
-const targetConnectors = [
-  'Target Mysql',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
+// const targetConnectors = [
+//   'Target Mysql',
+//   'Van Henry',
+//   'April Tucker',
+//   'Ralph Hubbard',
+//   'Omar Alexander',
+//   'Carlos Abbott',
+//   'Miriam Wagner',
+//   'Bradley Wilkerson',
+//   'Virginia Andrews',
+//   'Kelly Snyder',
+// ];
 
 //code for transfer-list
 function not(a, b) {
@@ -101,7 +100,6 @@ function union(a, b) {
 export default function NewProfile() {
 
   const classes = useStyles();
-  const theme = useTheme();
 
   const [personName, setPersonName] = useState([]);
 
