@@ -1,4 +1,4 @@
-import React , {useState, useEffect} from 'react';
+import React , {useState} from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PublicRoute from './Components/Router/PublicRouteComponent';
 import PrivateRoute from './Components/Router/PrivateRouteComponent';
@@ -38,7 +38,7 @@ const styles = theme => ({
 });
 function App(props) {
   const { classes } = props;
-  const [drawOpen, setDrawOpen] = React.useState(false);
+  const [drawOpen, setDrawOpen] = useState(false);
   const handleDrawerOpen = () => {
     setDrawOpen(true);
 };

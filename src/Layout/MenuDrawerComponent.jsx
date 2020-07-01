@@ -130,7 +130,7 @@ export default function MiniDrawer(props) {
         if(auth) {
             setIsAuthenticated(auth)
           }
-      });
+      }, []);
    
       
     const handleClick = () => {
