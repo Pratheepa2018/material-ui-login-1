@@ -93,19 +93,7 @@ export default function PrimarySearchAppBar(props) {
 
       <MenuItem>
         <Link href="#" onClick={preventDefault}>
-          Contact Us
-      </Link>
-      </MenuItem>
-
-      <MenuItem>
-        <Link href="#" onClick={preventDefault}>
           Resource Center
-      </Link>
-      </MenuItem>
-
-      <MenuItem>
-        <Link href="#" onClick={preventDefault}>
-          About
       </Link>
       </MenuItem>
 
