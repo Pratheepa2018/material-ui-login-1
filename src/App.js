@@ -13,6 +13,7 @@ import Connectors from './Components/Connectors/ConnectorsTableComponent'
 import Profile from './Components/Profile/ProfileTableComponent';
 import NewConnector from './Components/Connector/NewConnectorComponent';
 import NewProfile from './Components/Profile/NewProfileComponent';
+import NewProfileLayout from './Components/Profile/NewProfileComponentLayout';
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import { withStyles } from '@material-ui/core/styles';
 import Header from './Layout/HeaderComponent';
@@ -67,6 +68,7 @@ const handleDrawerClose = () => {
                   <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
                   <PrivateRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
                   <PrivateRoute restricted={false} component={NewProfile} path="/subscribedservices/CDP/new-profile" exact />
+                  <PrivateRoute restricted={false} component={NewProfileLayout} path="/subscribedservices/CDP/new-profile-layout" exact />
                   {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
                   <PublicRoute
                     restricted={false}
