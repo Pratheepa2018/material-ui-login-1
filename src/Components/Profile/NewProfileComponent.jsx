@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import { Button, ButtonGroup, Box, FormControl, Select, MenuItem, Divider ,
-  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid  } from '@material-ui/core';
+  Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid, Typography  } from '@material-ui/core';
   import SaveIcon from '@material-ui/icons/Save';
   import { green } from '@material-ui/core/colors';
 const useStyles = makeStyles((theme) => ({
@@ -21,10 +21,16 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: green[600],
     },
   },
+  centerbox: {
+    padding: theme.spacing(2),
+    margin: 'auto',
+    maxWidth: 540,
+    border: '1px solid #ccc',
+    marginTop: '10px',
+    borderRadius: '3px'
+  },
 
   formControl: {
-    marginLeft: theme.spacing(30),
-    marginBottom: theme.spacing(5),
     minWidth: 120,
     maxWidth: 300,
   },
@@ -45,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
     height: '40px'
   },
 
+
 }));
 
 const sourceConnectors = [
@@ -61,18 +68,18 @@ const sourceConnectors = [
 ];
 
 
-// const targetConnectors = [
-//   'Target Mysql',
-//   'Van Henry',
-//   'April Tucker',
-//   'Ralph Hubbard',
-//   'Omar Alexander',
-//   'Carlos Abbott',
-//   'Miriam Wagner',
-//   'Bradley Wilkerson',
-//   'Virginia Andrews',
-//   'Kelly Snyder',
-// ];
+const targetConnectors = [
+  'Target Mysql',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
 
 //code for transfer-list
 function not(a, b) {
@@ -91,6 +98,8 @@ function union(a, b) {
 export default function NewProfile() {
 
   const classes = useStyles();
+  const theme = useTheme();
+
   const [personName, setPersonName] = useState([]);
 
   const [source, notSource] = useState(false)
@@ -210,16 +219,25 @@ const handleSaveProfile = () =>{
         imageText="Full Banner"
         exceptimage ="../../../assets/images/learnmore.gif" />
 
-          <Box padding={6} >
-          <Box border={1} borderRadius={16} padding={6} >
+          
+
+ 
+
+<div className={classes.centerbox}>
+
+        <Grid container  justify="space-around"  alignItems="center" className={classes.grid}>
             
-          <div style = {{display: 'block'}}>
-      
+          <Grid item >
+          <Box paddingBottom={1}>
           <ButtonGroup  variant="contained" >
               <Button onClick = {handleBtn}  color="primary">Source</Button>
               <Button onClick = {handleBtn}  color="secondary">Target</Button>
             </ButtonGroup>
-           
+            </Box>
+            </Grid>
+
+            <Grid item>
+            <Box paddingBottom={1}>
             <FormControl  className={clsx(classes.formControl)}>
             <Select
               displayEmpty
@@ -244,14 +262,18 @@ const handleSaveProfile = () =>{
            
             </Select>
           </FormControl>
-        
-          </div>
+          </Box>
+          </Grid>
+          </Grid>
+          
+              
 
-          <Grid container spacing={2} justify="center" alignItems="center" className={classes.grid}>
+          <Grid container spacing={1} justify="center" alignItems="center" className={classes.grid}>
        
       <Grid item>{customList('Choices', left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
+          
           <Button
             variant="contained"
             size="small"
@@ -278,7 +300,10 @@ const handleSaveProfile = () =>{
       </Grid>
       <Grid item>{customList('Chosen', right)}</Grid>
     </Grid>
-    <div  style={{ display:'flex', justifyContent: 'flex-end' }}  >
+    <Grid container spacing={1} justify="center" alignItems="center" className={classes.grid}>
+       
+    <Grid justify="center">
+    <Box padding={1}>
     <Button 
      variant="contained"
      border={1} borderRadius={16}
@@ -287,12 +312,11 @@ const handleSaveProfile = () =>{
         onClick={handleSaveProfile}
        className= {classes.fabGreen}
         startIcon={<SaveIcon />}>Save Profile</Button>
-    </div>
-  
-    </Box>  
-          </Box>         
-
-
+        </Box>
+    </Grid>
+    </Grid>
+   
+    </div> 
     </div>
 
   );
