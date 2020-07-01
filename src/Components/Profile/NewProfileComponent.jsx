@@ -4,8 +4,11 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import { Button, ButtonGroup, Box, FormControl, Select, MenuItem, Divider ,
   Checkbox, ListItemIcon, ListItemText, ListItem, CardHeader, Card, List, Grid, Typography  } from '@material-ui/core';
-  import SaveIcon from '@material-ui/icons/Save';
-  import { green } from '@material-ui/core/colors';
+import SaveIcon from '@material-ui/icons/Save';
+import { green } from '@material-ui/core/colors';
+import { common } from '../../Utils/Api.env';
+import { NotificationManager } from 'react-notifications';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -207,8 +210,26 @@ const handleSaveProfile = () =>{
   );
 
   useEffect(() => {
+       const ConnectorsURL = `${common.profile_url}/GetProfileTable?tenant_Id=1` 
 
-  });
+        try {
+           fetch(ConnectorsURL, {
+            method: 'GET',
+            crossDomain: true,
+            compress: true,
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            },
+          }).then(resp => resp.json())
+            .then(data => {
+              console.log('secondthen', data)             
+            })
+        } catch (e) {        
+          return false;
+        }
+      
+     
+  }, []);
 
   return (
     <div className={classes.root}>

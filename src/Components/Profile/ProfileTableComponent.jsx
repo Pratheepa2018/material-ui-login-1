@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import {Table ,Box, Button } from '@material-ui/core/';
+import { Table, Box, Button, Link } from '@material-ui/core/';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -16,21 +16,11 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import {DeleteForever, AddBox, Edit} from '@material-ui/icons';
+import { DeleteForever, AddBox, Edit } from '@material-ui/icons';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
-// import Model from '../Model/ModelComponent'
-
-function createData(name, Description) {
-    return { name, Description };
-}
-const rows = [
-    createData('Profile1', 'CONNECTOR WORLD TO MYSQL DATABASE'),
-    createData('Profile2', 'CONNECTOR SELECTED FOR MSSQL'),
-    createData('Profile3', 'CONNECTOR WITH MONGO AND NODEJS'),
-    createData('Profile4', 'CONNECTOR FOR AZURE DEVOPS'),
-    createData('Profile5', 'CONNECTOR TARGET FOR AMAZON WEBSERVICES'),
-];
+import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
+import { common } from '../../Utils/Api.env';
+import Model from '../Model/ModelComponent';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -41,13 +31,11 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
-
 function getComparator(order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -57,38 +45,29 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
-
 const headCells = [
-    
   { id: 'name', numeric: true, disablePadding: true, label: 'Name' },
   { id: 'Description', numeric: true, disablePadding: false, label: 'Description' },
-  {id: 'action', numeric: false, label: 'Actions'}
+  { id: 'action', numeric: false, label: 'Actions' }
 ];
-
 function EnhancedTableHead(props) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+  const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
   const StyledTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: '#4169e1',
-        color: theme.palette.common.white,
+      backgroundColor: '#4169e1',
+      color: theme.palette.common.white,
     },
     body: {
-        fontSize: 14,
+      fontSize: 14,
     },
-}))(TableCell);
+  }))(TableCell);
   return (
     <TableHead>
       <TableRow>
         <StyledTableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all Connectors' }}
-          />
         </StyledTableCell>
         {headCells.map((headCell) => (
           <StyledTableCell
@@ -115,7 +94,6 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
@@ -125,7 +103,6 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 };
-
 const useToolbarStyles = makeStyles((theme) => ({
   root: {
     paddingLeft: theme.spacing(2),
@@ -134,27 +111,20 @@ const useToolbarStyles = makeStyles((theme) => ({
   highlight:
     theme.palette.type === 'light'
       ? {
-          color: theme.palette.secondary.main,
-          backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-        }
+        color: theme.palette.secondary.main,
+        backgroundColor: lighten(theme.palette.secondary.light, 0.85),
+      }
       : {
-          color: theme.palette.text.primary,
-          backgroundColor: theme.palette.secondary.dark,
-        },
+        color: theme.palette.text.primary,
+        backgroundColor: theme.palette.secondary.dark,
+      },
   title: {
     flex: '1 1 100%',
   },
 }));
-
-const showMessage = () =>{
-         
-}
-
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
-
-
+  const { numSelected, onDelete } = props;
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -166,38 +136,37 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Button e aria-label="Add" variant="outlined" color="primary" href="/subscribedservices/CDP/new-profile">
+          <Button e aria-label="Add" variant="outlined" color="primary">
             <AddBox />
-            <span> Add New Profile</span>
-            
-          </Button>
-      )}
+            <Link href="/subscribedservices/CDP/new-profile" variant="body2">
+              <span> Add New profiles</span>
+            </Link>
 
+          </Button>
+        )}
       {numSelected > 0 ? (
         <Tooltip title="Actions">
-          <Button aria-label="delete" variant="outlined" color="secondary" onClick={showMessage}>
-          <DeleteForever />
-          <span> Delete </span>
+          <Button aria-label="delete" variant="outlined" color="secondary" onClick={onDelete}>
+            <DeleteForever />
+            <span> Delete </span>
           </Button>
-        
-          
-          
+
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
+          <Tooltip title="Filter list">
+            <IconButton aria-label="filter list">
+              <FilterListIcon />
+            </IconButton>
+          </Tooltip>
+        )}
     </Toolbar>
   );
 };
-
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
+  
+  onDelete: PropTypes.func.isRequired
 };
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -221,22 +190,46 @@ const useStyles = makeStyles((theme) => ({
     width: 1,
   },
 }));
-
-export default function EnhancedTable() {
+export default function EnhancedTable(props) {
+  // const rows = [
+  //   createData('MYSQLDB', 'profile WORLD TO MYSQL DATABASE'),
+  //   createData('MSSQLDB', 'profile SELECTED FOR MSSQL'),
+  //   createData('MONGODB', 'profile WITH MONGO AND NODEJS'),
+  // ];
   const classes = useStyles();
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('calories');
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [dense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState('calories');
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [dataStatus, getStatus] = useState(false)
+  const [rows, getData] = useState(false);
+  const [isOpen, openModel] = useState();
+  const allprofilesURL = `${common.profile_url}/GetProfileTable?tenant_Id=1&profileId=-1`
+  useEffect(() => {
+    fetch(allprofilesURL, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    }).then(resp => resp.json())
+      .then((data) => {
+        
+        Object.keys(data).map((el, index) => {
+          console.log(data[el])
+          getData(data[el]);
+          getStatus(true);
+          return false;
+        })
+      });
+  }, [allprofilesURL])
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.name);
@@ -245,11 +238,9 @@ export default function EnhancedTable() {
     }
     setSelected([]);
   };
-
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
-
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selected, name);
     } else if (selectedIndex === 0) {
@@ -262,108 +253,141 @@ export default function EnhancedTable() {
         selected.slice(selectedIndex + 1),
       );
     }
-
     setSelected(newSelected);
   };
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  
-
+  const handleEdit = (event, id) => {
+    const editUrl = `/subscribedservices/CDP/new-profile?edit=${id}`
+    props.history.push(editUrl)
+  }
+  const setDeleteData = () => {
+    if(selected.length > 1) {
+      const dataToDelete = []
+      selected.forEach(item => {
+        const obj = {};
+        obj["connecterId"] = item;
+        dataToDelete.push(obj);
+      });
+    } else {
+      const sendData = `profileId=${selected[0]}`
+      return sendData;
+    }
+  }
+  const onDeleteHandle = (modelState=true) =>{
+    openModel(modelState);
+  }
+  const deleteConnector = async () =>{
+    const delteConnecterURL = `${common.api_url}/profile?${setDeleteData()}`;
+    console.log(delteConnecterURL);
+    try {
+      await fetch(delteConnecterURL, {
+        method: 'DELETE',
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      }).then(resp => resp.json())
+      .then(data => {
+        if(data.status === 'Success') {
+          window.location.reload(false)
+        }
+      })
+    } catch (e) { 
+      console.log(e);
+    }
+  }
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
   return (
     <div className={classes.root}>
-        <FullWidthBanner
-                 title="My Profile"
-                 image="../../../assets/images/globle.jpg"
-                 imageText="Full Banner" 
-                 exceptimage ="../../../assets/images/learnmore.gif"/>
-    <Box padding={6}>
-      <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.name)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.name}
-                      selected={isItemSelected}
-                    >
-
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
-                      </TableCell>
-                      <TableCell align="left">{row.Description}</TableCell> 
-
-                      <TableCell align="right">
-                      <Button aria-label="delete" variant="outlined" color="primary">
-          <Edit />
-          <span> Edit </span>
-          </Button>
-                      </TableCell>
+      <FullWidthBanner
+        title="My profiles"
+        image="../../assets/images/globle.jpg"
+        imageText="Full Banner"
+        exceptimage ="../../assets/images/learnmore.gif"
+      />
+      <Box padding={6}>
+        <Paper className={classes.paper}>
+          <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle}  />
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              {dataStatus &&
+                <TableBody>
+                  {stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.profileId);
+                      const labelId = `enhanced-table-checkbox-${index}`;
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.profileId}
+                          selected={isItemSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              checked={isItemSelected}
+                              onClick={(event) => handleClick(event, row.profileId)}
+                              inputProps={{ 'aria-labelledby': labelId }}
+                            />
+                          </TableCell>
+                          <TableCell component="th" id={labelId} scope="row" padding="none" >
+                            {row.profileName}
+                          </TableCell>
+                          <TableCell align="left">{row.profileDesc}</TableCell>
+                          <TableCell align="right">
+                            <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.profileId)}>
+                              <Edit />
+                            </Button>
+                            
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                      <TableCell />
                     </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell  />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+                  )}
+                </TableBody>}
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
       </Box>
+      <Model isOpen={isOpen} deleteConnector={deleteConnector}   />
     </div>
   );
 }
