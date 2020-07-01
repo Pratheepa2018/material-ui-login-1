@@ -7,6 +7,8 @@ class Auth {
     if(token) {
       this.authenticated = true;
       return this.authenticated;
+    }else{
+      return false;
     }
   }
 }
