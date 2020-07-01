@@ -17,7 +17,7 @@ export default function AlertDialog(props) {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
-    props.deleteConnector(false);
+    props.cancelModle(false);
     setOpen(false);
   };
 
