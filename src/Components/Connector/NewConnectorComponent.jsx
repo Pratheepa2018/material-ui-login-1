@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Grid, Typography, Box, TextField, Button } from '@material-ui/core';
+import { Grid, Typography, Box, Button } from '@material-ui/core';
 import { common } from '../../Utils/Api.env';
 import { NotificationManager } from 'react-notifications';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import '../../Styles/validation.css';
 
 export default class NewConnector extends Component {
   constructor(props) {
@@ -46,31 +48,6 @@ export default class NewConnector extends Component {
     this.setState(this.baseState);
   }
 
-  handelSave = async () => {    
-    const saveConnectorURL = `${common.api_url}/connector`;
-    try {
-      await fetch(saveConnectorURL, {
-        method: 'POST',
-        crossDomain: true,
-        compress: true,
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(this.createDataObject()),
-      }).then(resp => resp.json())
-      .then((data) => {
-        if(data.status === 'Success') {
-          this.props.history.push('/subscribedservices/CDP/connectors');
-        } else {
-          console.log('Something went wrong!');
-        }
-      })
-    } catch (e) {
-      console.log(e, 'Oh no something went wrong!!!');
-    }
-  }
-
   handleUpdate = async () => {
     const saveConnectorURL = `${common.api_url}/connector`;
     const { connectorId, connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
@@ -105,6 +82,41 @@ export default class NewConnector extends Component {
       })
     } catch (e) {
       console.log(e, 'Something went wrong');
+    }
+  }
+
+  handelSave = async () => {    
+    const searchKey = window.location.search;
+    let getKey;
+    if(searchKey.length > 0) {
+      getKey = window.location.search.split('?')[1].split('=')[0];
+    }  
+    if(getKey === 'edit') {
+      this.handleUpdate();
+    } else {
+      console.log('Hello', getKey);
+      const saveConnectorURL = `${common.api_url}/connector`;
+      try {
+        await fetch(saveConnectorURL, {
+          method: 'POST',
+          crossDomain: true,
+          compress: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(this.createDataObject()),
+        }).then(resp => resp.json())
+        .then((data) => {
+          if(data.status === 'Success') {
+            this.props.history.push('/subscribedservices/CDP/connectors');
+          } else {
+            console.log('Something went wrong!');
+          }
+        })
+      } catch (e) {
+        console.log(e, 'Oh no something went wrong!!!');
+      }
     }
   }
   componentDidMount() {
@@ -154,10 +166,12 @@ export default class NewConnector extends Component {
             <Box marginY={3} border={1} padding={2} borderColor="grey.500" boxShadow={3}>
               <Typography variant="subtitle1">Data Source Connector</Typography>
               <Box padding={3}>
-                <form>
+                <ValidatorForm 
+                  onSubmit={this.handelSave}
+                >
                   <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" alignContent="center">
                     <Grid item xs={6}>
-                      <TextField
+                      <TextValidator
                         type="text" 
                         variant="outlined"
                         margin="normal"
@@ -169,11 +183,13 @@ export default class NewConnector extends Component {
                         autoFocus
                         fullWidth
                         value={connector_name}
+                        validators={['required', 'matchRegexp:^[A-Za-z]+']}
+                        errorMessages={['This field is require', 'Enter proper name!']}
                         onChange={this.handleChanges}
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <TextValidator
                         type="text" 
                         required
                         variant="outlined"
@@ -185,11 +201,13 @@ export default class NewConnector extends Component {
                         fullWidth
                         size="small"
                         value={connector_desc}
+                        validators={['required']}
+                        errorMessages={['This field is required']}
                         onChange={this.handleChanges}
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <TextValidator
                         type="text" 
                         variant="outlined"
                         margin="normal"
@@ -201,11 +219,13 @@ export default class NewConnector extends Component {
                         autoFocus
                         fullWidth
                         value={connector_type}
+                        validators={['required', 'matchRegexp:^[0-9]*$']}
+                        errorMessages={['This field is required', 'Only integers are allowed']}
                         onChange={this.handleChanges}
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <TextValidator
                         type="text" 
                         variant="outlined"
                         margin="normal"
@@ -217,11 +237,13 @@ export default class NewConnector extends Component {
                         autoFocus
                         fullWidth
                         value={clientdb}
+                        validators={['required']}
+                        errorMessages={['This field is required']}
                         onChange={this.handleChanges}
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <TextValidator
                         type="text" 
                         variant="outlined"
                         margin="normal"
@@ -233,11 +255,13 @@ export default class NewConnector extends Component {
                         autoFocus
                         fullWidth
                         value={server_address}
+                        validators={['required']}
+                        errorMessages={['This field is required']}
                         onChange={this.handleChanges}
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <TextValidator
                         type="text" 
                         variant="outlined"
                         margin="normal"
@@ -249,11 +273,14 @@ export default class NewConnector extends Component {
                         autoFocus
                         fullWidth
                         value={server_port}
+                        validators={['required']}
+                        validators={['required', 'matchRegexp:^[0-9]*$']}
+                        errorMessages={['This field is required', 'Only integers are allowed']}
                         onChange={this.handleChanges}
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <TextValidator
                         type="text" 
                         variant="outlined"
                         margin="normal"
@@ -265,11 +292,13 @@ export default class NewConnector extends Component {
                         autoFocus
                         fullWidth
                         value={dbuser}
+                        validators={['required']}
+                        errorMessages={['This field is required']}
                         onChange={this.handleChanges}
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField 
+                      <TextValidator 
                         type="password"
                         variant="outlined"
                         margin="normal"
@@ -282,6 +311,8 @@ export default class NewConnector extends Component {
                         fullWidth
                         value={dbpassword}
                         onChange={this.handleChanges}
+                        validators={['required']}
+                        errorMessages={['This field is required']}
                         inputProps={{
                           form: {
                             autocomplete: 'off',
@@ -290,7 +321,7 @@ export default class NewConnector extends Component {
                       />
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="outlined" color="primary" fullWidth style={buttonStyle} onClick={this.handleClear}>Clear All</Button>
+                      <Button type="clear" variant="outlined" color="primary" fullWidth style={buttonStyle} onClick={this.handleClear}>Clear All</Button>
                     </Grid>
                     <Grid item xs={3}>
                       <Button variant="contained" color="primary" fullWidth style={buttonStyle}>Test Connection</Button>
@@ -299,14 +330,16 @@ export default class NewConnector extends Component {
                       <Button variant="contained" color="primary" fullWidth style={buttonStyle}>View Meta Data</Button>
                     </Grid>
                     <Grid item xs={3}>
-                      { !editConnector ? 
-                      <Button variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handelSave}>Save Connector Details</Button>
-                      : 
-                      <Button variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleUpdate}>Update Connector</Button>
-                      }
+                      <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
+                        {!editConnector ? 
+                          `Save Connector`
+                          :
+                          `Update Connector`
+                        }
+                      </Button>
                     </Grid>
                   </Grid>
-                </form>
+                </ValidatorForm>
               </Box>
             </Box>
           </Grid>
