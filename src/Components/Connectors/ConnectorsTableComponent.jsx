@@ -136,12 +136,9 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-          <Button e aria-label="Add" variant="outlined" color="primary">
+          <Button href="/subscribedservices/CDP/new-connector" aria-label="Add" variant="outlined" color="primary">
             <AddBox />
-            <Link href="/subscribedservices/CDP/new-connector" variant="body2">
-              <span> Add New Connectors</span>
-            </Link>
-
+             Add New Connectors
           </Button>
         )}
       {numSelected > 0 ? (
