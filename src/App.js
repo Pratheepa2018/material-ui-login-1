@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Switch } from "react-router-dom";
 import PublicRoute from './Components/Router/PublicRouteComponent';
 import PrivateRoute from './Components/Router/PrivateRouteComponent';
@@ -17,7 +17,7 @@ import NewProfileLayout from './Components/Profile/NewProfileComponentLayout';
 import Dashboard from './Components/Dashboard/DashboardComponent';
 import { withStyles } from '@material-ui/core/styles';
 import Header from './Layout/HeaderComponent';
-import Auth from './Layout/Authentication'; 
+import Auth from './Layout/Authentication';
 
 const styles = theme => ({
   root: {
@@ -42,41 +42,40 @@ function App(props) {
   const [drawOpen, setDrawOpen] = useState(false);
   const handleDrawerOpen = () => {
     setDrawOpen(true);
-};
+  };
 
-const handleDrawerClose = () => {
+  const handleDrawerClose = () => {
     setDrawOpen(false);
-};
-
+  };
   return (
     <div className="App">
       <div className='main'>
         <Router>
-          <React.Fragment>            
-            { Auth.isAuthenticated() ? <MenuBar open={handleDrawerOpen} close={handleDrawerClose} /> : <Header />   }
+          <React.Fragment>
+            {Auth.isAuthenticated() ? <MenuBar open={handleDrawerOpen} close={handleDrawerClose} /> : <Header />}
             <main className={drawOpen ? 'makeStyles-appBarShift-6' : Auth.isAuthenticated() && classes.closemenu} >
-              <div className={classes.toolbar} />  
-                <Switch>
-                  <PublicRoute restricted={true} component={Login} path="/" exact />
-                  <PublicRoute restricted={true} component={Login} path="/login" exact />
-                  <PrivateRoute restricted={true} component={Dashboard} path="/dashboard" exact />
-                  <PrivateRoute restricted={true} component={SubscribedServices} path="/subscribedservices" exact />
-                  <PrivateRoute restricted={false} component={SignUp} path="/signup" exact />
-                  <PrivateRoute restricted={true} component={Connectors} path="/subscribedservices/CDP/connectors" exact />
-                  <PrivateRoute restricted={true} component={Profile} path="/subscribedservices/CDP/profile" exact />
-                  <PrivateRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
-                  <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
-                  <PrivateRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
-                  <PrivateRoute restricted={false} component={NewProfile} path="/subscribedservices/CDP/new-profile" exact />
-                  <PrivateRoute restricted={false} component={NewProfileLayout} path="/subscribedservices/CDP/new-profile-layout" exact />
-                  {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
-                  <PublicRoute
-                    restricted={false}
-                    path="*"
-                    component={() => "404 Not Found"}
-                  />
-                </Switch>
-       
+              <div className={classes.toolbar} />
+              <Switch>
+                <PublicRoute restricted={true} component={Login} path="/" exact />
+                <PublicRoute restricted={true} component={Login} path="/login" exact />
+                <PrivateRoute restricted={true} component={Dashboard} path="/dashboard" exact />
+                <PrivateRoute restricted={true} component={SubscribedServices} path="/subscribedservices" exact />
+                <PrivateRoute restricted={false} component={SignUp} path="/signup" exact />
+                <PrivateRoute restricted={true} component={Connectors} path="/subscribedservices/CDP/connectors" exact />
+                <PrivateRoute restricted={true} component={Profile} path="/subscribedservices/CDP/profile" exact />
+                <PrivateRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
+                <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
+                <PrivateRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
+                <PrivateRoute restricted={false} component={NewProfile} path="/subscribedservices/CDP/new-profile" exact />
+                <PrivateRoute restricted={false} component={NewProfileLayout} path="/subscribedservices/CDP/new-profile-layout" exact />
+                {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
+                <PublicRoute
+                  restricted={false}
+                  path="*"
+                  component={() => "404 Not Found"}
+                />
+              </Switch>
+
             </main>
           </React.Fragment>
         </Router>

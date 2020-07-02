@@ -205,7 +205,7 @@ export default function EnhancedTable(props) {
   const [dataStatus, getStatus] = useState(false)
   const [rows, getData] = useState(false);
   const [isOpen, openModel] = useState();
-  const allprofilesURL = `${common.profile_url}?tenant_Id=1&profileId=-1`
+  const allprofilesURL = `${common.profile_url}/?tenant_Id=1&profileId=-1`
   useEffect(() => {
     fetch(allprofilesURL, {
       method: 'GET',
