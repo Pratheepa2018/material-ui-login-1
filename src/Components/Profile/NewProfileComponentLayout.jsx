@@ -217,7 +217,7 @@ export default function CheckboxLabels() {
 
 
                   <FormGroup row>
-                  {[table].map((columns) => {
+                  {table.columns.map((column) => {
                     return(
                       <FormControlLabel
                       control={
@@ -225,7 +225,7 @@ export default function CheckboxLabels() {
                           name="checkedB" color="primary"
                         />
                       }
-                      label={columns.columns}
+                      label={column}
                     />
 
                     )
