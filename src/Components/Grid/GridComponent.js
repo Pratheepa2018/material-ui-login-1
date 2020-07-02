@@ -17,7 +17,7 @@ class GridComponent extends Component {
               {card.title}
             </Typography>
             <Typography>
-              {card.discription}
+              {card.description}
             </Typography>
           </CardContent>
           <CardActions className="dashboard-grid-action">
@@ -38,7 +38,7 @@ class GridComponent extends Component {
               href={card.letsGolink}
               disabled={!card.letsGolink}
             >
-              Do Automation
+              GO
             </Button>
           </CardActions>
         </Card>

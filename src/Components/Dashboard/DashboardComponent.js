@@ -6,14 +6,14 @@ import GridComponent from '../Grid/GridComponent';
 import '../../Styles/dashboard.scss';
 
 const cards = [
-  { id: 1, title: 'DevOps Automation', discription: 'discription not available', image: '../assets/images/dashboard1.jpg', learnMorelink: '', letsGolink: '/subscribedservices' },
-  { id: 2, title: 'System Integration', discription: 'discription not available', image: '../assets/images/dashboard2.jpg', learnMorelink: '', letsGolink: '' },
-  { id: 3, title: 'Information Management', discription: 'discription not available', image: '../assets/images/dashboard3.jpg', learnMorelink: '', letsGolink: '' },
-  { id: 4, title: 'AI Automation', discription: 'discription not available', image: '../assets/images/dashboard4.jpg', learnMorelink: '', letsGolink: '' },
-  { id: 1, title: 'Report Factory Enablement', discription: 'discription not available', image: '../assets/images/dashboard5.jpg', learnMorelink: '', letsGolink: '' },
-  { id: 2, title: 'Healthcare Life Sciences', discription: 'discription not available', image: '../assets/images/dashboard7.jpg', learnMorelink: '', letsGolink: '' },
-  { id: 3, title: 'Payments Processing', discription: 'discription not available', image: '../assets/images/dashboard6.jpg', learnMorelink: '', letsGolink: '' },
-  { id: 1, title: 'Retail & SCM', discription: 'discription not available', image: '../assets/images/dashboard8.jpg', learnMorelink: '', letsGolink: '' },
+  { id: 1, title: 'DevOps Automation', description: '', image: '../assets/images/dashboard1.jpg', learnMorelink: '', letsGolink: '/subscribedservices' },
+  { id: 2, title: 'System Integration', description: '', image: '../assets/images/dashboard2.jpg', learnMorelink: '', letsGolink: '' },
+  { id: 3, title: 'Information Management', description: '', image: '../assets/images/dashboard3.jpg', learnMorelink: '', letsGolink: '' },
+  { id: 4, title: 'AI Automation', description: '', image: '../assets/images/dashboard4.jpg', learnMorelink: '', letsGolink: '' },
+  { id: 1, title: 'Report Factory Enablement', description: '', image: '../assets/images/dashboard5.jpg', learnMorelink: '', letsGolink: '' },
+  { id: 2, title: 'Healthcare Life Sciences', description: '', image: '../assets/images/dashboard7.jpg', learnMorelink: '', letsGolink: '' },
+  { id: 3, title: 'Payments Processing', description: '', image: '../assets/images/dashboard6.jpg', learnMorelink: '', letsGolink: '' },
+  { id: 1, title: 'Retail & SCM', description: '', image: '../assets/images/dashboard8.jpg', learnMorelink: '', letsGolink: '' },
 
 ]
 class DashboardComponent extends Component {

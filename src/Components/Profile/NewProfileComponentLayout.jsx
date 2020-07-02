@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
-import { Paper, Box, Grid, TextField, Tabs, Tab, Typography, AppBar } from '@material-ui/core';
+import { Paper, Box, Grid, TextField, Tabs, Tab, Typography, AppBar, Accordion, AccordionSummary , AccordionDetails } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles({
   root: {
@@ -101,14 +102,21 @@ export default function CheckboxLabels() {
   </Box>
         </Grid>
       </Grid>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={value} index={0} padding={1}>
+      <Box padding={1}>
       {tables.map((data) => {
         return (
-          <Box padding={1}>
 
-            <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-              <h3>{data}</h3>
-              <FormGroup row>
+          <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>{data}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+        <FormGroup row>
                 <FormControlLabel
                   control={
                     <Checkbox checked={state.checkedA} onChange={handleChange}
@@ -162,12 +170,16 @@ export default function CheckboxLabels() {
                   label="Pin code"
                 />
               </FormGroup>
-            </Paper>
-          </Box>
+           
+        </AccordionDetails>
+      </Accordion>
+
+          
         )
       })
 
       }
+      </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
       {tables2.map((data) => {
