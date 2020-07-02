@@ -217,7 +217,7 @@ export default function EnhancedTable(props) {
       .then((data) => {
         
         Object.keys(data).map((el, index) => {
-          console.log(data[el])
+         // console.log(data[el])
           getData(data[el]);
           getStatus(true);
           return false;
@@ -283,7 +283,7 @@ export default function EnhancedTable(props) {
   }
   const deleteConnector = async () =>{
     const delteConnecterURL = `${common.api_url}/profile?${setDeleteData()}`;
-    console.log(delteConnecterURL);
+    //console.log(delteConnecterURL);
     try {
       await fetch(delteConnecterURL, {
         method: 'DELETE',
