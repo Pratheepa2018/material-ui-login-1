@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -9,6 +9,7 @@ import {
   AccordionSummary, AccordionDetails, Select, MenuItem, Checkbox
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { common } from '../../Utils/Api.env';
 
 const useStyles = makeStyles({
   root: {
@@ -74,11 +75,16 @@ export default function CheckboxLabels() {
   const tables2 = ["Table Data 1", "Table Data 2", "Table Data 3", "Table tata 4"];
   const [value, setValue] = useState(0);
   const [personName, setPersonName] = useState([]);
-
+  const [sourceTableName, setSourceTableName] = useState([]);
   const [source, setTaget] = useState(false)
   const [state, setState] = useState({
     checkedB: false,
   });
+
+console.log('sourceTableName', sourceTableName)
+
+var sourceTableNames = [sourceTableName].map(tables => {return tables}); 
+    console.log(sourceTableNames); 
 
 
   const handleChangeTab = (event, newValue) => {
@@ -94,6 +100,28 @@ export default function CheckboxLabels() {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
+
+  useEffect(() => {
+    const ConnectorsURL = `${common.profile_url}/?tenant_Id=1&profileId=6` 
+
+     try {
+        fetch(ConnectorsURL, {
+         method: 'GET',
+         crossDomain: true,
+         compress: true,
+         headers: {
+           'Content-Type': 'application/json; charset=utf-8'
+         },
+       }).then(resp => resp.json())
+         .then(data => {
+           setSourceTableName(data.profiledetails[0].source_profile_data)
+         })
+     } catch (e) {        
+       return false;
+     }
+   
+  
+}, []);
 
   return (
     <div className={classes.root}>
@@ -181,7 +209,10 @@ export default function CheckboxLabels() {
                   <Typography className={classes.heading}>{data}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
+
+
                   <FormGroup row>
+
                     <FormControlLabel
                       control={
                         <Checkbox checked={state.checkedA} onChange={handleChange}
@@ -190,7 +221,7 @@ export default function CheckboxLabels() {
                       }
                       label="Name"
                     />
-                    <FormControlLabel
+                    {/* <FormControlLabel
                       control={
                         <Checkbox checked={state.checkedA} onChange={handleChange}
                           name="checkedB" color="primary"
@@ -233,7 +264,9 @@ export default function CheckboxLabels() {
                         />
                       }
                       label="Pin code"
-                    />
+                    /> */}
+
+
                   </FormGroup>
 
                 </AccordionDetails>
