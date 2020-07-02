@@ -14,6 +14,19 @@ class Auth {
     localStorage.setItem("token", JSON.stringify(item));
   }
 
+  getTenentID() {
+    const token = localStorage.getItem('token');
+    if(token) {
+      if(this.tokenExpirityChecking(token)) {
+        const item = JSON.parse(token);
+        this.tenant_id = item.tenantId;
+        return this.tenant_id;
+      }
+      return null;
+    }
+    return null;
+  }
+
   tokenExpirityChecking(token) {
     const item = JSON.parse(token);
     const now = new Date();

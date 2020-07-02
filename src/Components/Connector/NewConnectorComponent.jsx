@@ -6,6 +6,7 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import '../../Styles/validation.css';
 import { PageLoader } from '../../Layout/Loader';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
+import Auth from '../../Layout/Authentication';
 
 export default class NewConnector extends Component {
   constructor(props) {
@@ -32,12 +33,12 @@ export default class NewConnector extends Component {
   }
   
   createDataObject = () => {
-    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
+    const { connector_name, connector_desc, tenant_id, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
     const fields = {
       "connector_name": connector_name,
       "connector_desc": connector_desc,
       "connector_type": connector_type,
-      "tenant_id": 1,
+      "tenant_id": tenant_id,
       "server_address": server_address,
       "server_port": server_port,
       "clientdb": clientdb,
@@ -53,13 +54,13 @@ export default class NewConnector extends Component {
 
   handleUpdate = async () => {
     const saveConnectorURL = `${common.api_url}/connector`;
-    const { connectorId, connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
+    const { connectorId, connector_name, connector_desc, connector_type, tenant_id, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
     const fields = {
       "connectorId": connectorId,
       "connector_name": connector_name,
       "connector_desc": connector_desc,
       "connector_type": connector_type,
-      "tenant_id": 1,
+      "tenant_id": tenant_id,
       "server_address": server_address,
       "server_port": server_port,
       "clientdb": clientdb,
@@ -123,6 +124,7 @@ export default class NewConnector extends Component {
     }
   }
   componentDidMount() {
+    this.setState({tenant_id: Auth.getTenentID()});
     const searchKey = window.location.search;
     if(searchKey.length > 0) {
       const getKey = window.location.search.split('?')[1].split('=')[0];
