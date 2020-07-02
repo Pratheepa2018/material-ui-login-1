@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import { Button, LinearProgress, TextField, FormControlLabel, Checkbox, Paper, Box, Grid,Typography, InputAdornment,IconButton } from '@material-ui/core';
+import { Button, LinearProgress, TextField, FormControlLabel, Checkbox, Paper, Box, Grid, Typography, InputAdornment, IconButton } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
-import './LoginComponent.css'
 import { NotificationManager } from 'react-notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Auth from '../../Layout/Authentication';
+import './LoginComponent.css'
 
 export default class LoginComponent extends Component {
   constructor(props) {
@@ -23,6 +24,7 @@ export default class LoginComponent extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value })
   }
+
 
   handleSignIn = async () => {
     this.setState({ submitting: true })
@@ -43,7 +45,7 @@ export default class LoginComponent extends Component {
         .then(data => {
           this.setState({ submitting: false })
           if (data.status === 'Success') {
-            localStorage.setItem("token", 1);
+            Auth.setToken(data);
             window.location.reload(false);
           } else {
             this.setState({ formError: data.message })
@@ -65,7 +67,7 @@ export default class LoginComponent extends Component {
 
 
     const handleClickShowPassword = () => {
-      this.setState({showPassword: !showPassword });
+      this.setState({ showPassword: !showPassword });
     };
 
     const handleMouseDownPassword = (event) => {
