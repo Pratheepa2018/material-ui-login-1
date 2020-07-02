@@ -4,6 +4,8 @@ import { common } from '../../Utils/Api.env';
 import { NotificationManager } from 'react-notifications';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import '../../Styles/validation.css';
+import { PageLoader } from '../../Layout/Loader';
+import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 
 export default class NewConnector extends Component {
   constructor(props) {
@@ -19,7 +21,8 @@ export default class NewConnector extends Component {
       dbuser: '',
       dbpassword: '',
       editConnector: false,
-      connectorId: -1
+      connectorId: -1,
+      loadEditDetails: false
     }
     this.baseState = this.state;
   }
@@ -124,7 +127,7 @@ export default class NewConnector extends Component {
     if(searchKey.length > 0) {
       const getKey = window.location.search.split('?')[1].split('=')[0];
       if(getKey === 'edit') {
-        this.setState({editConnector: true})
+        this.setState({editConnector: true, loadEditDetails: true})
         const id = window.location.search.split('?')[1].split('=')[1]
         const connectorId = parseInt(id);
         this.setState({connectorId: connectorId})
@@ -141,7 +144,8 @@ export default class NewConnector extends Component {
           Object.keys(data).map(element => {
             const flag = Object.keys(data[element][0])
             flag.map(item => {
-              this.setState({[item]: data[element][0][item]});
+              
+              this.setState({[item]: data[element][0][item], loadEditDetails: false});
               return false;
             })
             return false;
@@ -153,197 +157,206 @@ export default class NewConnector extends Component {
   }
 
   render() {
-    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector } = this.state;
+    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector, loadEditDetails } = this.state;
     const buttonStyle ={
       fontSize: '12px',
       textTransform: 'capitalize'
     }
     return (
-      <Box marginY={5}>
-        <Grid container spacing={3} direction="row" alignItems="center" justify="center">
-          <Grid item xs={8}>
-            <Typography marginY={3} align="left" component="h2" variant="h5">Add new Connector</Typography>
-            <Box marginY={3} border={1} padding={2} borderColor="grey.500" boxShadow={3}>
-              <Typography variant="subtitle1">Data Source Connector</Typography>
-              <Box padding={3}>
-                <ValidatorForm 
-                  onSubmit={this.handelSave}
-                >
-                  <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" alignContent="center">
-                    <Grid item xs={6}>
-                      <TextValidator
-                        type="text" 
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="connectorName"
-                        label="Connector Name"
-                        name="connector_name"
-                        size="small"
-                        autoFocus
-                        fullWidth
-                        value={connector_name}
-                        validators={['required', 'matchRegexp:^[A-Za-z]+']}
-                        errorMessages={['This field is require', 'Enter proper name!']}
-                        onChange={this.handleChanges}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextValidator
-                        type="text" 
-                        required
-                        variant="outlined"
-                        margin="normal"
-                        id="connector_desc"
-                        label="Connector Desc"
-                        name="connector_desc"
-                        autoFocus
-                        fullWidth
-                        size="small"
-                        value={connector_desc}
-                        validators={['required']}
-                        errorMessages={['This field is required']}
-                        onChange={this.handleChanges}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextValidator
-                        type="text" 
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="connectorType"
-                        label="Connector Type"
-                        name="connector_type"
-                        size="small"
-                        autoFocus
-                        fullWidth
-                        value={connector_type}
-                        validators={['required', 'matchRegexp:^[0-9]*$']}
-                        errorMessages={['This field is required', 'Only integers are allowed']}
-                        onChange={this.handleChanges}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextValidator
-                        type="text" 
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="clientDb"
-                        label="Client DB"
-                        name="clientdb"
-                        size="small"
-                        autoFocus
-                        fullWidth
-                        value={clientdb}
-                        validators={['required']}
-                        errorMessages={['This field is required']}
-                        onChange={this.handleChanges}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextValidator
-                        type="text" 
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="serverAddress"
-                        label="Server Address"
-                        name="server_address"
-                        size="small"
-                        autoFocus
-                        fullWidth
-                        value={server_address}
-                        validators={['required']}
-                        errorMessages={['This field is required']}
-                        onChange={this.handleChanges}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextValidator
-                        type="text" 
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="serverPort"
-                        label="Server Port"
-                        name="server_port"
-                        size="small"
-                        autoFocus
-                        fullWidth
-                        value={server_port}
-                        validators={['required', 'matchRegexp:^[0-9]*$']}
-                        errorMessages={['This field is required', 'Only integers are allowed']}
-                        onChange={this.handleChanges}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextValidator
-                        type="text" 
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="dbUserName"
-                        label="DB User Name"
-                        name="dbuser"
-                        size="small"
-                        autoFocus
-                        fullWidth
-                        value={dbuser}
-                        validators={['required']}
-                        errorMessages={['This field is required']}
-                        onChange={this.handleChanges}
-                      />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextValidator 
-                        type="password"
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="dbPassword"
-                        label="DB Password"
-                        name="dbpassword"
-                        size="small"
-                        autoFocus
-                        fullWidth
-                        value={dbpassword}
-                        onChange={this.handleChanges}
-                        validators={['required']}
-                        errorMessages={['This field is required']}
-                        inputProps={{
-                          form: {
-                            autocomplete: 'off',
-                          },
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Button type="clear" variant="outlined" color="primary" fullWidth style={buttonStyle} onClick={this.handleClear}>Clear All</Button>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Button variant="contained" color="primary" fullWidth style={buttonStyle}>Test Connection</Button>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Button variant="contained" color="primary" fullWidth style={buttonStyle}>View Meta Data</Button>
-                    </Grid>
-                    <Grid item xs={3}>
-                      <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
-                        {!editConnector ? 
-                          `Save Connector`
-                          :
-                          `Update Connector`
-                        }
-                      </Button>
-                    </Grid>
-                  </Grid>
-                </ValidatorForm>
+      <div className="new-connector">
+        <FullWidthBanner
+          title="New Connector"
+          image="../../assets/images/globle.jpg"
+          imageText="Full Banner"
+          exceptimage ="../../assets/images/learnmore.gif"
+        />
+        <Box marginY={5}>
+          <Grid container spacing={3} direction="row" alignItems="center" justify="center">
+            <Grid item xs={8}>
+              <Box marginY={3} border={1} padding={2} borderColor="grey.500" boxShadow={3}>
+                <Typography variant="subtitle1">Data Source Connector</Typography>
+                <Box padding={3}>
+                  {!loadEditDetails ?
+                    <ValidatorForm 
+                      onSubmit={this.handelSave}
+                    >
+                      <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" alignContent="center">
+                        <Grid item xs={6}>
+                          <TextValidator
+                            type="text" 
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            id="connectorName"
+                            label="Connector Name"
+                            name="connector_name"
+                            size="small"
+                            autoFocus
+                            fullWidth
+                            value={connector_name}
+                            validators={['required', 'matchRegexp:^[A-Za-z]+']}
+                            errorMessages={['This field is require', 'Enter proper name!']}
+                            onChange={this.handleChanges}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextValidator
+                            type="text" 
+                            required
+                            variant="outlined"
+                            margin="normal"
+                            id="connector_desc"
+                            label="Connector Desc"
+                            name="connector_desc"
+                            autoFocus
+                            fullWidth
+                            size="small"
+                            value={connector_desc}
+                            validators={['required']}
+                            errorMessages={['This field is required']}
+                            onChange={this.handleChanges}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextValidator
+                            type="text" 
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            id="connectorType"
+                            label="Connector Type"
+                            name="connector_type"
+                            size="small"
+                            autoFocus
+                            fullWidth
+                            value={connector_type}
+                            validators={['required', 'matchRegexp:^[0-9]*$']}
+                            errorMessages={['This field is required', 'Only integers are allowed']}
+                            onChange={this.handleChanges}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextValidator
+                            type="text" 
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            id="clientDb"
+                            label="Client DB"
+                            name="clientdb"
+                            size="small"
+                            autoFocus
+                            fullWidth
+                            value={clientdb}
+                            validators={['required']}
+                            errorMessages={['This field is required']}
+                            onChange={this.handleChanges}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextValidator
+                            type="text" 
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            id="serverAddress"
+                            label="Server Address"
+                            name="server_address"
+                            size="small"
+                            autoFocus
+                            fullWidth
+                            value={server_address}
+                            validators={['required']}
+                            errorMessages={['This field is required']}
+                            onChange={this.handleChanges}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextValidator
+                            type="text" 
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            id="serverPort"
+                            label="Server Port"
+                            name="server_port"
+                            size="small"
+                            autoFocus
+                            fullWidth
+                            value={server_port}
+                            validators={['required', 'matchRegexp:^[0-9]*$']}
+                            errorMessages={['This field is required', 'Only integers are allowed']}
+                            onChange={this.handleChanges}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextValidator
+                            type="text" 
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            id="dbUserName"
+                            label="DB User Name"
+                            name="dbuser"
+                            size="small"
+                            autoFocus
+                            fullWidth
+                            value={dbuser}
+                            validators={['required']}
+                            errorMessages={['This field is required']}
+                            onChange={this.handleChanges}
+                          />
+                        </Grid>
+                        <Grid item xs={6}>
+                          <TextValidator 
+                            type="password"
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            id="dbPassword"
+                            label="DB Password"
+                            name="dbpassword"
+                            size="small"
+                            autoFocus
+                            fullWidth
+                            value={dbpassword}
+                            onChange={this.handleChanges}
+                            validators={['required']}
+                            errorMessages={['This field is required']}
+                            inputProps={{
+                              form: {
+                                autocomplete: 'off',
+                              },
+                            }}
+                          />
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Button type="clear" variant="outlined" color="primary" fullWidth style={buttonStyle} onClick={this.handleClear}>Clear All</Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Button variant="contained" color="primary" fullWidth style={buttonStyle}>Test Connection</Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Button variant="contained" color="primary" fullWidth style={buttonStyle}>View Meta Data</Button>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
+                            {!editConnector ? 
+                              `Save Connector`
+                              :
+                              `Update Connector`
+                            }
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </ValidatorForm>
+                  : <div className="page-loader"><PageLoader /></div>}  
+                </Box>
               </Box>
-            </Box>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      </div>  
     )
   }
 }

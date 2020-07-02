@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/nj-loader.scss';
+import '../Styles/loader.scss';
 export const PageLoader = () => {
   return(
     <div className="page-loader">
