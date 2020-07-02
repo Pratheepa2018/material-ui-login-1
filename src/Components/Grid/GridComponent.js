@@ -26,6 +26,7 @@ class GridComponent extends Component {
                 variant="outlined"
                 color="primary"
                 href={card.learnMorelink}
+                
               >
                 Learn More
               </Button>
@@ -35,6 +36,7 @@ class GridComponent extends Component {
               color="primary"
               className='right_btn'
               href={card.letsGolink}
+              disabled={!card.letsGolink}
             >
               Do Automation
             </Button>
