@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   nested: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(3),
   },
   arrow: {
     color: theme.palette.common.black,

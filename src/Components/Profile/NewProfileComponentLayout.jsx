@@ -81,10 +81,17 @@ export default function CheckboxLabels() {
     checkedB: false,
   });
 
-console.log('sourceTableName', sourceTableName)
+console.log('sourceTableName --', sourceTableName)
+if(sourceTableName){
+  var sourceTableNames = sourceTableName.map(tabless => {
+    console.log(tabless.tableName)
+       return tables
+  }); 
 
-var sourceTableNames = [sourceTableName].map(tables => {return tables}); 
-    console.log(sourceTableNames); 
+
+  
+}
+
 
 
   const handleChangeTab = (event, newValue) => {
@@ -114,7 +121,8 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
          },
        }).then(resp => resp.json())
          .then(data => {
-           setSourceTableName(data.profiledetails[0].source_profile_data)
+           let tablesdata=JSON.parse(data.profiledetails[0].source_profile_data);
+           setSourceTableName(tablesdata.tables)
          })
      } catch (e) {        
        return false;
