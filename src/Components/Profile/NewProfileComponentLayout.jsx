@@ -71,24 +71,22 @@ const sourceConnectors = [
 
 export default function CheckboxLabels() {
   const classes = useStyles();
-  const tables = ["Table Name 1", "Table Name 2", "Table Name 3", "Table Name 4"];
-  const tables2 = ["Table Data 1", "Table Data 2", "Table Data 3", "Table tata 4"];
   const [value, setValue] = useState(0);
   const [personName, setPersonName] = useState([]);
   const [sourceTableName, setSourceTableName] = useState([]);
+  const [targetTableName, setTargetTableName] = useState([]);
+  const [profileName, setProfileName] = useState('');
+  const [profileDescription, setProfileDescription] = useState('');
   const [source, setTaget] = useState(false)
   const [state, setState] = useState({
     checkedB: false,
   });
 
-console.log('sourceTableName', sourceTableName)
-
-var sourceTableNames = [sourceTableName].map(tables => {return tables}); 
-    console.log(sourceTableNames); 
-
-
+  const handleChangeSelect = (event) => {
+    setPersonName(event.target.value);
+  };
   const handleChangeTab = (event, newValue) => {
-    alert(newValue);
+   // alert(newValue);
     setValue(newValue);
     if(newValue === 1){
       setTaget(true);
@@ -114,7 +112,12 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
          },
        }).then(resp => resp.json())
          .then(data => {
-           setSourceTableName(data.profiledetails[0].source_profile_data)
+            setProfileName(data.profiledetails[0].profileName)
+            setProfileDescription(data.profiledetails[0].profileDescription)
+            let sourceTablesdata=JSON.parse(data.profiledetails[0].source_profile_data);
+            let targetTablesData=JSON.parse(data.profiledetails[0].target_profile_data);
+           setSourceTableName(sourceTablesdata.tables);
+           setTargetTableName(targetTablesData.tables);
          })
      } catch (e) {        
        return false;
@@ -151,7 +154,7 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
               <Select
                 displayEmpty
                 value={personName}
-                onChange={handleChange}
+                onChange={handleChangeSelect}
                 inputProps={{ 'aria-label': 'Without label' }}
               >
 
@@ -181,7 +184,8 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
           <Box padding={1}>
 
             <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-              <TextField id="outlined-basic" label="Profile title" variant="outlined" size="small" fullWidth />
+              <TextField id="outlined-basic" label="Profile Name" variant="outlined" size="small" fullWidth
+               value={profileName}/>
             </Paper>
           </Box>
         </Grid>
@@ -189,7 +193,8 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
           <Box padding={1}>
 
             <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-              <TextField id="outlined-basic" label="Profile description" variant="outlined" size="small" fullWidth />
+              <TextField id="outlined-basic" label="Profile description" variant="outlined" size="small" fullWidth
+               value={profileDescription}/>
             </Paper>
           </Box>
         </Grid>
@@ -197,7 +202,7 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
       </Grid>
       <TabPanel value={value} index={0} padding={1}>
         <Box padding={1}>
-          {tables.map((data) => {
+          {sourceTableName.map((table) => {
             return (
 
               <Accordion>
@@ -206,67 +211,25 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography className={classes.heading}>{data}</Typography>
+                  <Typography className={classes.heading}>{table.tableName}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
 
 
                   <FormGroup row>
-
-                    <FormControlLabel
+                  {[table].map((columns) => {
+                    return(
+                      <FormControlLabel
                       control={
                         <Checkbox checked={state.checkedA} onChange={handleChange}
                           name="checkedB" color="primary"
                         />
                       }
-                      label="Name"
-                    />
-                    {/* <FormControlLabel
-                      control={
-                        <Checkbox checked={state.checkedA} onChange={handleChange}
-                          name="checkedB" color="primary"
-                        />
-                      }
-                      label="CountryCode"
+                      label={columns.columns}
                     />
 
-                    <FormControlLabel
-                      control={
-                        <Checkbox checked={state.checkedA} onChange={handleChange}
-                          name="checkedB" color="primary"
-                        />
-                      }
-                      label="CountryCode"
-                    />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox checked={state.checkedA} onChange={handleChange}
-                          name="checkedB" color="primary"
-                        />
-                      }
-                      label="Address"
-                    />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox checked={state.checkedA} onChange={handleChange}
-                          name="checkedB" color="primary"
-                        />
-                      }
-                      label="Contact no"
-                    />
-
-                    <FormControlLabel
-                      control={
-                        <Checkbox checked={state.checkedA} onChange={handleChange}
-                          name="checkedB" color="primary"
-                        />
-                      }
-                      label="Pin code"
-                    /> */}
-
-
+                    )
+                  })}
                   </FormGroup>
 
                 </AccordionDetails>
@@ -280,7 +243,7 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
         </Box>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        {tables2.map((data) => {
+        {targetTableName.map((table) => {
           return (
             <Accordion>
               <AccordionSummary
@@ -288,62 +251,23 @@ var sourceTableNames = [sourceTableName].map(tables => {return tables});
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
-                <Typography className={classes.heading}>{data}</Typography>
+                <Typography className={classes.heading}>{table.tableName}</Typography>
               </AccordionSummary>
               <AccordionDetails>
                 <FormGroup row>
-                  <FormControlLabel
-                    control={
-                      <Checkbox checked={state.checkedA} onChange={handleChange}
-                        name="checkedB" color="primary"
-                      />
-                    }
-                    label="Name"
-                  />
-                  <FormControlLabel
-                    control={
-                      <Checkbox checked={state.checkedA} onChange={handleChange}
-                        name="checkedB" color="primary"
-                      />
-                    }
-                    label="CountryCode"
-                  />
+                {[table].map((columns) => {
+                    return(
+                      <FormControlLabel
+                      control={
+                        <Checkbox checked={state.checkedA} onChange={handleChange}
+                          name="checkedB" color="primary"
+                        />
+                      }
+                      label={columns.columns}
+                    />
 
-                  <FormControlLabel
-                    control={
-                      <Checkbox checked={state.checkedA} onChange={handleChange}
-                        name="checkedB" color="primary"
-                      />
-                    }
-                    label="CountryCode"
-                  />
-
-                  <FormControlLabel
-                    control={
-                      <Checkbox checked={state.checkedA} onChange={handleChange}
-                        name="checkedB" color="primary"
-                      />
-                    }
-                    label="Address"
-                  />
-
-                  <FormControlLabel
-                    control={
-                      <Checkbox checked={state.checkedA} onChange={handleChange}
-                        name="checkedB" color="primary"
-                      />
-                    }
-                    label="Contact no"
-                  />
-
-                  <FormControlLabel
-                    control={
-                      <Checkbox checked={state.checkedA} onChange={handleChange}
-                        name="checkedB" color="primary"
-                      />
-                    }
-                    label="Pin code"
-                  />
+                    )
+                  })}
                 </FormGroup>
 
               </AccordionDetails>

@@ -205,7 +205,7 @@ export default function EnhancedTable(props) {
   const [dataStatus, getStatus] = useState(false)
   const [rows, getData] = useState(false);
   const [isOpen, openModel] = useState();
-  const allprofilesURL = `${common.profile_url}/GetProfileTable?tenant_Id=1&profileId=-1`
+  const allprofilesURL = `${common.profile_url}/?tenant_Id=1&profileId=-1`
   useEffect(() => {
     fetch(allprofilesURL, {
       method: 'GET',
@@ -360,7 +360,7 @@ export default function EnhancedTable(props) {
                           <TableCell component="th" id={labelId} scope="row" padding="none" >
                             {row.profileName}
                           </TableCell>
-                          <TableCell align="left">{row.profileDesc}</TableCell>
+                          <TableCell align="left">{row.profileDescription}</TableCell>
                           <TableCell align="right">
                             <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.profileId)}>
                               <Edit />
