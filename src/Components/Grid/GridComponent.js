@@ -38,7 +38,7 @@ class GridComponent extends Component {
               href={card.letsGolink}
               disabled={!card.letsGolink}
             >
-              GO
+              Go
             </Button>
           </CardActions>
         </Card>
