@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
 import { Table, Box, Button } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -22,6 +21,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
 import Model from '../Model/ModelComponent';
+import { PageLoader } from '../../Layout/Loader';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -137,7 +137,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-          <Button href="/subscribedservices/CDP/new-profile" aria-label="Add" variant="outlined" color="primary">
+          <Button href="/subscribedservices/CDP/new-profile-layout" aria-label="Add" variant="outlined" color="primary">
             <AddBox />
              Add New profiles           
 
@@ -262,7 +262,7 @@ export default function EnhancedTable(props) {
     setPage(0);
   };
   const handleEdit = (event, id) => {
-    const editUrl = `/subscribedservices/CDP/new-profile?edit=${id}`
+    const editUrl = `/subscribedservices/CDP/new-profile-layout?edit=${id}`
     props.history.push(editUrl)
   }
   const setDeleteData = () => {
@@ -313,7 +313,7 @@ export default function EnhancedTable(props) {
         imageText="Full Banner"
         exceptimage ="../../assets/images/learnmore.gif"
       />
-      {!dataStatus ? <Skeleton animation="wave" variant="rect" className={classes.root} width={'100%'} height={400}/>
+      {!dataStatus ? <div className="loader-wrapper"><PageLoader /></div>
       : 
       <Box padding={6}>
         <Paper className={classes.paper}>
