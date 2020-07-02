@@ -137,7 +137,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-          <Button href="/subscribedservices/CDP/new-profile" aria-label="Add" variant="outlined" color="primary">
+          <Button href="/subscribedservices/CDP/new-profile-layout" aria-label="Add" variant="outlined" color="primary">
             <AddBox />
              Add New profiles           
 
@@ -262,7 +262,7 @@ export default function EnhancedTable(props) {
     setPage(0);
   };
   const handleEdit = (event, id) => {
-    const editUrl = `/subscribedservices/CDP/new-profile?edit=${id}`
+    const editUrl = `/subscribedservices/CDP/new-profile-layout?edit=${id}`
     props.history.push(editUrl)
   }
   const setDeleteData = () => {

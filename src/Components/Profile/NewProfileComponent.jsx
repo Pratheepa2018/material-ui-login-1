@@ -69,20 +69,6 @@ const sourceConnectors = [
   'Kelly Snyder',
 ];
 
-
-// const targetConnectors = [
-//   'Target Mysql',
-//   'Van Henry',
-//   'April Tucker',
-//   'Ralph Hubbard',
-//   'Omar Alexander',
-//   'Carlos Abbott',
-//   'Miriam Wagner',
-//   'Bradley Wilkerson',
-//   'Virginia Andrews',
-//   'Kelly Snyder',
-// ];
-
 //code for transfer-list
 function not(a, b) {
   return a.filter((value) => b.indexOf(value) === -1);
