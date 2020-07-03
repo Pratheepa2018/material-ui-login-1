@@ -385,7 +385,7 @@ export default function EnhancedTable(props) {
           />
         </Paper>
       </Box>}
-      <Model isOpen={isOpen} deleteConnector={deleteConnector} />
+      <Model isOpen={isOpen} deleteEntry={deleteConnector} />
     </div>
   );
 }
