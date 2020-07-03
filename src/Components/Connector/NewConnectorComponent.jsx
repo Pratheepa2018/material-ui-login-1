@@ -233,7 +233,7 @@ export default class NewConnector extends Component {
       <div className="new-connector">
         <FullWidthBanner
           title="New Connector"
-          image="../../assets/images/globle.jpg"
+          image="../../assets/images/main-bg.jpg"
           imageText="Full Banner"
           exceptimage ="../../assets/images/learnmore.gif"
         />
