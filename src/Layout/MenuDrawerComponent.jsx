@@ -32,7 +32,7 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    color: 'white'
+    
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -224,7 +224,7 @@ export default function MiniDrawer(props) {
             <ListItemText>{'About'}</ListItemText>
           </ListItem>
           <ListItem button>
-            <ListItemIcon><PermPhoneMsgIcon color="white" /> </ListItemIcon>
+            <ListItemIcon><PermPhoneMsgIcon color="inherit" /> </ListItemIcon>
             <ListItemText>{'ContactUs'}</ListItemText>
           </ListItem>
         </List>
