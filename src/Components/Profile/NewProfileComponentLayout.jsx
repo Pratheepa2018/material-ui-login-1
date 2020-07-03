@@ -57,7 +57,6 @@ class NewProfileComponentLayout extends React.Component {
       sourceConnectorsId: '',
       targetConnectorsId: '',
       source: '',
-      editProfile: '',
     })
   }
   handleChangeInput = (event) => {
@@ -73,7 +72,7 @@ class NewProfileComponentLayout extends React.Component {
 
   }
   handleChange = (event) => {
-console.log( event.target)
+    console.log(event.target)
     //this.setState({ ...values, [event.target.name]: event.target.checked });
   };
 
@@ -87,7 +86,6 @@ console.log( event.target)
     const token = query.get('edit')
 
     if (getKey === 'edit') {
-      this.setState({ editProfile: true })
       const ProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${token}`
 
       try {
@@ -131,7 +129,6 @@ console.log( event.target)
       sourceConnectorsId,
       targetConnectorsId,
       source,
-      editProfile,
     } = this.state
     return (
       <div className="profilepage">
@@ -208,47 +205,45 @@ console.log( event.target)
         </Grid>
         <TabPanel value={value} index={0} padding={1}>
           <Box padding={1}>
-          {sourceTableName.map((table) => {
-            return (
+            {sourceTableName.map((table) => {
+              return (
 
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
-                  <CardHeader
-       
-       avatar={
-         <Checkbox
-           inputProps={{ 'aria-label': 'all items selected' }}
-         />
-       }
-       title={table.tableName}
-        subheader={`${table.columns.length} Columns`}
-     />
-                </AccordionSummary>
-                <AccordionDetails>
-                  <FormGroup row>
-                    {table.columns.map((column) => {
-                      return (
-                        <FormControlLabel
-                          control={
-                            <Checkbox checked={false} onChange={this.handleChange}
-                              name="checkedB" color="primary"
-                            />
-                          }
-                          label={column}
+                <Accordion>
+                  <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                  >
+                    <CardHeader
+
+                      avatar={
+                        <Checkbox
+                          inputProps={{ 'aria-label': 'all items selected' }}
                         />
-                      )
-                    })}
-                  </FormGroup>
-                </AccordionDetails>
-              </Accordion>
-            )
-          })
-
+                      }
+                      title={table.tableName}
+                      subheader={`${table.columns.length} Columns`}
+                    />
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <FormGroup row>
+                      {table.columns.map((column) => {
+                        return (
+                          <FormControlLabel
+                            control={
+                              <Checkbox checked={false} onChange={this.handleChange}
+                                name="checkedB" color="primary"
+                              />
+                            }
+                            label={column}
+                          />
+                        )
+                      })}
+                    </FormGroup>
+                  </AccordionDetails>
+                </Accordion>
+              )
+            })
             }
           </Box>
         </TabPanel>
@@ -261,17 +256,16 @@ console.log( event.target)
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
                   <CardHeader
-       
-       avatar={
-         <Checkbox
-           inputProps={{ 'aria-label': 'all items selected' }}
-         />
-       }
-       title={table.tableName}
-        subheader={`${table.columns.length} Columns`}
-     />
+
+                    avatar={
+                      <Checkbox
+                        inputProps={{ 'aria-label': 'all items selected' }}
+                      />
+                    }
+                    title={table.tableName}
+                    subheader={`${table.columns.length} Columns`}
+                  />
                 </AccordionSummary>
                 <AccordionDetails>
                   <FormGroup row>
@@ -307,11 +301,7 @@ console.log( event.target)
                 onClick={this.handleSaveProfile}
                 className='buttonsave'
                 startIcon={<SaveIcon />}>
-                {!editProfile ?
-                  ` Save Profile`
-                  :
-                  `Update Profile`
-                }
+                Save Profile
               </Button>
             </Box>
           </Grid>

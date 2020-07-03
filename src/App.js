@@ -11,7 +11,7 @@ import SignUp from './Components/Signup/SignUpComponent';
 import CDPConnectorProfileDashboard from './Components/CDP/CDPConnectorProfileDashboard';
 import Connectors from './Components/Connectors/ConnectorsTableComponent'
 import Profile from './Components/Profile/ProfileTableComponent';
-import NewConnector from './Components/Connector/NewConnectorComponent';
+import NewConnector from './Components/Connectors/NewConnectorComponent';
 import NewProfile from './Components/Profile/NewProfileComponent';
 import NewProfileLayout from './Components/Profile/NewProfileComponentLayout';
 import Dashboard from './Components/Dashboard/DashboardComponent';
