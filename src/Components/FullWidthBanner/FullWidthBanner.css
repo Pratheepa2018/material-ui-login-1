@@ -1,7 +1,8 @@
 .banner_body{
     background-size: cover;
     padding: 30px;
-    min-height: 225px;
+    min-height: 150px;
+    font-size: 30px;
 }
 .textbody{
     display: inline-block;

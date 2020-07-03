@@ -23,6 +23,7 @@ class DashboardComponent extends Component {
     return (
       <div>
         <FullWidthBanner
+        title="Dashboard"
           image="../assets/images/globle.jpg"
           imageText="alt text"
           exceptimage="../assets/images/learnmore.gif" />
