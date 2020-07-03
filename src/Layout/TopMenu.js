@@ -4,7 +4,8 @@ import { Button } from '@material-ui/core';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { Language, FindReplace } from '@material-ui/icons/';
+import { Language } from '@material-ui/icons/';
+import SearchIcon from '@material-ui/icons/Search';
 import Logout from '../Components/Authentication/LogoutComponent';
 
 const useStyles = makeStyles((theme) => ({
@@ -37,13 +38,7 @@ export default function PrimarySearchAppBar(props) {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Button aria-label="show 4 new mails" color="inherit">
-              Contact Us
-            </Button>
-            <Button aria-label="show 4 new mails" color="inherit">
               Resource Center
-            </Button>
-            <Button aria-label="show 4 new mails" color="inherit">
-              About
             </Button>
             <Button aria-label="show 4 new mails" color="inherit">
               Call: 1800-827-2796
@@ -52,7 +47,7 @@ export default function PrimarySearchAppBar(props) {
               <Language />
             </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit">
-              <FindReplace />
+              <SearchIcon />
             </IconButton>
 
             {props.islogin && (

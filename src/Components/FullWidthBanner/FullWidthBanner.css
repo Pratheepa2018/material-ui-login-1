@@ -23,4 +23,7 @@
 
 @media(max-width:767px){
     .banner_body h1{font-size: 30px;}
+    .gif{
+        display: none;
+    }
 }

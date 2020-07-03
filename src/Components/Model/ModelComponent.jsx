@@ -42,7 +42,7 @@ export default function AlertDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="outlined" color="primary" style={buttonStyle}>
-            Cancle
+            Cancel
           </Button>
           <Button onClick={() => props.deleteEntry(false)} variant="contained" color="secondary" autoFocus style={buttonStyle}>
             Delete Permanently
