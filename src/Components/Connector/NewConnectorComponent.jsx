@@ -88,6 +88,69 @@ export default class NewConnector extends Component {
       console.log(e, 'Something went wrong');
     }
   }
+  generateTestData = () => {
+    const { server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
+    const data = {
+      'server_address': server_address,
+      'server_port': server_port,
+      'clientdb': clientdb,
+      'dbuser': dbuser,
+      'dbpassword': dbpassword
+    }
+    return data;
+  }
+
+  handleTestConnection = async () => {
+    const testURL = "https://cdpmysqlconnector.azurewebsites.net/mysql/testConnection";
+    try {
+      await fetch(testURL, {
+        method: 'POST',
+        crossDomain: true,
+        compress: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(this.generateTestData())
+      }).then(resp => resp.json())
+      .then(response => {
+        if(response === 'failure') {
+          return false;
+        } else if (response === 'success') {
+          return true;
+        }
+      })
+    } catch (e) {
+      return false;
+    }
+
+  }
+
+  handleMetadata = async () => {
+    const metaURL = 'https://cdpmysqlconnector.azurewebsites.net/mysql/getMetaData';
+    try {
+      await fetch(metaURL, {
+        method: 'POST',
+        crossDomain: true,
+        compress: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(this.generateTestData())
+      }).then(resp => resp.json())
+      .then(response => {
+        console.log(response);
+        // if(response === 'failure') {
+        //   return false;
+        // } else if (response === 'success') {
+        //   return true;
+        // }
+      })
+    } catch (e) {
+      return false;
+    }
+  }
 
   handelSave = async () => {    
     const searchKey = window.location.search;
@@ -98,29 +161,31 @@ export default class NewConnector extends Component {
     if(getKey === 'edit') {
       this.handleUpdate();
     } else {
-      console.log('Hello', getKey);
-      const saveConnectorURL = `${common.api_url}/connector`;
-      try {
-        await fetch(saveConnectorURL, {
-          method: 'POST',
-          crossDomain: true,
-          compress: true,
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          },
-          body: JSON.stringify(this.createDataObject()),
-        }).then(resp => resp.json())
-        .then((data) => {
-          if(data.status === 'Success') {
-            this.props.history.push('/subscribedservices/CDP/connectors');
-          } else {
-            console.log('Something went wrong!');
-          }
-        })
-      } catch (e) {
-        console.log(e, 'Oh no something went wrong!!!');
-      }
+      if(this.handleTestConnection()) {
+        const saveConnectorURL = `${common.api_url}/connector`;
+        try {
+          await fetch(saveConnectorURL, {
+            method: 'POST',
+            crossDomain: true,
+            compress: true,
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            },
+            body: JSON.stringify(this.createDataObject()),
+          }).then(resp => resp.json())
+          .then((data) => {
+            if(data.status === 'Success') {
+              this.props.history.push('/subscribedservices/CDP/connectors');
+            } else {
+              console.log('Something went wrong!');
+            }
+          })
+        } catch (e) {
+          console.log(e, 'Oh no something went wrong!!!');
+        }
+      } 
+      console.log('Your connection got failed');
     }
   }
   componentDidMount() {
@@ -336,10 +401,10 @@ export default class NewConnector extends Component {
                           <Button type="clear" variant="outlined" color="primary" fullWidth style={buttonStyle} onClick={this.handleClear}>Clear All</Button>
                         </Grid>
                         <Grid item xs={3}>
-                          <Button variant="contained" color="primary" fullWidth style={buttonStyle}>Test Connection</Button>
+                          <Button type="button" variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleTestConnection}>Test Connection</Button>
                         </Grid>
                         <Grid item xs={3}>
-                          <Button variant="contained" color="primary" fullWidth style={buttonStyle}>View Meta Data</Button>
+                          <Button type="button" variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleMetadata}>View Meta Data</Button>
                         </Grid>
                         <Grid item xs={3}>
                           <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
