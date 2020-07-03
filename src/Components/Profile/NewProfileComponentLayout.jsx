@@ -9,7 +9,6 @@ import {
   AccordionSummary, AccordionDetails, Select, MenuItem, Checkbox, Button
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
-import { green } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { common } from '../../Utils/Api.env';
 
@@ -17,11 +16,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
-  grid:{
-    margin: 'auto',   
+  grid: {
+    margin: 'auto',
   },
   fabGreen: {
-    borderRadius: '35px',    
+    borderRadius: '35px',
   },
 }));
 
@@ -98,58 +97,58 @@ export default function CheckboxLabels(props) {
   };
 
   const handleChangeTab = (event, newValue) => {
-    setValue(newValue);    
+    setValue(newValue);
     setTaget(!source);
   };
-const handleSaveProfile = () =>{
+  const handleSaveProfile = () => {
 
-}
+  }
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
   useEffect(() => {
-  const searchKey = window.location.search;
-  let getKey;
-  if(searchKey.length > 0) {
-    getKey = window.location.search.split('?')[1].split('=')[0]; 
-  }  
-  const query = new URLSearchParams(window.location.search);
-  const token = query.get('edit')
- 
-  if(getKey === 'edit') {
-    setEditProfile(true)
-    const ProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${token}` 
+    const searchKey = window.location.search;
+    let getKey;
+    if (searchKey.length > 0) {
+      getKey = window.location.search.split('?')[1].split('=')[0];
+    }
+    const query = new URLSearchParams(window.location.search);
+    const token = query.get('edit')
 
-     try {
+    if (getKey === 'edit') {
+      setEditProfile(true)
+      const ProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${token}`
+
+      try {
         fetch(ProfileURL, {
-         method: 'GET',
-         crossDomain: true,
-         compress: true,
-         headers: {
-           'Content-Type': 'application/json; charset=utf-8'
-         },
-       }).then(resp => resp.json())
-         .then(data => {
+          method: 'GET',
+          crossDomain: true,
+          compress: true,
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8'
+          },
+        }).then(resp => resp.json())
+          .then(data => {
             setProfileName(data.profiledetails[0].profileName)
             setProfileDescription(data.profiledetails[0].profileDescription)
             setSourceConnectorsId(data.profiledetails[0].source_connector_id)
             setTargetConnectorsId(data.profiledetails[0].target_connector_id)
-            let sourceTablesdata=JSON.parse(data.profiledetails[0].source_profile_data);
-            let targetTablesData=JSON.parse(data.profiledetails[0].target_profile_data);
-           setSourceTableName(sourceTablesdata.tables);
-           setTargetTableName(targetTablesData.tables);
+            let sourceTablesdata = JSON.parse(data.profiledetails[0].source_profile_data);
+            let targetTablesData = JSON.parse(data.profiledetails[0].target_profile_data);
+            setSourceTableName(sourceTablesdata.tables);
+            setTargetTableName(targetTablesData.tables);
 
-         })
-     } catch (e) {        
-       return false;
-     }
- 
-}
- else {
-   console.log('new entry')
- }
-}, []);
+          })
+      } catch (e) {
+        return false;
+      }
+
+    }
+    else {
+      console.log('new entry')
+    }
+  }, []);
   return (
     <div className={classes.root}>
 
@@ -174,7 +173,6 @@ const handleSaveProfile = () =>{
           <Box padding={1}>
 
             <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-
               <Select
                 displayEmpty
                 value={personName}
@@ -184,16 +182,16 @@ const handleSaveProfile = () =>{
 
                 {!source ? <MenuItem disabled value=''>
                   <em>Source Connectors Id {sourceConnectorsId}</em>
-                
+
                 </MenuItem>
 
                   : <MenuItem disabled value=''>
                     <em>Target Connectors Id {targetConnectorsId}</em>
-                    
+
                   </MenuItem>}
 
                 {/* {sourceConnectors.map((name) => ( */}
-                  {/* <MenuItem key={name} value={name} >
+                {/* <MenuItem key={name} value={name} >
                     {name}
                   </MenuItem> */}
                 {/* ))} */}
@@ -203,24 +201,20 @@ const handleSaveProfile = () =>{
           </Box>
         </Grid>
         <Grid item sm={3}>
-
         </Grid>
-
         <Grid item sm={6}>
           <Box padding={1}>
-
             <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
               <TextField id="outlined-basic" label="Profile Name" variant="outlined" size="small" fullWidth
-               value={profileName}/>
+                value={profileName} />
             </Paper>
           </Box>
         </Grid>
         <Grid item sm={6}>
           <Box padding={1}>
-
             <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
               <TextField id="outlined-basic" label="Profile description" variant="outlined" size="small" fullWidth
-               value={profileDescription}/>
+                value={profileDescription} />
             </Paper>
           </Box>
         </Grid>
@@ -240,28 +234,22 @@ const handleSaveProfile = () =>{
                   <Typography className={classes.heading}>{table.tableName}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-
-
                   <FormGroup row>
-                  {table.columns.map((column) => {
-                    return(
-                      <FormControlLabel
-                      control={
-                        <Checkbox checked={state.checkedA} onChange={handleChange}
-                          name="checkedB" color="primary"
+                    {table.columns.map((column) => {
+                      return (
+                        <FormControlLabel
+                          control={
+                            <Checkbox checked={state.checkedA} onChange={handleChange}
+                              name="checkedB" color="primary"
+                            />
+                          }
+                          label={column}
                         />
-                      }
-                      label={column}
-                    />
-
-                    )
-                  })}
+                      )
+                    })}
                   </FormGroup>
-
                 </AccordionDetails>
               </Accordion>
-
-
             )
           })
 
@@ -281,24 +269,21 @@ const handleSaveProfile = () =>{
               </AccordionSummary>
               <AccordionDetails>
                 <FormGroup row>
-                {table.columns.map((column) => {
-                    return(
+                  {table.columns.map((column) => {
+                    return (
                       <FormControlLabel
-                      control={
-                        <Checkbox checked={state.checkedA} onChange={handleChange}
-                          name="checkedB" color="primary"
-                        />
-                      }
-                      label={column}
-                    />
-
+                        control={
+                          <Checkbox checked={state.checkedA} onChange={handleChange}
+                            name="checkedB" color="primary"
+                          />
+                        }
+                        label={column}
+                      />
                     )
                   })}
                 </FormGroup>
-
               </AccordionDetails>
             </Accordion>
-
           )
         })
 
@@ -306,26 +291,26 @@ const handleSaveProfile = () =>{
       </TabPanel>
 
       <Grid container spacing={1} justify="center" alignItems="center" className={classes.grid}>
-       
-       <Grid justify="center">
-       <Box padding={1}>
-       <Button 
-        variant="contained"
-        border={1} borderRadius={16}
-           color="primary"
-           size="large"
-           onClick={handleSaveProfile}
-          className= {classes.fabGreen}
-           startIcon={<SaveIcon />}>
-                      {!editProfile ? 
-                              ` Save Profile`
-                              :
-                              `Update Profile`
-                            }
+
+        <Grid justify="center">
+          <Box padding={1}>
+            <Button
+              variant="contained"
+              border={1} borderRadius={16}
+              color="primary"
+              size="large"
+              onClick={handleSaveProfile}
+              className={classes.fabGreen}
+              startIcon={<SaveIcon />}>
+              {!editProfile ?
+                ` Save Profile`
+                :
+                `Update Profile`
+              }
             </Button>
-           </Box>
-       </Grid>
-       </Grid>
+          </Box>
+        </Grid>
+      </Grid>
 
     </div>
   );
