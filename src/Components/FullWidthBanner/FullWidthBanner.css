@@ -6,7 +6,8 @@
 .textbody{
     display: inline-block;
     padding: 20px;
-    background-color: rgba(0, 0, 0, .5);
+    /* background-color: rgba(0, 0, 0, .5); */
+    /* color: #0f33f9; */
     color: #fff;
 }
 .desh_card{height: 100%;}
