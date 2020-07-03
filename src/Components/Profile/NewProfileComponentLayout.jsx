@@ -87,7 +87,8 @@ export default function CheckboxLabels(props) {
   const [profileDescription, setProfileDescription] = useState('');
   const [sourceConnectorsId, setSourceConnectorsId] = useState('');
   const [targetConnectorsId, setTargetConnectorsId] = useState('');
-  const [source, setTaget] = useState(false)
+  const [source, setTaget] = useState(false);
+  const [editProfile, setEditProfile] = useState(false);
   const [state, setState] = useState({
     checkedB: false,
   });
@@ -117,7 +118,7 @@ const handleSaveProfile = () =>{
   const token = query.get('edit')
  
   if(getKey === 'edit') {
- 
+    setEditProfile(true)
     const ProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${token}` 
 
      try {
@@ -315,7 +316,13 @@ const handleSaveProfile = () =>{
            size="large"
            onClick={handleSaveProfile}
           className= {classes.fabGreen}
-           startIcon={<SaveIcon />}>Save Profile</Button>
+           startIcon={<SaveIcon />}>
+                      {!editProfile ? 
+                              ` Save Profile`
+                              :
+                              `Update Profile`
+                            }
+            </Button>
            </Box>
        </Grid>
        </Grid>
