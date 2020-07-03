@@ -220,7 +220,7 @@ const handleSaveProfile = () =>{
 
       <FullWidthBanner
         title="Add New Profile"
-        image="../../../assets/images/globle.jpg"
+        image="../../../assets/images/bgbanner.png"
         imageText="Full Banner"
         exceptimage ="../../../assets/images/learnmore.gif" />
 
