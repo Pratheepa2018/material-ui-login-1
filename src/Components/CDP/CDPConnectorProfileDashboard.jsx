@@ -18,7 +18,7 @@ class CDPConnectorProfileDashboard extends Component {
                     title="Collabera DevOps Platform (CDP)"
                     description="description"
                     linkText="Learn more"
-                    image="../../assets/images/bgbanner.png"
+                    image="../../assets/images/globle.jpg"
                     imageText="alt text" 
                     exceptimage ="../../assets/images/learnmore.gif"/>
                 <Grid className='cdp_box'>

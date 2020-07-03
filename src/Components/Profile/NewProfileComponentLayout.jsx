@@ -138,7 +138,7 @@ console.log( event.target)
 
         <FullWidthBanner
           title="Add New Profile"
-          image="../../../assets/images/bgbanner.png"
+          image="../../../assets/images/globle.jpg"
           imageText="Full Banner"
           exceptimage="../../../assets/images/learnmore.gif" />
 

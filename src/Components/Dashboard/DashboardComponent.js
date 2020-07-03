@@ -23,7 +23,7 @@ class DashboardComponent extends Component {
     return (
       <div>
         <FullWidthBanner
-          image="../assets/images/bgbanner.png"
+          image="../assets/images/globle.jpg"
           imageText="alt text"
           exceptimage="../assets/images/learnmore.gif" />
         <Grid className='dash_box'>
