@@ -99,7 +99,6 @@ class NewProfileComponentLayout extends React.Component {
     const token = query.get('edit')
 
     if (getKey === 'edit') {
-      this.setState({ editProfile: true })
       const ProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${token}`
 
       try {
@@ -159,7 +158,7 @@ class NewProfileComponentLayout extends React.Component {
 
         <FullWidthBanner
           title="Add New Profile"
-          image="../../../assets/images/bgbanner.png"
+          image="../../../assets/images/globle.jpg"
           imageText="Full Banner"
           exceptimage="../../../assets/images/learnmore.gif" />
 
@@ -272,7 +271,6 @@ class NewProfileComponentLayout extends React.Component {
                 </Accordion>
               )
             })
-
             }
           
         </TabPanel>
@@ -285,7 +283,6 @@ class NewProfileComponentLayout extends React.Component {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
                   <CardHeader
 
                     avatar={
@@ -334,11 +331,7 @@ class NewProfileComponentLayout extends React.Component {
                 onClick={this.handleSaveProfile}
                 className='buttonsave'
                 startIcon={<SaveIcon />}>
-                {!editProfile ?
-                  ` Save Profile`
-                  :
-                  `Update Profile`
-                }
+                Save Profile
               </Button>
             </Box>
           </Grid>

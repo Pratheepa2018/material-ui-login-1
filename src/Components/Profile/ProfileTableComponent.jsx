@@ -270,7 +270,7 @@ export default function EnhancedTable(props) {
       const dataToDelete = []
       selected.forEach(item => {
         const obj = {};
-        obj["connecterId"] = item;
+        obj["profileId"] = item;
         dataToDelete.push(obj);
       });
     } else {
@@ -281,11 +281,11 @@ export default function EnhancedTable(props) {
   const onDeleteHandle = (modelState=true) =>{
     openModel(modelState);
   }
-  const deleteConnector = async () =>{
-    const delteConnecterURL = `${common.api_url}/profile?${setDeleteData()}`;
-    //console.log(delteConnecterURL);
+  const deleteProfile = async () =>{
+    const deleteProfileURL = `${common.profile_url}?${setDeleteData()}`;
+    console.log(deleteProfileURL);
     try {
-      await fetch(delteConnecterURL, {
+      await fetch(deleteProfileURL, {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",
@@ -308,8 +308,8 @@ export default function EnhancedTable(props) {
   return (
     <div className={classes.root}>
       <FullWidthBanner
-        title="My profiles"
-        image="../../assets/images/bgbanner.png"
+        title="My Profiles"
+        image="../../assets/images/globle.jpg"
         imageText="Full Banner"
         exceptimage ="../../assets/images/learnmore.gif"
       />
@@ -390,7 +390,7 @@ export default function EnhancedTable(props) {
         </Paper>
       </Box>
 }
-      <Model isOpen={isOpen} deleteConnector={deleteConnector}   />
+      <Model isOpen={isOpen} deleteEntry={deleteProfile}   />
     </div>
   );
 }
