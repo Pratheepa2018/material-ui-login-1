@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { Language } from '@material-ui/icons/';
 import SearchIcon from '@material-ui/icons/Search';
 import Logout from '../Components/Authentication/LogoutComponent';
+import { NotificationContainer } from 'react-notifications';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -30,6 +31,7 @@ export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
   return (
     <div className={classes.grow}>
+      <NotificationContainer />
       <div>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
