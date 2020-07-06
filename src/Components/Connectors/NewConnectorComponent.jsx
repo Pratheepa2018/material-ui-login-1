@@ -81,7 +81,7 @@ export default class NewConnector extends Component {
       .then(data => {
         if(data.status === 'Success') {
           NotificationManager.success(data.message);
-          this.props.history.push('/subscribedservices/CDP/connectors');
+          this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
         }
       })
     } catch (e) {
@@ -176,7 +176,7 @@ export default class NewConnector extends Component {
           }).then(resp => resp.json())
           .then((data) => {
             if(data.status === 'Success') {
-              this.props.history.push('/subscribedservices/CDP/connectors');
+              this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
             } else {
               console.log('Something went wrong!');
             }
@@ -233,9 +233,9 @@ export default class NewConnector extends Component {
       <div className="new-connector">
         <FullWidthBanner
           title="New Connector"
-          image="../../assets/images/globle.jpg"
+          image="../../../../assets/images/globle.jpg"
           imageText="Full Banner"
-          exceptimage ="../../assets/images/learnmore.gif"
+          exceptimage ="../../../../assets/images/learnmore.gif"
         />
         <Box marginY={5}>
           <Grid container spacing={3} direction="row" alignItems="center" justify="center">

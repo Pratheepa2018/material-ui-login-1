@@ -137,7 +137,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-          <Button href="/subscribedservices/CDP/new-connector" aria-label="Add" variant="outlined" color="primary">
+          <Button href="/dashboard/CDP/cdp-connector-profile/connectors/new-connector" aria-label="Add" variant="outlined" color="primary">
             <AddBox />
              Add New Connectors
           </Button>
@@ -259,7 +259,7 @@ export default function EnhancedTable(props) {
     setPage(0);
   };
   const handleEdit = (event, id) => {
-    const editUrl = `/subscribedservices/CDP/new-connector?edit=${id}`
+    const editUrl = `/dashboard/CDP/cdp-connector-profile/connectors/new-connector?edit=${id}`
     props.history.push(editUrl)
   }
   const setDeleteData = () => {
@@ -305,9 +305,9 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <FullWidthBanner
         title="My Connectors"
-        image="../../assets/images/globle.jpg"
+        image="../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage ="../../assets/images/learnmore.gif"
+        exceptimage ="../../../assets/images/learnmore.gif"
       />
        {!dataStatus ? <div className="loader-wrapper"><PageLoader /></div>
       : 

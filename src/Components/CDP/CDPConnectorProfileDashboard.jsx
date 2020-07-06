@@ -5,8 +5,8 @@ import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import GridComponent from '../Grid/GridComponent'
 
 const cards = [
-    { id: 1, title: 'Connectors', description: '', image: '../../assets/images/connect.jpg', learnMorelink: '#', letsGolink: './connectors' },
-    { id: 2, title: 'Profiles', description: '', image: '../../assets/images/profile.jpg', learnMorelink: '#', letsGolink: './profile' },
+    { id: 1, title: 'Connectors', description: '', image: '../../assets/images/connect.jpg', learnMorelink: '#', letsGolink: './cdp-connector-profile/connectors' },
+    { id: 2, title: 'Profiles', description: '', image: '../../assets/images/profile.jpg', learnMorelink: '#', letsGolink: './cdp-connector-profile/profiles' },
    
 ]
 

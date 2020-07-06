@@ -158,9 +158,9 @@ class NewProfileComponentLayout extends React.Component {
 
         <FullWidthBanner
           title="Add New Profile"
-          image="../../../assets/images/globle.jpg"
+          image="../../../../assets/images/globle.jpg"
           imageText="Full Banner"
-          exceptimage="../../../assets/images/learnmore.gif" />
+          exceptimage="../../../../assets/images/learnmore.gif" />
 
         <AppBar position="static" color="default">
           <Tabs value={value} onChange={this.handleChangeTab} aria-label="simple tabs example">

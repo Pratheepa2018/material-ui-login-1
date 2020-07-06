@@ -4,7 +4,7 @@ import { Box, Grid } from '@material-ui/core';
 import GridComponent from '../Grid/GridComponent';
 
 const data = [
-  {id: 1, title: 'DevOps Automation', description: '', image: '../assets/images/dashboard1.jpg', learnMorelink: '', letsGolink: '/subscribedservices' }
+  {id: 1, title: 'DevOps Automation', description: '', image: '../assets/images/dashboard1.jpg', learnMorelink: '', letsGolink: '/dashboard' }
 ]
 export default class ConnectorType extends Component {
 

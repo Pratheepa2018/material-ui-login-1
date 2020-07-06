@@ -59,15 +59,15 @@ function App(props) {
                 <PublicRoute restricted={true} component={Login} path="/" exact />
                 <PublicRoute restricted={true} component={Login} path="/login" exact />
                 <PrivateRoute restricted={true} component={Dashboard} path="/dashboard" exact />
-                <PrivateRoute restricted={true} component={SubscribedServices} path="/subscribedservices" exact />
+                {/* <PrivateRoute restricted={true} component={SubscribedServices} path="/subscribedservices" exact /> */}
                 <PrivateRoute restricted={false} component={SignUp} path="/signup" exact />
-                <PrivateRoute restricted={true} component={Connectors} path="/subscribedservices/CDP/connectors" exact />
-                <PrivateRoute restricted={true} component={Profile} path="/subscribedservices/CDP/profile" exact />
-                <PrivateRoute restricted={false} component={CollaberaDevOpsPlatform} path="/subscribedservices/CDP" exact />
-                <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/subscribedservices/CDP/cdpconnectorprofile" exact />
-                <PrivateRoute restricted={false} component={NewConnector} path="/subscribedservices/CDP/new-connector" exact />
-                <PrivateRoute restricted={false} component={NewProfile} path="/subscribedservices/CDP/new-profile" exact />
-                <PrivateRoute restricted={false} component={NewProfileLayout} path="/subscribedservices/CDP/new-profile-layout" exact />
+                <PrivateRoute restricted={true} component={Connectors} path="/dashboard/CDP/cdp-connector-profile/connectors" exact />
+                <PrivateRoute restricted={true} component={Profile} path="/dashboard/CDP/cdp-connector-profile/profiles" exact />
+                <PrivateRoute restricted={false} component={CollaberaDevOpsPlatform} path="/dashboard/CDP" exact />
+                <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/dashboard/CDP/cdp-connector-profile" exact />
+                <PrivateRoute restricted={false} component={NewConnector} path="/dashboard/CDP/cdp-connector-profile/connectors/new-connector" exact />
+                <PrivateRoute restricted={false} component={NewProfile} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile-old" exact />
+                <PrivateRoute restricted={false} component={NewProfileLayout} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile" exact />
                 {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
                 <PublicRoute
                   restricted={false}

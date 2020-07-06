@@ -5,7 +5,7 @@ import FullWidthBanner from '../FullWidthBanner/FullWidthBanner'
 import GridComponent from '../Grid/GridComponent'
 
 const cards = [
-    { id: 1, title: 'Data Testing Framework', description: '', image: '../assets/images/data.jpg', learnMorelink: '#', letsGolink: './CDP/cdpconnectorprofile' },
+    { id: 1, title: 'Data Testing Framework', description: '', image: '../assets/images/data.jpg', learnMorelink: '#', letsGolink: './CDP/cdp-connector-profile' },
     { id: 2, title: 'API Testing Framework', description: '', image: '../assets/images/api.jpg', learnMorelink: '#', letsGolink: '' },
     { id: 3, title: 'UI Testing Framework', description: '', image: '../assets/images/ui.jpg', learnMorelink: '#', letsGolink: '' },
 ]

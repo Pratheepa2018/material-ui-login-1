@@ -6,7 +6,7 @@ import GridComponent from '../Grid/GridComponent';
 import '../../Styles/dashboard.scss';
 
 const cards = [
-  { id: 1, title: 'DevOps Automation', description: '', image: '../assets/images/dashboard1.jpg', learnMorelink: '', letsGolink: '/subscribedservices' },
+  { id: 1, title: 'DevOps Automation', description: '', image: '../assets/images/dashboard1.jpg', learnMorelink: '', letsGolink: '/dashboard/CDP' },
   { id: 2, title: 'System Integration', description: '', image: '../assets/images/dashboard2.jpg', learnMorelink: '', letsGolink: '' },
   { id: 3, title: 'Information Management', description: '', image: '../assets/images/dashboard3.jpg', learnMorelink: '', letsGolink: '' },
   { id: 4, title: 'AI Automation', description: '', image: '../assets/images/dashboard4.jpg', learnMorelink: '', letsGolink: '' },
