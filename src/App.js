@@ -17,6 +17,7 @@ import Dashboard from './Components/Dashboard/DashboardComponent';
 import { withStyles } from '@material-ui/core/styles';
 import Header from './Layout/HeaderComponent';
 import Auth from './Layout/Authentication';
+import PipelineUI from './Components/CIPipeline/PipelineUIComponent';
 
 const styles = theme => ({
   root: {
@@ -66,6 +67,8 @@ function App(props) {
                 <PrivateRoute restricted={false} component={NewConnector} path="/dashboard/CDP/cdp-connector-profile/connectors/new-connector" exact />
                 <PrivateRoute restricted={false} component={NewProfile} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile-old" exact />
                 <PrivateRoute restricted={false} component={NewProfileLayout} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile" exact />
+                <PrivateRoute restricted={false} component={PipelineUI} path="/dashboard/CDP/api-pipeline" exact />
+                
                 <PublicRoute
                   restricted={false}
                   path="*"

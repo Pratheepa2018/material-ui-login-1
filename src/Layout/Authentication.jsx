@@ -2,6 +2,7 @@ class Auth {
   constructor() {
     this.authenticated = false;
     this.tenant_id = '';
+    this.username = '';
   }
   setToken(data) {
     console.log(data);
@@ -9,7 +10,8 @@ class Auth {
     const item = {
       value: data.token,
       expiry: expires,
-      tenantId: data.tenant_id
+      tenantId: data.tenant_id,
+      username: data.username
     }
     localStorage.setItem("token", JSON.stringify(item));
   }
@@ -27,6 +29,18 @@ class Auth {
     return null;
   }
 
+  getUserName() {
+    const token = localStorage.getItem('token');
+    if(token) {
+      if(this.tokenExpirityChecking(token)) {
+        const item = JSON.parse(token);
+        this.username = item.username;
+        return this.username;
+      }
+      return null;
+    }
+    return null;
+  }
   tokenExpirityChecking(token) {
     const item = JSON.parse(token);
     const now = new Date();
