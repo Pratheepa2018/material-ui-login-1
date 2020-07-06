@@ -4,7 +4,6 @@ import PublicRoute from './Components/Router/PublicRouteComponent';
 import PrivateRoute from './Components/Router/PrivateRouteComponent';
 import Footer from './Layout/FooterComponent';
 import MenuBar from './Layout/MenuDrawerComponent';
-import SubscribedServices from './Components/SubscribedServices/SubscribedServicesComponent';
 import Login from './Components/Login/LoginComponent';
 import CollaberaDevOpsPlatform from './Components/CDP/CollaberaDevOpsPlatform'
 import SignUp from './Components/Signup/SignUpComponent';
@@ -59,7 +58,6 @@ function App(props) {
                 <PublicRoute restricted={true} component={Login} path="/" exact />
                 <PublicRoute restricted={true} component={Login} path="/login" exact />
                 <PrivateRoute restricted={true} component={Dashboard} path="/dashboard" exact />
-                {/* <PrivateRoute restricted={true} component={SubscribedServices} path="/subscribedservices" exact /> */}
                 <PrivateRoute restricted={false} component={SignUp} path="/signup" exact />
                 <PrivateRoute restricted={true} component={Connectors} path="/dashboard/CDP/cdp-connector-profile/connectors" exact />
                 <PrivateRoute restricted={true} component={Profile} path="/dashboard/CDP/cdp-connector-profile/profiles" exact />
@@ -68,7 +66,6 @@ function App(props) {
                 <PrivateRoute restricted={false} component={NewConnector} path="/dashboard/CDP/cdp-connector-profile/connectors/new-connector" exact />
                 <PrivateRoute restricted={false} component={NewProfile} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile-old" exact />
                 <PrivateRoute restricted={false} component={NewProfileLayout} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile" exact />
-                {/* <PrivateRoute component={Dashboard} path="/dashboard" exact /> */}
                 <PublicRoute
                   restricted={false}
                   path="*"
