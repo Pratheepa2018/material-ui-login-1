@@ -204,6 +204,7 @@ export default function EnhancedTable(props) {
   const [dataStatus, getStatus] = useState(false)
   const [rows, getData] = useState(false);
   const [isOpen, openModel] = useState();
+  const [deleteStatus, setDeleteStatus] = useState(false);
   const allConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=-1`
   useEffect(() => {
     fetch(allConnectorsURL, {
@@ -220,12 +221,14 @@ export default function EnhancedTable(props) {
           return false;
         })
       });
-  }, [allConnectorsURL])
+  }, [allConnectorsURL]);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.name);
@@ -234,6 +237,7 @@ export default function EnhancedTable(props) {
     }
     setSelected([]);
   };
+
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -280,6 +284,7 @@ export default function EnhancedTable(props) {
   }
   const deleteConnector = async () =>{
     const delteConnecterURL = `${common.api_url}/connector?${setDeleteData()}`;
+    setDeleteStatus(true);
     console.log(delteConnecterURL);
     try {
       await fetch(delteConnecterURL, {
@@ -290,11 +295,13 @@ export default function EnhancedTable(props) {
         }
       }).then(resp => resp.json())
       .then(data => {
+        setDeleteStatus(false)
         if(data.status === 'Success') {
           window.location.reload(false)
         }
       })
     } catch (e) { 
+      setDeleteStatus(false);
       console.log(e);
     }
   }
@@ -366,26 +373,27 @@ export default function EnhancedTable(props) {
                         </TableRow>
                       );
                     })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                      <TableCell />
-                    </TableRow>
-                  )}
+                  
                 </TableBody>
             </Table>
+            {rows.length <= 0 && 
+              <p className="empty-message">There is no connector! Please add new.</p>
+            }
           </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
+          {rows.length > 0 && 
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          } 
         </Paper>
       </Box>}
-      <Model isOpen={isOpen} deleteEntry={deleteConnector} />
+      <Model isOpen={isOpen} deleteEntry={deleteConnector} deleteStatus={deleteStatus} />
     </div>
   );
 }

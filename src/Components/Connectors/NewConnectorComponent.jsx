@@ -23,7 +23,10 @@ export default class NewConnector extends Component {
       dbpassword: '',
       editConnector: false,
       connectorId: -1,
-      loadEditDetails: false
+      loadEditDetails: false,
+      testConnection: false,
+      metaDataConnection: false,
+      saveConnector: false
     }
     this.baseState = this.state;
   }
@@ -102,6 +105,8 @@ export default class NewConnector extends Component {
 
   handleTestConnection = async () => {
     const testURL = "https://cdpmysqlconnector.azurewebsites.net/mysql/testConnection";
+    this.setState({testConnection: true});
+    console.log(this.generateTestData());
     try {
       await fetch(testURL, {
         method: 'POST',
@@ -114,6 +119,7 @@ export default class NewConnector extends Component {
         body: JSON.stringify(this.generateTestData())
       }).then(resp => resp.json())
         .then(response => {
+          this.setState({testConnection: false});
           if (response === 'failure') {
             return false;
           } else if (response === 'success') {
@@ -121,6 +127,8 @@ export default class NewConnector extends Component {
           }
         })
     } catch (e) {
+      this.setState({testConnection: false});
+      NotificationManager.error('Error! Check the fields');
       return false;
     }
 
@@ -128,6 +136,8 @@ export default class NewConnector extends Component {
 
   handleMetadata = async () => {
     const metaURL = 'https://cdpmysqlconnector.azurewebsites.net/mysql/getMetaData';
+    this.setState({metaDataConnection: true});
+    console.log(this.generateTestData());
     try {
       await fetch(metaURL, {
         method: 'POST',
@@ -140,7 +150,9 @@ export default class NewConnector extends Component {
         body: JSON.stringify(this.generateTestData())
       }).then(resp => resp.json())
         .then(response => {
+          this.setState({metaDataConnection: false})
           console.log(response);
+          console.log(JSON.parse(response));
           // if(response === 'failure') {
           //   return false;
           // } else if (response === 'success') {
@@ -148,11 +160,14 @@ export default class NewConnector extends Component {
           // }
         })
     } catch (e) {
+      this.setState({metaDataConnection: false});
+      NotificationManager.error('Error! Check the fields');
       return false;
     }
   }
 
   handelSave = async () => {
+    this.setState({saveConnector: true});
     const searchKey = window.location.search;
     let getKey;
     if (searchKey.length > 0) {
@@ -177,6 +192,7 @@ export default class NewConnector extends Component {
             body: JSON.stringify(this.createDataObject()),
           }).then(resp => resp.json())
             .then((data) => {
+              this.setState({saveConnector: false});
               if (data.status === 'Success') {
                 NotificationManager.success('Connection Saved Successfully!');
                 this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
@@ -185,9 +201,11 @@ export default class NewConnector extends Component {
               }
             })
         } catch (e) {
+          this.setState({saveConnector: false});
           console.log(e, 'Oh no something went wrong!!!');
         }
       } else {
+        this.setState({saveConnector: false});
         NotificationManager.error('Connection Failed');
       }
     }
@@ -228,7 +246,7 @@ export default class NewConnector extends Component {
   }
 
   render() {
-    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector, loadEditDetails } = this.state;
+    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector, loadEditDetails, testConnection, metaDataConnection, saveConnector} = this.state;
     const buttonStyle = {
       fontSize: '12px',
       textTransform: 'capitalize'
@@ -404,20 +422,33 @@ export default class NewConnector extends Component {
                         <Grid item xs={3}>
                           <Button type="clear" variant="outlined" color="primary" fullWidth style={buttonStyle} onClick={this.handleClear}>Clear All</Button>
                         </Grid>
-                        <Grid item xs={3}>
-                          <Button type="button" variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleTestConnection}>Test Connection</Button>
+                        <Grid item xs={3} className={`${testConnection ? 'section-loader': ''}`}>
+                          { !testConnection ? 
+                            <Button type="button" variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleTestConnection}>Test Connection</Button>
+                            :
+                            <PageLoader />
+                          }
                         </Grid>
-                        <Grid item xs={3}>
-                          <Button type="button" variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleMetadata}>View Meta Data</Button>
+                        <Grid item xs={3} className={`${metaDataConnection ? 'section-loader': ''}`}>
+                          { !metaDataConnection ?
+                            <Button type="button" variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleMetadata}>View Meta Data</Button>
+                            :
+                            <PageLoader />
+                          }
                         </Grid>
-                        <Grid item xs={3}>
-                          <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
-                            {!editConnector ?
-                              `Save Connector`
-                              :
-                              `Update Connector`
-                            }
-                          </Button>
+                        <Grid item xs={3} className={`${saveConnector ? 'section-loader': ''}`}>
+                          { !saveConnector ? 
+                            <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
+                              {!editConnector ?
+                                `Save Connector`
+                                :
+                                `Update Connector`
+                              }
+                            </Button>
+                          :
+                            <PageLoader />
+                          }
+
                         </Grid>
                       </Grid>
                     </ValidatorForm>

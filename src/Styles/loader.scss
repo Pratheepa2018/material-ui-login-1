@@ -5,6 +5,13 @@
   pointer-events: none;
   height: 400px;
 }
+.section-loader {
+  position: relative;
+  pointer-events: none;
+  .page-loader {
+    background: transparent;
+  }
+}
 
 .page-loader {
   align-items: center;
