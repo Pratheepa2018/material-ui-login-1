@@ -116,7 +116,7 @@ class NewProfileComponentLayout extends React.Component {
             const checkedItems = { ...this.state.checkedItems }
             sourceTablesdata.tables.filter((table)=>{
               checkedItems[table.tableName] = [];
-              
+              return 0;
             })
              
             this.setState({
