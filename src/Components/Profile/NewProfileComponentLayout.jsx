@@ -259,7 +259,7 @@ class NewProfileComponentLayout extends React.Component {
                                 onChange={this.handleChangeCheckbox(table.tableName, column)}
                                 name={column} 
                                 color="primary"
-                                checked={checkedItems[table.tableName].filter(item => item === column).length} 
+                                checked={checkedItems[table.tableName].filter(item => item === column).length ? true : false } 
                               />
                             }
                             label={column} 
