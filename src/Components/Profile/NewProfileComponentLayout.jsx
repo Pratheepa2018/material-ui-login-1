@@ -116,7 +116,7 @@ class NewProfileComponentLayout extends React.Component {
             const checkedItems = { ...this.state.checkedItems }
             sourceTablesdata.tables.filter((table)=>{
               checkedItems[table.tableName] = [];
-               //console.log(checkedItems)
+              
             })
              
             this.setState({
@@ -150,7 +150,7 @@ class NewProfileComponentLayout extends React.Component {
       sourceConnectorsId,
       targetConnectorsId,
       source,
-      editProfile,
+      
       checkedItems,
     } = this.state
     return (
