@@ -305,7 +305,7 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <FullWidthBanner
         title="My Connectors"
-        image="../../assets/images/globle.jpg"
+        image="../../assets/images/bgbanner.png"
         imageText="Full Banner"
         exceptimage ="../../assets/images/learnmore.gif"
       />

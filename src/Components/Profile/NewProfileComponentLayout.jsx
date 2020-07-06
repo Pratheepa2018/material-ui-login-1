@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import PropTypes from 'prop-types';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import {
   Paper, Box, Grid, TextField, Tabs, Tab, Typography, AppBar, Accordion,
-  AccordionSummary, AccordionDetails, Select, MenuItem, Checkbox, Button
+  AccordionSummary, AccordionDetails, Select, MenuItem, Checkbox, Button, CardHeader
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -51,7 +50,6 @@ class NewProfileComponentLayout extends React.Component {
     this.state = ({
       value: 0,
       setTaget: '',
-      personName: [],
       sourceTableName: [],
       targetTableName: [],
       profileName: '',
@@ -75,7 +73,8 @@ class NewProfileComponentLayout extends React.Component {
 
   }
   handleChange = (event) => {
-    // setState({ ...state, [event.target.name]: event.target.checked });
+console.log( event.target)
+    //this.setState({ ...values, [event.target.name]: event.target.checked });
   };
 
   componentDidMount() {
@@ -128,7 +127,6 @@ class NewProfileComponentLayout extends React.Component {
       sourceTableName,
       targetTableName,
       profileName,
-      personName,
       profileDescription,
       sourceConnectorsId,
       targetConnectorsId,
@@ -140,7 +138,7 @@ class NewProfileComponentLayout extends React.Component {
 
         <FullWidthBanner
           title="Add New Profile"
-          image="../../../assets/images/globle.jpg"
+          image="../../../assets/images/bgbanner.png"
           imageText="Full Banner"
           exceptimage="../../../assets/images/learnmore.gif" />
 
@@ -219,7 +217,17 @@ class NewProfileComponentLayout extends React.Component {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography className='tableHeading'>{table.tableName}</Typography>
+                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
+                  <CardHeader
+       
+       avatar={
+         <Checkbox
+           inputProps={{ 'aria-label': 'all items selected' }}
+         />
+       }
+       title={table.tableName}
+        subheader={`${table.columns.length} Columns`}
+     />
                 </AccordionSummary>
                 <AccordionDetails>
                   <FormGroup row>
@@ -253,7 +261,17 @@ class NewProfileComponentLayout extends React.Component {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography className='tableHeading'>{table.tableName}</Typography>
+                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
+                  <CardHeader
+       
+       avatar={
+         <Checkbox
+           inputProps={{ 'aria-label': 'all items selected' }}
+         />
+       }
+       title={table.tableName}
+        subheader={`${table.columns.length} Columns`}
+     />
                 </AccordionSummary>
                 <AccordionDetails>
                   <FormGroup row>

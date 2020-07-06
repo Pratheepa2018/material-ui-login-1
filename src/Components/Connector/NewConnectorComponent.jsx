@@ -162,6 +162,8 @@ export default class NewConnector extends Component {
       this.handleUpdate();
     } else {
       if(this.handleTestConnection()) {
+
+        NotificationManager.success('Connection Varified Successfully!');
         const saveConnectorURL = `${common.api_url}/connector`;
         try {
           await fetch(saveConnectorURL, {
@@ -176,6 +178,7 @@ export default class NewConnector extends Component {
           }).then(resp => resp.json())
           .then((data) => {
             if(data.status === 'Success') {
+              NotificationManager.success('Connection Saved Successfully!');
               this.props.history.push('/subscribedservices/CDP/connectors');
             } else {
               console.log('Something went wrong!');
@@ -184,8 +187,9 @@ export default class NewConnector extends Component {
         } catch (e) {
           console.log(e, 'Oh no something went wrong!!!');
         }
+      } else {
+        NotificationManager.error('Connection Failed');
       } 
-      console.log('Your connection got failed');
     }
   }
   componentDidMount() {

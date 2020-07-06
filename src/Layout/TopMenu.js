@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Language, FindReplace } from '@material-ui/icons/';
 import Logout from '../Components/Authentication/LogoutComponent';
+import { NotificationContainer } from 'react-notifications';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -127,6 +128,7 @@ export default function PrimarySearchAppBar(props) {
 
   return (
     <div className={classes.grow}>
+      <NotificationContainer />
       <div>
         <Toolbar>
           <Typography className={classes.title} variant="h6" noWrap>
