@@ -53,7 +53,7 @@ function App(props) {
         <Router>
           <React.Fragment>
             {Auth.isAuthenticated() ? <MenuBar open={handleDrawerOpen} close={handleDrawerClose} /> : <Header />}
-            <main className={drawOpen ? 'makeStyles-appBarShift-6' : Auth.isAuthenticated() && classes.closemenu} >
+            <main className={drawOpen ? 'makeStyles-appBarShift-6 slide-menu-open' : Auth.isAuthenticated() && classes.closemenu} >
               <div className={classes.toolbar} />
               <Switch>
                 <PublicRoute restricted={true} component={Login} path="/" exact />

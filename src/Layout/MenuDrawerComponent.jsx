@@ -181,22 +181,24 @@ export default function MiniDrawer(props) {
             <ListItemText className={classes.sidemenu} primary="Solutions" />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemText primary="Collabera Information Platform (CIP)" />
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemText primary="Collabera DevOps Platform (CDP)" />
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemText primary="Collabera Connectors MarketPlace (CCM)" />
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <ListItemText primary="Collabera Cloud Accelerators (CCP)" />
-              </ListItem>
-            </List>
-          </Collapse>
+          {drawOpen && 
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button className={classes.nested}>
+                  <ListItemText primary="Collabera Information Platform (CIP)" />
+                </ListItem>
+                <ListItem button className={classes.nested}>
+                  <ListItemText primary="Collabera DevOps Platform (CDP)" />
+                </ListItem>
+                <ListItem button className={classes.nested}>
+                  <ListItemText primary="Collabera Connectors MarketPlace (CCM)" />
+                </ListItem>
+                <ListItem button className={classes.nested}>
+                  <ListItemText primary="Collabera Cloud Accelerators (CCP)" />
+                </ListItem>
+              </List>
+            </Collapse>
+          }
           <ListItem button>
             <ListItemIcon><LinearScaleIcon color="inherit" /> </ListItemIcon>
             <ListItemText>{'Insights'}</ListItemText>
