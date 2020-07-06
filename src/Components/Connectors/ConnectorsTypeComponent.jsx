@@ -13,7 +13,7 @@ export default class ConnectorType extends Component {
       <div className="connector-type">
         <FullWidthBanner 
           title="Connector Type"
-          image="../../assets/images/bgbanner.png"
+          image="../../assets/images/globle.jpg"
           imageText="Full Banner"
           exceptimage ="../../assets/images/learnmore.gif"
         />

@@ -305,7 +305,7 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <FullWidthBanner
         title="My Connectors"
-        image="../../assets/images/bgbanner.png"
+        image="../../assets/images/globle.jpg"
         imageText="Full Banner"
         exceptimage ="../../assets/images/learnmore.gif"
       />
@@ -385,7 +385,7 @@ export default function EnhancedTable(props) {
           />
         </Paper>
       </Box>}
-      <Model isOpen={isOpen} deleteConnector={deleteConnector} />
+      <Model isOpen={isOpen} deleteEntry={deleteConnector} />
     </div>
   );
 }

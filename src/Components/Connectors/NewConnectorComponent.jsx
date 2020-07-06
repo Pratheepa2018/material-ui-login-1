@@ -28,10 +28,10 @@ export default class NewConnector extends Component {
     this.baseState = this.state;
   }
   handleChanges = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     this.setState({ [name]: value })
   }
-  
+
   createDataObject = () => {
     const { connector_name, connector_desc, tenant_id, connector_type, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
     const fields = {
@@ -43,7 +43,7 @@ export default class NewConnector extends Component {
       "server_port": server_port,
       "clientdb": clientdb,
       "dbuser": dbuser,
-      "dbpassword": dbpassword 
+      "dbpassword": dbpassword
     }
     return fields;
   }
@@ -65,7 +65,7 @@ export default class NewConnector extends Component {
       "server_port": server_port,
       "clientdb": clientdb,
       "dbuser": dbuser,
-      "dbpassword": dbpassword 
+      "dbpassword": dbpassword
     }
     try {
       await fetch(saveConnectorURL, {
@@ -78,12 +78,12 @@ export default class NewConnector extends Component {
         },
         body: JSON.stringify(fields),
       }).then(resp => resp.json())
-      .then(data => {
-        if(data.status === 'Success') {
-          NotificationManager.success(data.message);
-          this.props.history.push('/subscribedservices/CDP/connectors');
-        }
-      })
+        .then(data => {
+          if (data.status === 'Success') {
+            NotificationManager.success(data.message);
+            this.props.history.push('/subscribedservices/CDP/connectors');
+          }
+        })
     } catch (e) {
       console.log(e, 'Something went wrong');
     }
@@ -113,13 +113,13 @@ export default class NewConnector extends Component {
         },
         body: JSON.stringify(this.generateTestData())
       }).then(resp => resp.json())
-      .then(response => {
-        if(response === 'failure') {
-          return false;
-        } else if (response === 'success') {
-          return true;
-        }
-      })
+        .then(response => {
+          if (response === 'failure') {
+            return false;
+          } else if (response === 'success') {
+            return true;
+          }
+        })
     } catch (e) {
       return false;
     }
@@ -139,29 +139,29 @@ export default class NewConnector extends Component {
         },
         body: JSON.stringify(this.generateTestData())
       }).then(resp => resp.json())
-      .then(response => {
-        console.log(response);
-        // if(response === 'failure') {
-        //   return false;
-        // } else if (response === 'success') {
-        //   return true;
-        // }
-      })
+        .then(response => {
+          console.log(response);
+          // if(response === 'failure') {
+          //   return false;
+          // } else if (response === 'success') {
+          //   return true;
+          // }
+        })
     } catch (e) {
       return false;
     }
   }
 
-  handelSave = async () => {    
+  handelSave = async () => {
     const searchKey = window.location.search;
     let getKey;
-    if(searchKey.length > 0) {
+    if (searchKey.length > 0) {
       getKey = window.location.search.split('?')[1].split('=')[0];
-    }  
-    if(getKey === 'edit') {
+    }
+    if (getKey === 'edit') {
       this.handleUpdate();
     } else {
-      if(this.handleTestConnection()) {
+      if (this.handleTestConnection()) {
 
         NotificationManager.success('Connection Varified Successfully!');
         const saveConnectorURL = `${common.api_url}/connector`;
@@ -176,33 +176,33 @@ export default class NewConnector extends Component {
             },
             body: JSON.stringify(this.createDataObject()),
           }).then(resp => resp.json())
-          .then((data) => {
-            if(data.status === 'Success') {
-              NotificationManager.success('Connection Saved Successfully!');
-              this.props.history.push('/subscribedservices/CDP/connectors');
-            } else {
-              console.log('Something went wrong!');
-            }
-          })
+            .then((data) => {
+              if (data.status === 'Success') {
+                NotificationManager.success('Connection Saved Successfully!');
+                this.props.history.push('/subscribedservices/CDP/connectors');
+              } else {
+                console.log('Something went wrong!');
+              }
+            })
         } catch (e) {
           console.log(e, 'Oh no something went wrong!!!');
         }
       } else {
         NotificationManager.error('Connection Failed');
-      } 
+      }
     }
   }
   componentDidMount() {
-    this.setState({tenant_id: Auth.getTenentID()});
+    this.setState({ tenant_id: Auth.getTenentID() });
     const searchKey = window.location.search;
-    if(searchKey.length > 0) {
+    if (searchKey.length > 0) {
       const getKey = window.location.search.split('?')[1].split('=')[0];
-      if(getKey === 'edit') {
-        this.setState({editConnector: true, loadEditDetails: true})
+      if (getKey === 'edit') {
+        this.setState({ editConnector: true, loadEditDetails: true })
         const id = window.location.search.split('?')[1].split('=')[1]
         const connectorId = parseInt(id);
-        this.setState({connectorId: connectorId})
-        const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}` 
+        this.setState({ connectorId: connectorId })
+        const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}`
         console.log(ConnectorsURL);
         fetch(ConnectorsURL, {
           method: 'GET',
@@ -211,25 +211,25 @@ export default class NewConnector extends Component {
             "Accept": "application/json"
           }
         }).then(resp => resp.json())
-        .then((data) => {
-          Object.keys(data).map(element => {
-            const flag = Object.keys(data[element][0])
-            flag.map(item => {
-              
-              this.setState({[item]: data[element][0][item], loadEditDetails: false});
+          .then((data) => {
+            Object.keys(data).map(element => {
+              const flag = Object.keys(data[element][0])
+              flag.map(item => {
+
+                this.setState({ [item]: data[element][0][item], loadEditDetails: false });
+                return false;
+              })
               return false;
             })
             return false;
-          })
-          return false;
-        });
+          });
       }
     }
   }
 
   render() {
     const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector, loadEditDetails } = this.state;
-    const buttonStyle ={
+    const buttonStyle = {
       fontSize: '12px',
       textTransform: 'capitalize'
     }
@@ -239,7 +239,7 @@ export default class NewConnector extends Component {
           title="New Connector"
           image="../../assets/images/main-bg.jpg"
           imageText="Full Banner"
-          exceptimage ="../../assets/images/learnmore.gif"
+          exceptimage="../../assets/images/learnmore.gif"
         />
         <Box marginY={5}>
           <Grid container spacing={3} direction="row" alignItems="center" justify="center">
@@ -248,13 +248,13 @@ export default class NewConnector extends Component {
                 <Typography variant="subtitle1">Data Source Connector</Typography>
                 <Box padding={3}>
                   {!loadEditDetails ?
-                    <ValidatorForm 
+                    <ValidatorForm
                       onSubmit={this.handelSave}
                     >
                       <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" alignContent="center">
                         <Grid item xs={6}>
                           <TextValidator
-                            type="text" 
+                            type="text"
                             variant="outlined"
                             margin="normal"
                             required
@@ -272,7 +272,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={6}>
                           <TextValidator
-                            type="text" 
+                            type="text"
                             required
                             variant="outlined"
                             margin="normal"
@@ -290,7 +290,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={6}>
                           <TextValidator
-                            type="text" 
+                            type="text"
                             variant="outlined"
                             margin="normal"
                             required
@@ -308,7 +308,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={6}>
                           <TextValidator
-                            type="text" 
+                            type="text"
                             variant="outlined"
                             margin="normal"
                             required
@@ -326,7 +326,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={6}>
                           <TextValidator
-                            type="text" 
+                            type="text"
                             variant="outlined"
                             margin="normal"
                             required
@@ -344,7 +344,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={6}>
                           <TextValidator
-                            type="text" 
+                            type="text"
                             variant="outlined"
                             margin="normal"
                             required
@@ -362,7 +362,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={6}>
                           <TextValidator
-                            type="text" 
+                            type="text"
                             variant="outlined"
                             margin="normal"
                             required
@@ -379,7 +379,7 @@ export default class NewConnector extends Component {
                           />
                         </Grid>
                         <Grid item xs={6}>
-                          <TextValidator 
+                          <TextValidator
                             type="password"
                             variant="outlined"
                             margin="normal"
@@ -412,7 +412,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={3}>
                           <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
-                            {!editConnector ? 
+                            {!editConnector ?
                               `Save Connector`
                               :
                               `Update Connector`
@@ -421,13 +421,13 @@ export default class NewConnector extends Component {
                         </Grid>
                       </Grid>
                     </ValidatorForm>
-                  : <div className="page-loader"><PageLoader /></div>}  
+                    : <div className="page-loader"><PageLoader /></div>}
                 </Box>
               </Box>
             </Grid>
           </Grid>
         </Box>
-      </div>  
+      </div>
     )
   }
 }

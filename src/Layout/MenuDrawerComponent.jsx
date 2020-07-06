@@ -95,19 +95,9 @@ const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(3),
   },
-  arrow: {
-    color: theme.palette.common.black,
-  },
-  tooltip: {
-    backgroundColor: theme.palette.common.black,
-  },
   sidemenu: {
     fontWeight: "600",
-
   },
-  iconStyle: {
-
-  }
 }));
 
 export default function MiniDrawer(props) {
