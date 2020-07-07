@@ -26,6 +26,8 @@ import AddNewProject from './Pipeline/Components/Projects/AddNewProject'
 import DevopsTools from './Pipeline/Components/DevopsTools/DevopsTools';
 import AddDevopsTool from './Pipeline/Components/DevopsTools/AddDevopsTool'
 
+import './Styles/main.scss';
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -39,8 +41,7 @@ const styles = theme => ({
   },
   closemenu: {
     flexGrow: 1,
-    paddingLeft: "70px",
-    paddingTop: theme.spacing(-5),
+    paddingLeft: "70px"
 
   },
 });
@@ -60,8 +61,8 @@ function App(props) {
         <Router>
           <React.Fragment>
             {Auth.isAuthenticated() ? <MenuBar open={handleDrawerOpen} close={handleDrawerClose} /> : <Header />}
-            <main className={drawOpen ? 'makeStyles-appBarShift-6 slide-menu-open' : Auth.isAuthenticated() && classes.closemenu} >
-              <div className={classes.toolbar} />
+            <main className={drawOpen ? 'makeStyles-appBarShift-6 slide-menu-open clip-header' : Auth.isAuthenticated() ? `${classes.closemenu} clip-header` : 'clip-header'} >
+              {/* <div className={classes.toolbar} /> */}
               <Switch>
                 <PublicRoute restricted={true} component={Login} path="/" exact />
                 <PublicRoute restricted={true} component={Login} path="/login" exact />

@@ -6,7 +6,7 @@
     background-color: #1a2038;
     /* color: white; */
 }
-footer .footerbody{ justify-content: center;}
+footer .footerbody{ justify-content: center; border-radius: 0;}
 footer .footerbody a{padding: 2px 15px;}
 
 @media(max-width:767px){

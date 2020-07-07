@@ -10,9 +10,12 @@ class FullWidthBanner extends React.Component {
 
   render() {
     const { image, imageText, title, exceptimage } = this.props; //description, linkText
+    const bannerStyle = {
+      backgroundImage: `url(${image})`
+    }
     return (
       <div>
-        <Box className='banner_body' style={{ backgroundImage: `url(${image})` }} p={{ xs: 4, sm: 6, md: 8 }}>
+        <Box className='banner_body' style={bannerStyle} p={{ xs: 4, sm: 6, md: 8 }}>
           {<img style={{ display: 'none' }} src={image} alt={imageText} />}
           <Typography component="h1" variant="h2" className="main-head" align="center">{title}</Typography>
         </Box>
