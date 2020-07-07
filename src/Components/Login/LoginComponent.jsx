@@ -8,6 +8,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Auth from '../../Layout/Authentication';
 import './LoginComponent.css'
+import { PageLoader } from '../../Layout/Loader';
 
 export default class LoginComponent extends Component {
   constructor(props) {
@@ -140,19 +141,13 @@ export default class LoginComponent extends Component {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}
-              > {
-                  !submitting ? 'Sign In' : 'Submitting'
-                }
+              <Button type="submit" fullWidth variant="contained" color="primary" className={`${submitting ? `section-loader ${classes.submit}`: classes.submit}`}
+              >
+              Sign In 
+              {
+                submitting && <PageLoader/>
+              }
               </Button>
-              <Box paddingTop={1} paddingBottom={1}>
-                {!submitting ? " " : <LinearProgress />}
-              </Box>
-              {/* <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">Forgot password?</Link>
-                </Grid>
-              </Grid> */}
             </ValidatorForm>
           </Box>
         </Grid>

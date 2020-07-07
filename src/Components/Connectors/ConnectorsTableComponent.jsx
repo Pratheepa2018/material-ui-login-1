@@ -234,11 +234,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function EnhancedTable(props) {
-  // const rows = [
-  //   createData('MYSQLDB', 'CONNECTOR WORLD TO MYSQL DATABASE'),
-  //   createData('MSSQLDB', 'CONNECTOR SELECTED FOR MSSQL'),
-  //   createData('MONGODB', 'CONNECTOR WITH MONGO AND NODEJS'),
-  // ];
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
