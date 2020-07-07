@@ -1,7 +1,6 @@
 import React from 'react';
 import Box from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import '../../Styles/banner.scss';
 
 import Breadcrumbs from '../../Layout/BreadCrumbs';
@@ -9,7 +8,7 @@ import Breadcrumbs from '../../Layout/BreadCrumbs';
 class FullWidthBanner extends React.Component {
 
   render() {
-    const { image, imageText, title, exceptimage } = this.props; //description, linkText
+    const { image, imageText, title } = this.props; //description, linkText
     const bannerStyle = {
       backgroundImage: `url(${image})`
     }

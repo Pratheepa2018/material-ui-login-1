@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import { Button, LinearProgress, TextField, FormControlLabel, Checkbox, Paper, Box, Grid, Typography, InputAdornment, IconButton } from '@material-ui/core';
+import { Button, TextField, FormControlLabel, Checkbox, Paper, Box, Grid, Typography, InputAdornment, IconButton } from '@material-ui/core';
 import { ValidatorForm } from 'react-material-ui-form-validator';
 import { NotificationManager } from 'react-notifications';
 import AccountCircle from '@material-ui/icons/AccountCircle';

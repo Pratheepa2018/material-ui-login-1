@@ -303,7 +303,7 @@ class NewProfileComponentLayout extends React.Component {
               targetTableName[table.tableName] = table.columns;
               return 0;
             })
-            const connecterList= "";
+            // const connecterList= "";
             this.setState({
               profileId: updateData.profileId,
               tenant_id: updateData.tenant_id,

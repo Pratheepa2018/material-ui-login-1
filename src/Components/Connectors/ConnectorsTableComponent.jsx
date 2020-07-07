@@ -360,6 +360,7 @@ export default function EnhancedTable(props) {
       } else if(data.connector_name.toLowerCase().includes(search) || data.connector_desc.toLowerCase().includes(search)) {
         return data;
       }
+      return null;
     })
     getData(item);
   }
