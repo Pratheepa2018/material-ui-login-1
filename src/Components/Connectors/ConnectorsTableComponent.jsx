@@ -354,14 +354,14 @@ export default function EnhancedTable(props) {
     e.stopPropagation();
     getFilterData(e.target.value);
     let search = e.target.value.trim().toLowerCase();
-    if(search.length > 0) {
-      let data = defaultRows.filter(function(item) {
-        return item.connector_name.toLowerCase().match(search)
-      })
-      getData(data);
-    } else {
-      getData(defaultRows);
-    }
+    let item = defaultRows.filter((data) => {
+      if(search.length <= 0) {
+        return defaultRows;
+      } else if(data.connector_name.toLowerCase().includes(search) || data.connector_desc.toLowerCase().includes(search)) {
+        return data;
+      }
+    })
+    getData(item);
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
