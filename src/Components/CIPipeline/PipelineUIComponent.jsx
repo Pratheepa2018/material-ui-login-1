@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Typography, Box, Button, Select, MenuItem, InputLabel } from '@material-ui/core';
+import { Grid, Typography, Box, Button, Select, MenuItem, InputLabel, FormControl } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import '../../Styles/validation.css';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
@@ -23,7 +23,7 @@ export default class NewConnector extends Component {
   }
 
   handelSave = async () => {
-   
+
     const fieldsToSend = {
       browserName: this.state.browserName,
       frameworkType: this.state.frameworkType,
@@ -32,10 +32,10 @@ export default class NewConnector extends Component {
       executeFor: this.state.executeFor,
       userName: this.state.userName
     }
-   const fieldsToSenda=  JSON.stringify(fieldsToSend)
+    const fieldsToSenda = JSON.stringify(fieldsToSend)
 
     alert(fieldsToSenda);
- 
+
   }
   componentDidMount() {
     this.setState({ userName: Auth.getUserName() });
@@ -91,40 +91,43 @@ export default class NewConnector extends Component {
                     onSubmit={this.handelSave}
                   >
                     <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" alignContent="center">
+
                       <Grid item xs={6}>
-
-                        <InputLabel id="browserName">Browser Name</InputLabel>
-                        <Select
-                          margin="normal"
-                          id="browserName"
-                          fullWidth
-                          required
-                          labelId="browserName"
-                          name="browserName"
-                          value={browserName}
-                          onChange={this.handleChanges}
-                        >
-                          {browserNames.map((name) => (
-                            <MenuItem key={name} value={name} >
-                              {name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-
+                        <FormControl variant="outlined" >
+                          <InputLabel id="demo-simple-select-outlined-label">Browser Name</InputLabel>
+                          <Select style={{ width: 300 }}
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={browserName}
+                            onChange={this.handleChanges}
+                            fullWidth
+                            label="browserName"
+                            size="small"
+                            name="browserName"
+                            required
+                          >
+                            {browserNames.map((name) => (
+                              <MenuItem key={name} value={name} >
+                                {name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
                       </Grid>
-                      <Grid item xs={6}>
-                        <InputLabel id="frameworkType">Framework Type</InputLabel>
-                        <Select
-                          margin="normal"
-                          required
-                          id="frameworkType"
-                          fullWidth
 
-                          labelId="frameworkType"
-                          name="frameworkType"
+                      <Grid item xs={6}>
+                      <FormControl variant="outlined" >
+                        <InputLabel id="demo-simple-select-outlined-label">Framework Type</InputLabel>
+                        <Select style={{ width: 300 }}
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
                           value={frameworkType}
                           onChange={this.handleChanges}
-
+                          fullWidth
+                          label="frameworkType"
+                          size="small"
+                          name="frameworkType"
+                          required
                         >
                           {frameworkTypes.map((name) => (
                             <MenuItem key={name} value={name} >
@@ -132,26 +135,24 @@ export default class NewConnector extends Component {
                             </MenuItem>
                           ))}
                         </Select>
-
+                        </FormControl>
                       </Grid>
                       <Grid item xs={6}>
-                        <TextValidator
+                        <TextValidator style={{ width: 300 }}
                           type="text"
-                          margin="normal"
+                          variant="outlined" 
                           required
                           id="reportName"
                           label="Report Name"
                           name="reportName"
-                          size="small"
-                          autoFocus
-                          fullWidth
                           value={reportName}
                           onChange={this.handleChanges}
                         />
                       </Grid>
                       <Grid item xs={6}>
+                      <FormControl variant="outlined" >
                         <InputLabel id="operatingSystem">Operating System</InputLabel>
-                        <Select
+                        <Select style={{ width: 300 }}
                           margin="normal"
                           required
                           id="operatingSystem"
@@ -167,10 +168,12 @@ export default class NewConnector extends Component {
                             </MenuItem>
                           ))}
                         </Select>
+                        </FormControl>
                       </Grid>
                       <Grid item xs={6}>
+                      <FormControl variant="outlined" >
                         <InputLabel id="executeFor">Execute For</InputLabel>
-                        <Select
+                        <Select style={{ width: 300 }}
                           margin="normal"
                           required
                           id="executeFor"
@@ -186,9 +189,10 @@ export default class NewConnector extends Component {
                             </MenuItem>
                           ))}
                         </Select>
+                        </FormControl>
                       </Grid>
                       <Grid item xs={6}>
-                        <TextValidator
+                        <TextValidator style={{ width: 300 }}
                           type="text"
                           disabled
                           margin="normal"
@@ -196,8 +200,7 @@ export default class NewConnector extends Component {
                           id="userName"
                           label="User Name"
                           name="userName"
-                          size="small"
-                          fullWidth
+                          variant="outlined" 
                           value={userName}
                         />
                       </Grid>
