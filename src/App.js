@@ -21,10 +21,13 @@ import PipelineUI from './Components/CIPipeline/PipelineUIComponent';
 
 
 //Pipeline imports
+import PipelineDashboard from './Pipeline/Components/Dashboard/PipelineDashboard';
 import Projects from './Pipeline/Components/Projects/Projects';
-import AddNewProject from './Pipeline/Components/Projects/AddNewProject'
+import AddNewProject from './Pipeline/Components/Projects/AddNewProject';
 import DevopsTools from './Pipeline/Components/DevopsTools/DevopsTools';
-import AddDevopsTool from './Pipeline/Components/DevopsTools/AddDevopsTool'
+import AddDevopsTool from './Pipeline/Components/DevopsTools/AddDevopsTool';
+import ScriptTemplates from './Pipeline/Components/ScriptTemplates/ScriptTemplatesComponent';
+import AddScriptTemplates from './Pipeline/Components/ScriptTemplates/AddScriptTemplate';
 
 import './Styles/main.scss';
 
@@ -78,11 +81,14 @@ function App(props) {
                 <PrivateRoute restricted={false} component={PipelineUI} path="/dashboard/CDP/api-pipeline" exact />
                 
                 {/* Devops Pipeline Code  */}
+                <PrivateRoute restricted={false} component={PipelineDashboard} path="/pipeline" exact />
                 <PrivateRoute restricted={false} component={Projects} path="/pipeline/Projects" exact />
                 <PrivateRoute restricted={false} component={AddNewProject} path="/pipeline/Projects/AddNewProject" exact />
                 <PrivateRoute restricted={false} component={DevopsTools} path="/pipeline/DevopsTools" exact />
                 <PrivateRoute restricted={false} component={AddDevopsTool} path="/pipeline/DevopsTools/AddDevopsTool" exact />
-
+                <PrivateRoute restricted={false} component={ScriptTemplates} path="/pipeline/ScriptTemplates" exact />
+                <PrivateRoute restricted={false} component={AddScriptTemplates} path="/pipeline/ScriptTemplates/AddScriptTemplates" exact />
+                
                 <PublicRoute
                   restricted={false}
                   path="*"
