@@ -1,0 +1,50 @@
+@import './utils/mixins';
+
+.banner_body{
+  align-items: center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  min-height: 150px;
+  position: relative;
+
+  &::after {
+    content: "";
+    background: rgba(0,0,0,0.2);
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .main-head {
+    color: #fff;
+    font-size: 45px;
+    font-weight: 600;
+    position: relative;
+    text-shadow: -1px -1px 2px rgba(0,0,0,0.5);
+    z-index: 1;
+  }
+}
+
+.textbody{
+  display: inline-block;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, .5);
+  color: #fff;
+}
+.gif{
+  display: unset;
+  position: absolute;
+  right: 159px;
+}
+
+@media(max-width:767px){
+  .banner_body h1{font-size: 30px;}
+  .gif{
+    display: none;
+  }
+}
