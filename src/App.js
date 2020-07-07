@@ -19,6 +19,13 @@ import Header from './Layout/HeaderComponent';
 import Auth from './Layout/Authentication';
 import PipelineUI from './Components/CIPipeline/PipelineUIComponent';
 
+
+//Pipeline imports
+import Projects from './Pipeline/Components/Projects/Projects';
+import AddNewProject from './Pipeline/Components/Projects/AddNewProject'
+import DevopsTools from './Pipeline/Components/DevopsTools/DevopsTools';
+import AddDevopsTool from './Pipeline/Components/DevopsTools/AddDevopsTool'
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -69,6 +76,12 @@ function App(props) {
                 <PrivateRoute restricted={false} component={NewProfileLayout} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile" exact />
                 <PrivateRoute restricted={false} component={PipelineUI} path="/dashboard/CDP/api-pipeline" exact />
                 
+                {/* Devops Pipeline Code  */}
+                <PrivateRoute restricted={false} component={Projects} path="/Projects" exact />
+                <PrivateRoute restricted={false} component={AddNewProject} path="/Projects/AddNewProject" exact />
+                <PrivateRoute restricted={false} component={DevopsTools} path="/DevopsTools" exact />
+                <PrivateRoute restricted={false} component={AddDevopsTool} path="/DevopsTools/AddDevopsTool" exact />
+
                 <PublicRoute
                   restricted={false}
                   path="*"
