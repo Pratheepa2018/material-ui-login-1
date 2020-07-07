@@ -77,10 +77,10 @@ function App(props) {
                 <PrivateRoute restricted={false} component={PipelineUI} path="/dashboard/CDP/api-pipeline" exact />
                 
                 {/* Devops Pipeline Code  */}
-                <PrivateRoute restricted={false} component={Projects} path="/Projects" exact />
-                <PrivateRoute restricted={false} component={AddNewProject} path="/Projects/AddNewProject" exact />
-                <PrivateRoute restricted={false} component={DevopsTools} path="/DevopsTools" exact />
-                <PrivateRoute restricted={false} component={AddDevopsTool} path="/DevopsTools/AddDevopsTool" exact />
+                <PrivateRoute restricted={false} component={Projects} path="/pipeline/Projects" exact />
+                <PrivateRoute restricted={false} component={AddNewProject} path="/pipeline/Projects/AddNewProject" exact />
+                <PrivateRoute restricted={false} component={DevopsTools} path="/pipeline/DevopsTools" exact />
+                <PrivateRoute restricted={false} component={AddDevopsTool} path="/pipeline/DevopsTools/AddDevopsTool" exact />
 
                 <PublicRoute
                   restricted={false}
