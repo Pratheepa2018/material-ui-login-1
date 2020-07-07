@@ -4,7 +4,7 @@ import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner
 
 import { Checkbox, TextField, FormControlLabel, Typography, Grid, Box, Button, Paper, InputBase } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import './DevopsTools.css';
+import './ScriptTemplates.css';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function AddDevopsTool() {
+export default function AddScriptTemplates() {
   const classes = useStyles();
   return (
     <div id="addNewProject">
       <FullWidthBanner
-        title="Add Devops Tool"
+        title="Add Script Templates"
         image="../../assets/images/globle.jpg"
         imageText="Full Banner"
         exceptimage="../../assets/images/learnmore.gif"
@@ -33,7 +33,7 @@ export default function AddDevopsTool() {
         <Grid container spacing={3} direction="row" alignItems="center" justify="center">
           <Grid item xs={6}>
             <Box marginY={3} border={1} padding={2} borderColor="grey.500" boxShadow={3}>
-              <Typography variant="subtitle1" className="bold">Add Devops Tool</Typography>
+              <Typography variant="subtitle1" className="bold">Add Script  Templates</Typography>
               <Box padding={3}>
                 <ValidatorForm>
                   <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" alignContent="center">
@@ -115,7 +115,7 @@ export default function AddDevopsTool() {
                       <Button type="clear" variant="contained" color="primary" fullWidth >Save</Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="outlined" color="primary" fullWidth href="/pipeline/DevopsTools" >Cancel</Button>
+                      <Button variant="outlined" color="primary" fullWidth href="/ScriptTemplates" >Cancel</Button>
                     </Grid>
 
                   </Grid>
