@@ -4,20 +4,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import PropTypes from 'prop-types';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { NotificationManager } from 'react-notifications';
-
 import { PageLoader } from '../../Layout/Loader';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import {
-  Paper, Box, Grid, TextField, Tabs, FormControl, Tab, AppBar, Accordion,
+  Box, Grid, Tabs, FormControl, Tab, AppBar, Accordion,
   AccordionSummary, AccordionDetails, InputLabel, Select,
   MenuItem, Checkbox, Button, CardHeader
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { common } from '../../Utils/Api.env';
-
+import './NewProfileComponentLayout.css'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
-
   return (
     <div
       role="tabpanel"
@@ -32,7 +31,6 @@ function TabPanel(props) {
     </div>
   );
 }
-
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
@@ -56,8 +54,8 @@ class NewProfileComponentLayout extends React.Component {
       targetTableName: [],
       profileName: '',
       profileDescription: '',
-      sourceConnectorsId: '',
-      targetConnectorsId: '',
+      sourceConnectorsId: [{ connector_name: '' }],
+      targetConnectorsId: [{ connector_name: '' }],
       source: '',
       editProfile: '',
       checkedItems: [],
@@ -67,24 +65,34 @@ class NewProfileComponentLayout extends React.Component {
       connecterSelected: "",
       masterTable: [],
       saveConnector: false,
-      profileId:'',
+      profileId: '',
       isLoading: false
     })
   }
   handleChangeConnecter = (event) => {
+    const connecterList = [...this.state.connecterList];
+
     if (this.state.activeTab === 0) {
+      const connecterSource = connecterList.filter((connecter) => {
+        if (connecter.connectorId === event.target.value) {
+          return connecter
+        }
+        return false;
+      })
       this.setState({
-        sourceConnectorsId: event.target.value,
-        connecterSelected: event.target.value,
+        sourceConnectorsId: connecterSource,
       });
     } else {
+      const connecterTarget = connecterList.filter((connecter) => {
+        if (connecter.connectorId === event.target.value) {
+          return connecter
+        }
+        return false;
+      })
       this.setState({
-        targetConnectorsId: event.target.value,
-        connecterSelected: event.target.value,
+        targetConnectorsId: connecterTarget,
       });
     }
-
-
   };
 
   handleChangeInput = (event) => {
@@ -92,35 +100,9 @@ class NewProfileComponentLayout extends React.Component {
   };
 
   handleChangeTab = (event, newValue) => {
-    if (newValue === 0) {
-      if (!this.state.sourceConnectorsId) {
-        this.setState({
-          activeTab: newValue, taget: !this.state.source,
-          connecterSelected: this.state.targetConnectorsId,
-          sourceConnectorsId: this.state.targetConnectorsId,
-        });
-      } else {
-        this.setState({
-          activeTab: newValue, taget: !this.state.source,
-          connecterSelected: this.state.sourceConnectorsId,
-        });
-      }
-
-    } else {
-      if (!this.state.targetConnectorsId) {
-        this.setState({
-          activeTab: newValue, taget: !this.state.source,
-          connecterSelected: this.state.sourceConnectorsId,
-          targetConnectorsId: this.state.sourceConnectorsId,
-        });
-      } else {
-        this.setState({
-          activeTab: newValue, taget: !this.state.source,
-          connecterSelected: this.state.targetConnectorsId,
-        });
-      }
-    }
-
+    this.setState({
+      activeTab: newValue
+    });
   };
 
   saveProfileDataFormate() {
@@ -141,24 +123,24 @@ class NewProfileComponentLayout extends React.Component {
     })
 
     const dataPostformat = {
+      ...(this.state.isEdit) && { profileId: this.state.profileId },
       tenant_id: 1,
       profileName: this.state.profileName,
       profileDescription: this.state.profileDescription,
-      source_connector_id: this.state.sourceConnectorsId,
+      source_connector_id: this.state.sourceConnectorsId[0].connectorId,
       source_profile_data: { tables: sourceTable },
-      target_connector_id: this.state.targetConnectorsId,
+      target_connector_id: this.state.targetConnectorsId[0].connectorId,
       target_profile_data: { tables: targetTable }
     }
     return dataPostformat;
   }
-  handleSaveProfile = async () => {
-    //alert(JSON.stringify(this.saveProfileDataFormate()))
+  handleSaveProfile = () => {
+    alert(JSON.stringify(this.saveProfileDataFormate()))
+    this.setState({ isLoading: true });
     const profile_api_link = common.profile_url;
-    this.setState({ saveConnector: true });
-
     try {
-      await fetch(profile_api_link, {
-        method: 'POST',
+      fetch(profile_api_link, {
+        method: this.state.isEdit ? 'put' : 'POST',
         crossDomain: true,
         compress: true,
         headers: {
@@ -168,17 +150,18 @@ class NewProfileComponentLayout extends React.Component {
         body: JSON.stringify(this.saveProfileDataFormate())
       }).then(resp => resp.json())
         .then(data => {
-          this.setState({ saveConnector: false });
+          this.setState({ isLoading: false });
           if (data.status === 'Success') {
             NotificationManager.success('Connection Saved Successfully!');
             this.props.history.push('/dashboard/CDP/cdp-connector-profile/profiles');
           } else {
-            console.log('Something went wrong!');
+
+            NotificationManager.error('Please fill all required fields');
           }
         })
     } catch (e) {
-      this.setState({ saveConnector: false });
-      console.log('Error! Check the fields');
+      this.setState({ isLoading: false });
+      NotificationManager.error('Error! Check the fields');
       return false;
     }
 
@@ -200,7 +183,7 @@ class NewProfileComponentLayout extends React.Component {
     this.setState({ [typedata]: checkedItems });
   };
 
-   createConnectorlist = () =>{
+  createConnectorlist = () => {
     const searchKey = window.location.search;
     let getKey;
     let queryStringpass;
@@ -215,7 +198,7 @@ class NewProfileComponentLayout extends React.Component {
     let GetConnectorstype = `${common.profile_url}/GetConnectors?tenant_Id=1`;
 
     try {
-       fetch(GetConnectorstype, {
+      fetch(GetConnectorstype, {
         method: 'GET',
         crossDomain: true,
         compress: true,
@@ -225,15 +208,19 @@ class NewProfileComponentLayout extends React.Component {
       }).then(resp => resp.json())
         .then(data => {
 
-          this.setState({ connecterList: data.connectors, isLoading:false })
+          this.setState({ connecterList: data.connectors, })
+          if (!this.state.isEdit) {
+            this.setState({ isLoading: false })
+          }
+          this.fetchEditProfileData();
         })
     } catch (e) {
       return false;
     }
   }
 
-   getMasterTablesDetails=()=>{
-     this.setState({isLoading:true})
+  getMasterTablesDetails = () => {
+    this.setState({ isLoading: true })
     let ProfileURL = `${common.profile_url}/GetTablesDetails`
     const queryString = {
       "server_address": "collaberamarketplace.mysql.database.azure.com",
@@ -244,7 +231,7 @@ class NewProfileComponentLayout extends React.Component {
     };
 
     try {
-        fetch(ProfileURL, {
+      fetch(ProfileURL, {
         method: 'POST',
         crossDomain: true,
         compress: true,
@@ -253,7 +240,7 @@ class NewProfileComponentLayout extends React.Component {
         },
         body: JSON.stringify(queryString),
       }).then(resp => resp.json())
-        .then(data => { 
+        .then(data => {
           const sourceTableName = { ...this.state.sourceTableName };
           const targetTableName = { ...this.state.targetTableName };
           data.tables.filter((table) => {
@@ -265,19 +252,19 @@ class NewProfileComponentLayout extends React.Component {
           this.setState({
             masterTable: data.tables,
             targetTableName,
-            sourceTableName 
+            sourceTableName
           })
-          if (!this.state.isEdit) {
+
           this.createConnectorlist();
-          }
-          this.fetchEditProfileData();
+
+
         })
     } catch (e) {
       return false;
     }
   }
 
-  fetchEditProfileData = () =>{
+  fetchEditProfileData = () => {
     if (this.state.isEdit) {
       const getProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${this.state.profileId}`
       try {
@@ -297,23 +284,40 @@ class NewProfileComponentLayout extends React.Component {
             const targetTableName = { ...this.state.targetTableName };
             source_profile_data.tables.filter((table) => {
               sourceTableName[table.tableName] = table.columns;
-              return 0;
+              return false;
             })
             target_profile_data.tables.filter((table) => {
               targetTableName[table.tableName] = table.columns;
-              return 0;
+              return false;;
             })
-            // const connecterList= "";
+
+            const connecterList = [...this.state.connecterList];
+
+            const connecterSource = connecterList.filter((connecter) => {
+              if (connecter.connectorId === updateData.source_connector_id) {
+                return connecter
+              }
+              return false;
+            })
+
+            const connecterTarget = connecterList.filter((connecter) => {
+              if (connecter.connectorId === updateData.target_connector_id) {
+                return connecter
+              }
+              return false;
+            })
+
             this.setState({
               profileId: updateData.profileId,
               tenant_id: updateData.tenant_id,
               profileName: updateData.profileName,
               profileDescription: updateData.profileDescription,
-              sourceConnectorsId: updateData.source_connector_id,
-              targetConnectorsId: updateData.target_connector_id,
+              sourceConnectorsId: connecterSource,
+              targetConnectorsId: connecterTarget,
               sourceTableName,
               targetTableName,
-              isLoading: false
+              isLoading: false,
+              connecterSelected: connecterSource[0].connector_name,
             })
           })
       } catch (e) {
@@ -325,10 +329,25 @@ class NewProfileComponentLayout extends React.Component {
     }
   }
 
-   componentDidMount() {
+  componentDidMount() {
     this.getMasterTablesDetails();
   }
 
+  handleSelectAll = (table) => e =>{
+   
+    if(this.state.activeTab===0){
+      const sourceTableAll= {...this.state.sourceTableName};
+       
+      e.target.checked ? sourceTableAll[table.tableName]= table.columns : sourceTableAll[table.tableName]=[];
+        this.setState({
+          sourceTableName: sourceTableAll
+        })
+      
+   }  
+    
+    e.stopPropagation(); 
+    return false
+  }
   render() {
     const {
       activeTab,
@@ -336,16 +355,23 @@ class NewProfileComponentLayout extends React.Component {
       targetTableName,
       profileName,
       profileDescription,
+      sourceConnectorsId,
+      targetConnectorsId,
       connecterList,
       isEdit,
-      connecterSelected,
       masterTable,
       isLoading
     } = this.state
 
+    let activeConnecter =
+      activeTab === 0 ? sourceConnectorsId[0].connectorId :
+        targetConnectorsId[0].connectorId;
+
+    activeConnecter = activeConnecter ? activeConnecter : "";
+    //alert("render")
+
     return (
       <div className="profilepage">
-
         <FullWidthBanner
           title="Add New Profile"
           image="../../../../assets/images/globle.jpg"
@@ -359,172 +385,217 @@ class NewProfileComponentLayout extends React.Component {
 
           </Tabs>
         </AppBar>
-        <Grid container spacing={1}>
-        { isLoading && <PageLoader />}
-          <Grid item sm={6}>
-            <Box padding={1}>
-
-              <Paper variant='outlined' style={{ padding: "10px" }}>
-
-                <FormControl variant="outlined" className="selectdrop">
-                  <InputLabel id="demo-simple-select-outlined-label">Connecter</InputLabel>
-                  <Select style={{ width: 300 }}
-                    labelId="demo-simple-select-outlined-label"
-                    id="demo-simple-select-outlined"
-                    value={connecterSelected}
-                    onChange={this.handleChangeConnecter}
+       
+        {isLoading ? <PageLoader /> :
+          <div>
+             <ValidatorForm onSubmit={this.handleSaveProfile} > 
+            <Grid container spacing={1} className="lg_space">
+              <Grid item sm={6}>
+                <Box padding={1}> 
+                    <FormControl variant="outlined" className="selectdrop">
+                      <InputLabel id="demo-simple-select-outlined-label">Connecter</InputLabel>
+                      <Select 
+                        labelId="demo-simple-select-outlined-label"
+                        id="demo-simple-select-outlined"
+                        value={activeConnecter}
+                        onChange={this.handleChangeConnecter}
+                        fullWidth
+                        required
+                        size="small"
+                        label="Connecter"
+                        name="connecterSelected"
+                        validators={['required']}
+                        errorMessages={['This field is required']}
+                      >
+                        {isEdit ?
+                          activeTab === 0 ?
+                            <MenuItem key={sourceConnectorsId[0].connectorId} value={sourceConnectorsId[0].connectorId} >
+                              {sourceConnectorsId[0].connector_name}
+                            </MenuItem> :
+                            <MenuItem key={targetConnectorsId[0].connectorId} value={targetConnectorsId[0].connectorId} >
+                              {targetConnectorsId[0].connector_name}
+                            </MenuItem>
+                          :
+                          connecterList.map((connecter) => (
+                            <MenuItem key={connecter.connectorId} value={connecter.connectorId} >
+                              {connecter.connector_name}
+                            </MenuItem>
+                          ))}
+                      </Select>
+                    </FormControl>
+ 
+                </Box>
+              </Grid>
+              <Grid item sm={3}>
+              </Grid>
+              <Grid item sm={6}>
+                <Box padding={1}>
+                   
+                    <TextValidator 
+                    label="Profile Name" 
+                    variant="outlined" 
+                    size="small" 
                     fullWidth
-                    label="Connecter"
-                    name="connecterSelected"
-                  >
-                    {isEdit ?
-                      <MenuItem key={1} value={connecterSelected}>
-                        {connecterSelected}
-                      </MenuItem>
-                      :
-                      connecterList.map((connecter) => (
-                        <MenuItem key={connecter.connectorId} value={connecter.connectorId} >
-                          {connecter.connector_name}
-                        </MenuItem>
-                      ))}
-                  </Select>
-                </FormControl>
+                    validators={['required']}
+                    errorMessages={['This field is required']}
+                    value={profileName} 
+                    name='profileName' 
+                    onChange={this.handleChangeInput} />
+ 
+                </Box>
+              </Grid>
 
-              </Paper>
-            </Box>
-          </Grid>
-          <Grid item sm={3}>
-          </Grid>
-          <Grid item sm={6}>
-            <Box padding={1}>
-              <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-                <TextField label="Profile Name" variant="outlined" size="small" fullWidth
-                  value={profileName} name='profileName' onChange={this.handleChangeInput} />
+              <Grid item sm={6}>
+                <Box padding={1}>
+                   
+                    <TextValidator label="Profile description" 
+                    variant="outlined" 
+                    size="small" 
+                    fullWidth
+                    value={profileDescription} 
+                    name='profileDescription' 
+                    validators={['required']}
+                    errorMessages={['This field is required']}
+                    onChange={this.handleChangeInput}
+                     />
+                </Box>
+              </Grid>
 
-              </Paper>
-            </Box>
-          </Grid>
+            </Grid>
+            <TabPanel hidden={activeTab === 1} value={activeTab} index={0} padding={1}>
+              {masterTable.map((table, index) => {
+                return (
 
-          <Grid item sm={6}>
-            <Box padding={1}>
-              <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-                <TextField label="Profile description" variant="outlined" size="small" fullWidth
-                  value={profileDescription} name='profileDescription' onChange={this.handleChangeInput} />
-
-              </Paper>
-            </Box>
-          </Grid>
-
-        </Grid>
-        <TabPanel hidden={activeTab === 1} value={activeTab} index={0} padding={1}>
-          {masterTable.map((table, index) => {
-            return (
-
-              <Accordion key={index}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
-                  <CardHeader avatar={
-                    <Checkbox
-                      inputProps={{ 'aria-label': 'all items selected' }}
-                    />
-                  }
-                    title={table.tableName}
-                    subheader={`${table.columns.length} Columns`}
-                  />
-                </AccordionSummary>
-                <AccordionDetails>
-                  <FormGroup row>
-                    {table.columns.map((column, i) => {
-                      return (
-                        <FormControlLabel key={i}
-                          control={
-                            <Checkbox
-                              onChange={this.handleChangeCheckbox(table.tableName, column, "sourceTableName")}
-                              name={column}
-                              color="primary"
-                              checked={sourceTableName[table.tableName].filter(item => item === column).length ? true : false}
-                            />
-                          }
-                          label={column}
+                  <Accordion key={index}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                      className="accordinheadding"
+                    >
+                       
+                      {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
+                      <CardHeader className="selectAll" avatar={
+                        <Checkbox
+                          inputProps={{ 'aria-label': 'all items selected' }}
+                          onClick={this.handleSelectAll(table)}
+                          color="primary"
+                          checked={activeTab ===0 ? sourceTableName[table.tableName].length ===table.columns.length  :
+                            targetTableName[table.tableName].length === table.columns.length
+                           }
                         />
-                      )
-                    })}
-                  </FormGroup>
-                </AccordionDetails>
-              </Accordion>
-            )
-          })
-          }
-
-        </TabPanel>
-        <TabPanel hidden={activeTab === 0} value={activeTab} index={1}>
-          {masterTable.map((table, index) => {
-            return (
-
-              <Accordion key={index}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
-                  <CardHeader avatar={
-                    <Checkbox
-                      inputProps={{ 'aria-label': 'all items selected' }}
-                    />
-                  }
-                    title={table.tableName}
-                    subheader={`${table.columns.length} Columns`}
-                  />
-                </AccordionSummary>
-                <AccordionDetails>
-                  <FormGroup row>
-                    {table.columns.map((column, i) => {
-                      return (
-                        <FormControlLabel key={i}
-                          control={
-                            <Checkbox
-                              onChange={this.handleChangeCheckbox(table.tableName, column, "targetTableName")}
-                              name={column}
-                              color="primary"
-                              checked={targetTableName[table.tableName].filter(item => item === column).length ? true : false}
+                      }
+                        title={table.tableName}
+                        subheader={`${table.columns.length} Columns/ 
+                        ${activeTab ===0 ? sourceTableName[table.tableName].length :
+                          targetTableName[table.tableName].length
+                         }
+                         Selected Columns `}
+                         
+                      />
+                    
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <FormGroup row>
+                        {table.columns.map((column, i) => {
+                          return (
+                            <FormControlLabel key={i}
+                              control={
+                                <Checkbox
+                                  onChange={this.handleChangeCheckbox(table.tableName, column, "sourceTableName")}
+                                  name={column}
+                                  color="primary"
+                                  checked={sourceTableName[table.tableName].filter(item => item === column).length ? true : false}
+                                />
+                              }
+                              label={column}
                             />
-                          }
-                          label={column}
-                        />
-                      )
-                    })}
-                  </FormGroup>
-                </AccordionDetails>
-              </Accordion>
-            )
-          })
-          }
-        </TabPanel>
-        <Grid container spacing={1} justify="center" alignItems="center" className='profilegrid'>
-          <Grid>
-            <Box padding={1}>
+                          )
+                        })}
+                      </FormGroup>
+                    </AccordionDetails>
+                  </Accordion>
+                )
+              })
+              }
 
-              <Button
-                variant="contained"
-                border={1}
-                color="primary"
-                size="large"
-                onClick={this.handleSaveProfile}
-                className='buttonsave'
-                startIcon={<SaveIcon />}>
-                Save Profile
+            </TabPanel>
+            <TabPanel hidden={activeTab === 0} value={activeTab} index={1}>
+              {masterTable.map((table, index) => {
+                return (
+
+                  <Accordion key={index}>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                      className="accordinheadding"
+                    >
+                      {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
+                      <CardHeader className="selectAll" avatar={
+                        <Checkbox
+                          inputProps={{ 'aria-label': 'all items selected' }}
+                          onClick={this.handleSelectAll(table)}
+                          color="primary"
+                          checked={activeTab ===0 ? sourceTableName[table.tableName].length ===table.columns.length  :
+                            targetTableName[table.tableName].length === table.columns.length
+                           }
+                        />
+                      }
+                        title={table.tableName}
+                        subheader={`${table.columns.length} Columns/ 
+                        ${activeTab ===0 ? sourceTableName[table.tableName].length :
+                          targetTableName[table.tableName].length
+                         }
+                         Selected Columns `}
+                         
+                      />
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <FormGroup row>
+                        {table.columns.map((column, i) => {
+                          return (
+                            <FormControlLabel key={i}
+                              control={
+                                <Checkbox
+                                  onChange={this.handleChangeCheckbox(table.tableName, column, "targetTableName")}
+                                  name={column}
+                                  color="primary"
+                                  checked={targetTableName[table.tableName].filter(item => item === column).length ? true : false}
+                                />
+                              }
+                              label={column}
+                            />
+                          )
+                        })}
+                      </FormGroup>
+                    </AccordionDetails>
+                  </Accordion>
+                )
+              })
+              }
+            </TabPanel>
+            <Grid container spacing={1} justify="center" alignItems="center" className='profilegrid'>
+              <Grid>
+                <Box padding={1}>
+
+                  <Button
+                    variant="contained"
+                    border={1}
+                    color="primary"
+                    size="large"
+                    type="submit"
+                    className='buttonsave'
+                    startIcon={<SaveIcon />}>
+                    Save Profile
               </Button>
-            </Box>
-          </Grid>
-        </Grid>
-
+                </Box>
+              </Grid>
+            </Grid>
+            </ValidatorForm>
+          </div>
+        }
       </div>
-
     );
   }
 }
