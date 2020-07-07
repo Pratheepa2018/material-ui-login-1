@@ -152,7 +152,7 @@ class NewProfileComponentLayout extends React.Component {
         .then(data => {
           this.setState({ isLoading: false });
           if (data.status === 'Success') {
-            NotificationManager.success('Connection Saved Successfully!');
+            NotificationManager.success('Profile Saved Successfully!');
             this.props.history.push('/dashboard/CDP/cdp-connector-profile/profiles');
           } else {
 
@@ -594,7 +594,11 @@ class NewProfileComponentLayout extends React.Component {
                     type="submit"
                     className='buttonsave'
                     startIcon={<SaveIcon />}>
-                    Save Profile
+                    {!this.state.isEdit ?
+                                `Save Profile`
+                                :
+                                `Update Profile`
+                              }
               </Button>
                 </Box>
               </Grid>
