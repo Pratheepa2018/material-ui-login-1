@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import { Table, Box, Button } from '@material-ui/core';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
+import { Table, Box, Button, Grid, TableBody, TableCell, TableContainer,InputBase  } from '@material-ui/core';
+
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
@@ -14,14 +12,13 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import { DeleteForever, AddBox, Edit } from '@material-ui/icons';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
 import Model from '../Model/ModelComponent';
 import { PageLoader } from '../../Layout/Loader';
+import SearchIcon from '@material-ui/icons/Search';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -32,11 +29,13 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
+
 function getComparator(order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
+
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -46,11 +45,13 @@ function stableSort(array, comparator) {
   });
   return stabilizedThis.map((el) => el[0]);
 }
+
 const headCells = [
   { id: 'name', numeric: true, disablePadding: true, label: 'Name' },
   { id: 'Description', numeric: true, disablePadding: false, label: 'Description' },
   { id: 'action', numeric: false, label: 'Actions' }
 ];
+
 function EnhancedTableHead(props) {
   const { classes, order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
@@ -65,6 +66,7 @@ function EnhancedTableHead(props) {
       fontSize: 14,
     },
   }))(TableCell);
+
   return (
     <TableHead>
       <TableRow>
@@ -123,6 +125,7 @@ const useToolbarStyles = makeStyles((theme) => ({
     flex: '1 1 100%',
   },
 }));
+
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
   const { numSelected, onDelete } = props;
@@ -139,33 +142,27 @@ const EnhancedTableToolbar = (props) => {
       ) : (
           <Button href="/dashboard/CDP/cdp-connector-profile/profiles/new-profile" aria-label="Add" variant="outlined" color="primary">
             <AddBox />
-             Add New profiles           
-
+             Add New profiles
           </Button>
         )}
-      {numSelected > 0 ? (
+      {numSelected > 0 && (
         <Tooltip title="Actions">
           <Button aria-label="delete" variant="outlined" color="secondary" onClick={onDelete}>
             <DeleteForever />
             <span> Delete </span>
           </Button>
-
         </Tooltip>
-      ) : (
-          <Tooltip title="Filter list">
-            <IconButton aria-label="filter list">
-              <FilterListIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+      )}
     </Toolbar>
   );
 };
+
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
   
   onDelete: PropTypes.func.isRequired
 };
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -188,13 +185,47 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: 'rgba(202, 202, 202, 0.15)',
+    '&:hover': {
+      backgroundColor: 'rgba(243, 243, 243, 0.8)',
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(3),
+      width: 'auto',
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputRoot: {
+    color: 'inherit',
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  }
 }));
+
 export default function EnhancedTable(props) {
-  // const rows = [
-  //   createData('MYSQLDB', 'profile WORLD TO MYSQL DATABASE'),
-  //   createData('MSSQLDB', 'profile SELECTED FOR MSSQL'),
-  //   createData('MONGODB', 'profile WITH MONGO AND NODEJS'),
-  // ];
+
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState('calories');
@@ -203,9 +234,12 @@ export default function EnhancedTable(props) {
   const [dense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataStatus, getStatus] = useState(false)
-  const [rows, getData] = useState(false);
-  const [isOpen, openModel] = useState();
+  const [rows, getData] = useState(false);  
+  const [defaultRows, setDefaultRow] = useState();
+  const [isOpen, openModel] = useState();  
+  const [filterData, getFilterData] = useState();  
   const allprofilesURL = `${common.profile_url}/?tenant_Id=1&profileId=-1`
+
   useEffect(() => {
     fetch(allprofilesURL, {
       method: 'GET',
@@ -214,21 +248,22 @@ export default function EnhancedTable(props) {
         "Accept": "application/json"
       }
     }).then(resp => resp.json())
-      .then((data) => {
-        
+      .then((data) => {        
         Object.keys(data).map((el, index) => {
-         // console.log(data[el])
           getData(data[el]);
+          setDefaultRow(data[el]);
           getStatus(true);
           return false;
         })
       });
   }, [allprofilesURL])
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.name);
@@ -237,6 +272,7 @@ export default function EnhancedTable(props) {
     }
     setSelected([]);
   };
+
   const handleClick = (event, name) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected = [];
@@ -254,13 +290,16 @@ export default function EnhancedTable(props) {
     }
     setSelected(newSelected);
   };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const handleEdit = (event, id) => {
     const editUrl = `/dashboard/CDP/cdp-connector-profile/profiles/new-profile?edit=${id}`
     props.history.push(editUrl)
@@ -278,6 +317,7 @@ export default function EnhancedTable(props) {
       return sendData;
     }
   }
+
   const onDeleteHandle = (modelState=true) =>{
     openModel(modelState);
   }
@@ -301,6 +341,21 @@ export default function EnhancedTable(props) {
       console.log(e);
     }
   }
+
+  const handleFilter = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    getFilterData(e.target.value);
+    let search = e.target.value.trim().toLowerCase();
+    if(search.length > 0) {
+      let data = defaultRows.filter(function(item) {
+        return item.profileName.toLowerCase().match(search)
+      })
+      getData(data);
+    } else {
+      getData(defaultRows);
+    }
+  }
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -317,7 +372,31 @@ export default function EnhancedTable(props) {
       : 
       <Box padding={6}>
         <Paper className={classes.paper}>
-          <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle}  />
+          <Grid container alignItems="center" justify="space-between">
+            <Grid item xs={`${selected.length > 0 ? 12 : ''}`}>
+              <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle}  />
+            </Grid>
+          { selected.length <= 0 &&
+              <Grid item>
+                <div className={classes.search}>
+                  <div className={classes.searchIcon}>
+                    <SearchIcon />
+                  </div>
+                  <InputBase
+                    type="text"
+                    placeholder="Search…"
+                    classes={{
+                      root: classes.inputRoot,
+                      input: classes.inputInput,
+                    }}
+                    value={filterData}
+                    inputProps={{ 'aria-label': 'search' }}
+                    onChange={handleFilter}
+                  />
+                 </div>
+              </Grid>
+            }
+          </Grid>
           <TableContainer>
             <Table
               className={classes.table}
@@ -377,8 +456,12 @@ export default function EnhancedTable(props) {
                   )}
                 </TableBody>
             </Table>
+            {rows.length <= 0 && 
+              <p className="empty-message">There is no connector! Please add new.</p>
+            }
           </TableContainer>
-          <TablePagination
+          {rows.length > 0 && 
+          <TablePagination           
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={rows.length}
@@ -387,9 +470,9 @@ export default function EnhancedTable(props) {
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
+          } 
         </Paper>
-      </Box>
-}
+      </Box>}
       <Model isOpen={isOpen} deleteEntry={deleteProfile}   />
     </div>
   );
