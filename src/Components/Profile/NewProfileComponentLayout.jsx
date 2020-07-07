@@ -3,9 +3,13 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import PropTypes from 'prop-types';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
+import { NotificationManager } from 'react-notifications';
+
+import { PageLoader } from '../../Layout/Loader';
 import {
-  Paper, Box, Grid, TextField, Tabs, Tab, AppBar, Accordion,
-  AccordionSummary, AccordionDetails, Select, MenuItem, Checkbox, Button, CardHeader
+  Paper, Box, Grid, TextField, Tabs, FormControl, Tab, AppBar, Accordion,
+  AccordionSummary, AccordionDetails, InputLabel, Select,
+  MenuItem, Checkbox, Button, CardHeader
 } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -22,11 +26,9 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box padding={1} >
-          {children}
-        </Box>
-      )}
+      <Box padding={1} >
+        {children}
+      </Box>
     </div>
   );
 }
@@ -48,7 +50,7 @@ class NewProfileComponentLayout extends React.Component {
   constructor(props) {
     super(props);
     this.state = ({
-      value: 0,
+      activeTab: 0,
       setTaget: '',
       sourceTableName: [],
       targetTableName: [],
@@ -59,50 +61,227 @@ class NewProfileComponentLayout extends React.Component {
       source: '',
       editProfile: '',
       checkedItems: [],
-      sourceTableEdit: []
+      sourceTableEdit: [],
+      connecterList: [],
+      isEdit: false,
+      connecterSelected: "",
+      masterTable: [],
+      saveConnector: false,
+      profileId:'',
+      isLoading: false
     })
   }
+  handleChangeConnecter = (event) => {
+    if (this.state.activeTab === 0) {
+      this.setState({
+        sourceConnectorsId: event.target.value,
+        connecterSelected: event.target.value,
+      });
+    } else {
+      this.setState({
+        targetConnectorsId: event.target.value,
+        connecterSelected: event.target.value,
+      });
+    }
+
+
+  };
+
   handleChangeInput = (event) => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
   handleChangeTab = (event, newValue) => {
-    this.setState({
-      value: newValue, taget: !this.state.source,
-    });
+    if (newValue === 0) {
+      if (!this.state.sourceConnectorsId) {
+        this.setState({
+          activeTab: newValue, taget: !this.state.source,
+          connecterSelected: this.state.targetConnectorsId,
+          sourceConnectorsId: this.state.targetConnectorsId,
+        });
+      } else {
+        this.setState({
+          activeTab: newValue, taget: !this.state.source,
+          connecterSelected: this.state.sourceConnectorsId,
+        });
+      }
+
+    } else {
+      if (!this.state.targetConnectorsId) {
+        this.setState({
+          activeTab: newValue, taget: !this.state.source,
+          connecterSelected: this.state.sourceConnectorsId,
+          targetConnectorsId: this.state.sourceConnectorsId,
+        });
+      } else {
+        this.setState({
+          activeTab: newValue, taget: !this.state.source,
+          connecterSelected: this.state.targetConnectorsId,
+        });
+      }
+    }
+
   };
-  handleSaveProfile = () => {
+
+  saveProfileDataFormate() {
+    let sourceTable = Object.keys(this.state.sourceTableName).map((tableName) => {
+      return {
+        tableName: tableName,
+        orderByColumn: "ID",
+        columns: this.state.sourceTableName[tableName]
+      }
+    })
+
+    let targetTable = Object.keys(this.state.targetTableName).map((tableName) => {
+      return {
+        tableName: tableName,
+        orderByColumn: "ID",
+        columns: this.state.targetTableName[tableName]
+      }
+    })
+
+    const dataPostformat = {
+      tenant_id: 1,
+      profileName: this.state.profileName,
+      profileDescription: this.state.profileDescription,
+      source_connector_id: this.state.sourceConnectorsId,
+      source_profile_data: { tables: sourceTable },
+      target_connector_id: this.state.targetConnectorsId,
+      target_profile_data: { tables: targetTable }
+    }
+    return dataPostformat;
+  }
+  handleSaveProfile = async () => {
+    //alert(JSON.stringify(this.saveProfileDataFormate()))
+    const profile_api_link = common.profile_url;
+    this.setState({ saveConnector: true });
+
+    try {
+      await fetch(profile_api_link, {
+        method: 'POST',
+        crossDomain: true,
+        compress: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(this.saveProfileDataFormate())
+      }).then(resp => resp.json())
+        .then(data => {
+          this.setState({ saveConnector: false });
+          if (data.status === 'Success') {
+            NotificationManager.success('Connection Saved Successfully!');
+            this.props.history.push('/dashboard/CDP/cdp-connector-profile/profiles');
+          } else {
+            console.log('Something went wrong!');
+          }
+        })
+    } catch (e) {
+      this.setState({ saveConnector: false });
+      console.log('Error! Check the fields');
+      return false;
+    }
 
   }
-  handleChangeCheckbox = (table, column) => event => {
-    const checkedItems = { ...this.state.checkedItems }
+
+  handleChangeCheckbox = (table, column, typedata) => event => {
+    const checkedItems = { ...this.state[typedata] }
     if (event.target.checked) {
       if (!checkedItems[table]) {
         checkedItems[table] = [];
       }
       checkedItems[table].push(column);
     } else {
-      checkedItems[table] = checkedItems[table].filter(item => item !== column)
+      checkedItems[table] = checkedItems[table].filter(item => {
+        return item !== column
+      })
     }
-    this.setState({ checkedItems }, function(){
-      console.log(this.state.checkedItems);
-    })
+    console.log(checkedItems)
+    this.setState({ [typedata]: checkedItems });
   };
 
-  componentDidMount() {
+   createConnectorlist = () =>{
     const searchKey = window.location.search;
     let getKey;
+    let queryStringpass;
     if (searchKey.length > 0) {
-      getKey = window.location.search.split('?')[1].split('=')[0];
+      queryStringpass = window.location.search.split('?')[1].split('=');
+      getKey = queryStringpass[0];
     }
-    const query = new URLSearchParams(window.location.search);
-    const token = query.get('edit')
 
     if (getKey === 'edit') {
-      const ProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${token}`
+      this.setState({ isEdit: true, profileId: queryStringpass[1] });
+    }
+    let GetConnectorstype = `${common.profile_url}/GetConnectors?tenant_Id=1`;
 
-      try {
+    try {
+       fetch(GetConnectorstype, {
+        method: 'GET',
+        crossDomain: true,
+        compress: true,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+      }).then(resp => resp.json())
+        .then(data => {
+
+          this.setState({ connecterList: data.connectors, isLoading:false })
+        })
+    } catch (e) {
+      return false;
+    }
+  }
+
+   getMasterTablesDetails=()=>{
+     this.setState({isLoading:true})
+    let ProfileURL = `${common.profile_url}/GetTablesDetails`
+    const queryString = {
+      "server_address": "collaberamarketplace.mysql.database.azure.com",
+      "server_port": "3306",
+      "clientdb": "world",
+      "dbuser": "cmpadmin@collaberamarketplace",
+      "dbpassword": "collabera@123"
+    };
+
+    try {
         fetch(ProfileURL, {
+        method: 'POST',
+        crossDomain: true,
+        compress: true,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+        body: JSON.stringify(queryString),
+      }).then(resp => resp.json())
+        .then(data => { 
+          const sourceTableName = { ...this.state.sourceTableName };
+          const targetTableName = { ...this.state.targetTableName };
+          data.tables.filter((table) => {
+            sourceTableName[table.tableName] = [];
+            targetTableName[table.tableName] = [];
+            return 0;
+          })
+
+          this.setState({
+            masterTable: data.tables,
+            targetTableName,
+            sourceTableName 
+          })
+          if (!this.state.isEdit) {
+          this.createConnectorlist();
+          }
+          this.fetchEditProfileData();
+        })
+    } catch (e) {
+      return false;
+    }
+  }
+
+  fetchEditProfileData = () =>{
+    if (this.state.isEdit) {
+      const getProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${this.state.profileId}`
+      try {
+        fetch(getProfileURL, {
           method: 'GET',
           crossDomain: true,
           compress: true,
@@ -111,25 +290,31 @@ class NewProfileComponentLayout extends React.Component {
           },
         }).then(resp => resp.json())
           .then(data => {
-            let sourceTablesdata = JSON.parse(data.profiledetails[0].source_profile_data);
-            let targetTablesData = JSON.parse(data.profiledetails[0].target_profile_data);
-            const checkedItems = { ...this.state.checkedItems }
-            sourceTablesdata.tables.filter((table)=>{
-              checkedItems[table.tableName] = [];
+            const updateData = data.profiledetails[0];
+            const source_profile_data = JSON.parse(updateData.source_profile_data);
+            const target_profile_data = JSON.parse(updateData.target_profile_data);
+            const sourceTableName = { ...this.state.sourceTableName };
+            const targetTableName = { ...this.state.targetTableName };
+            source_profile_data.tables.filter((table) => {
+              sourceTableName[table.tableName] = table.columns;
               return 0;
             })
-             
-            this.setState({
-              profileName: data.profiledetails[0].profileName,
-              profileDescription: data.profiledetails[0].profileDescription,
-              sourceConnectorsId: data.profiledetails[0].source_connector_id,
-              targetConnectorsId: data.profiledetails[0].target_connector_id,
-              sourceTableName: sourceTablesdata.tables,
-              targetTableName: targetTablesData.tables,
-              sourceTableEdit: targetTablesData.tables,
-              checkedItems
+            target_profile_data.tables.filter((table) => {
+              targetTableName[table.tableName] = table.columns;
+              return 0;
             })
-             
+            const connecterList= "";
+            this.setState({
+              profileId: updateData.profileId,
+              tenant_id: updateData.tenant_id,
+              profileName: updateData.profileName,
+              profileDescription: updateData.profileDescription,
+              sourceConnectorsId: updateData.source_connector_id,
+              targetConnectorsId: updateData.target_connector_id,
+              sourceTableName,
+              targetTableName,
+              isLoading: false
+            })
           })
       } catch (e) {
         return false;
@@ -140,19 +325,24 @@ class NewProfileComponentLayout extends React.Component {
     }
   }
 
+   componentDidMount() {
+    this.getMasterTablesDetails();
+  }
+
   render() {
     const {
-      value,
+      activeTab,
       sourceTableName,
       targetTableName,
       profileName,
       profileDescription,
-      sourceConnectorsId,
-      targetConnectorsId,
-      source,
-      
-      checkedItems,
+      connecterList,
+      isEdit,
+      connecterSelected,
+      masterTable,
+      isLoading
     } = this.state
+
     return (
       <div className="profilepage">
 
@@ -163,45 +353,43 @@ class NewProfileComponentLayout extends React.Component {
           exceptimage="../../../../assets/images/learnmore.gif" />
 
         <AppBar position="static" color="default">
-          <Tabs value={value} onChange={this.handleChangeTab} aria-label="simple tabs example">
+          <Tabs value={activeTab} onChange={this.handleChangeTab} aria-label="simple tabs example">
             <Tab label="Source" elevation={1} {...a11yProps(0)} />
             <Tab label="Target" elevation={1} {...a11yProps(1)} />
 
           </Tabs>
         </AppBar>
         <Grid container spacing={1}>
-          <Grid item sm={3}>
-
-          </Grid>
+        { isLoading && <PageLoader />}
           <Grid item sm={6}>
             <Box padding={1}>
 
-              <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
-                <Select
-                  displayEmpty
-                  value=''
-                  name={profileName}
-                  onChange={this.handleChangeInput}
-                  inputProps={{ 'aria-label': 'Without label' }}
-                >
+              <Paper variant='outlined' style={{ padding: "10px" }}>
 
-                  {!source ? <MenuItem disabled value=''>
-                    <em>Source Connectors Id {sourceConnectorsId}</em>
+                <FormControl variant="outlined" className="selectdrop">
+                  <InputLabel id="demo-simple-select-outlined-label">Connecter</InputLabel>
+                  <Select style={{ width: 300 }}
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={connecterSelected}
+                    onChange={this.handleChangeConnecter}
+                    fullWidth
+                    label="Connecter"
+                    name="connecterSelected"
+                  >
+                    {isEdit ?
+                      <MenuItem key={1} value={connecterSelected}>
+                        {connecterSelected}
+                      </MenuItem>
+                      :
+                      connecterList.map((connecter) => (
+                        <MenuItem key={connecter.connectorId} value={connecter.connectorId} >
+                          {connecter.connector_name}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
 
-                  </MenuItem>
-
-                    : <MenuItem disabled value=''>
-                      <em>Target Connectors Id {targetConnectorsId}</em>
-
-                    </MenuItem>}
-
-                  {/* {sourceConnectors.map((name) => ( */}
-                  {/* <MenuItem key={name} value={name} >
-                    {name}
-                  </MenuItem> */}
-                  {/* ))} */}
-
-                </Select>
               </Paper>
             </Box>
           </Grid>
@@ -212,7 +400,7 @@ class NewProfileComponentLayout extends React.Component {
               <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
                 <TextField label="Profile Name" variant="outlined" size="small" fullWidth
                   value={profileName} name='profileName' onChange={this.handleChangeInput} />
-                   
+
               </Paper>
             </Box>
           </Grid>
@@ -222,90 +410,43 @@ class NewProfileComponentLayout extends React.Component {
               <Paper elevation={0} variant='outlined' style={{ padding: "10px" }}>
                 <TextField label="Profile description" variant="outlined" size="small" fullWidth
                   value={profileDescription} name='profileDescription' onChange={this.handleChangeInput} />
-               
+
               </Paper>
             </Box>
           </Grid>
 
         </Grid>
-        <TabPanel value={value} index={0} padding={1}>
-          
-            {sourceTableName.map((table, index) => {
-              return (
-
-                <Accordion key={index}>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
-                    <CardHeader avatar={
-                      <Checkbox
-                        inputProps={{ 'aria-label': 'all items selected' }}
-                      />
-                    }
-                      title={table.tableName}
-                      subheader={`${table.columns.length} Columns`}
-                    />
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <FormGroup row>
-                      {table.columns.map((column, i) => {
-                        return (
-                          <FormControlLabel key={i}
-                            control={
-                              <Checkbox
-                                onChange={this.handleChangeCheckbox(table.tableName, column)}
-                                name={column} 
-                                color="primary"
-                                checked={checkedItems[table.tableName].filter(item => item === column).length ? true : false } 
-                              />
-                            }
-                            label={column} 
-                          />
-                        )
-                      })}
-                    </FormGroup>
-                  </AccordionDetails>
-                </Accordion>
-              )
-            })
-            }
-          
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {targetTableName.map((table, i) => {
+        <TabPanel hidden={activeTab === 1} value={activeTab} index={0} padding={1}>
+          {masterTable.map((table, index) => {
             return (
-              <Accordion key={i}>
+
+              <Accordion key={index}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <CardHeader
-
-                    avatar={
-                      <Checkbox
-                        inputProps={{ 'aria-label': 'all items selected' }}
-                      />
-                    }
+                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
+                  <CardHeader avatar={
+                    <Checkbox
+                      inputProps={{ 'aria-label': 'all items selected' }}
+                    />
+                  }
                     title={table.tableName}
                     subheader={`${table.columns.length} Columns`}
                   />
                 </AccordionSummary>
                 <AccordionDetails>
                   <FormGroup row>
-                    {table.columns.map((column, index) => {
+                    {table.columns.map((column, i) => {
                       return (
-                        <FormControlLabel key={index}
+                        <FormControlLabel key={i}
                           control={
-
-                            <Checkbox checked={false} 
-                            onChange={this.handleChangeCheckbox(table.tableName, column)}
-                            name="checkedB" 
-                            color="primary"
-
+                            <Checkbox
+                              onChange={this.handleChangeCheckbox(table.tableName, column, "sourceTableName")}
+                              name={column}
+                              color="primary"
+                              checked={sourceTableName[table.tableName].filter(item => item === column).length ? true : false}
                             />
                           }
                           label={column}
@@ -317,12 +458,57 @@ class NewProfileComponentLayout extends React.Component {
               </Accordion>
             )
           })
+          }
 
+        </TabPanel>
+        <TabPanel hidden={activeTab === 0} value={activeTab} index={1}>
+          {masterTable.map((table, index) => {
+            return (
+
+              <Accordion key={index}>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  {/* <Typography className='tableHeading'>{table.tableName}</Typography> */}
+                  <CardHeader avatar={
+                    <Checkbox
+                      inputProps={{ 'aria-label': 'all items selected' }}
+                    />
+                  }
+                    title={table.tableName}
+                    subheader={`${table.columns.length} Columns`}
+                  />
+                </AccordionSummary>
+                <AccordionDetails>
+                  <FormGroup row>
+                    {table.columns.map((column, i) => {
+                      return (
+                        <FormControlLabel key={i}
+                          control={
+                            <Checkbox
+                              onChange={this.handleChangeCheckbox(table.tableName, column, "targetTableName")}
+                              name={column}
+                              color="primary"
+                              checked={targetTableName[table.tableName].filter(item => item === column).length ? true : false}
+                            />
+                          }
+                          label={column}
+                        />
+                      )
+                    })}
+                  </FormGroup>
+                </AccordionDetails>
+              </Accordion>
+            )
+          })
           }
         </TabPanel>
         <Grid container spacing={1} justify="center" alignItems="center" className='profilegrid'>
           <Grid>
             <Box padding={1}>
+
               <Button
                 variant="contained"
                 border={1}
