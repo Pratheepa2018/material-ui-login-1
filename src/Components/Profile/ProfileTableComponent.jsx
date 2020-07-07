@@ -347,14 +347,15 @@ export default function EnhancedTable(props) {
     e.stopPropagation();
     getFilterData(e.target.value);
     let search = e.target.value.trim().toLowerCase();
-    if(search.length > 0) {
-      let data = defaultRows.filter(function(item) {
-        return item.profileName.toLowerCase().match(search)
-      })
-      getData(data);
-    } else {
-      getData(defaultRows);
-    }
+    let item = defaultRows.filter((data) => {
+      if(search.length <= 0) {
+        return defaultRows;
+      } else if(data.profileName.toLowerCase().includes(search) || data.profileDescription.toLowerCase().includes(search)) {
+        return data;
+      }
+      return null;
+    })
+    getData(item);
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
