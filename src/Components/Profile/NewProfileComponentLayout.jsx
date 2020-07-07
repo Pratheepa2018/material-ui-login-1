@@ -135,7 +135,7 @@ class NewProfileComponentLayout extends React.Component {
     return dataPostformat;
   }
   handleSaveProfile = () => {
-    alert(JSON.stringify(this.saveProfileDataFormate()))
+    //alert(JSON.stringify(this.saveProfileDataFormate()))
     this.setState({ isLoading: true });
     const profile_api_link = common.profile_url;
     try {
@@ -343,7 +343,14 @@ class NewProfileComponentLayout extends React.Component {
           sourceTableName: sourceTableAll
         })
       
-   }  
+   }else{
+      const targetTableAll= {...this.state.targetTableName};
+       
+      e.target.checked ? targetTableAll[table.tableName]= table.columns : targetTableAll[table.tableName]=[];
+        this.setState({
+          targetTableName: targetTableAll
+        })
+   }
     
     e.stopPropagation(); 
     return false
@@ -387,7 +394,7 @@ class NewProfileComponentLayout extends React.Component {
         </AppBar>
        
         {isLoading ? <PageLoader /> :
-          <div>
+          <div className="box_profile">
              <ValidatorForm onSubmit={this.handleSaveProfile} > 
             <Grid container spacing={1} className="lg_space">
               <Grid item sm={6}>
