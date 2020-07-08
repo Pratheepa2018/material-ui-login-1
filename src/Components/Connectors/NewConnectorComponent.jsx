@@ -7,6 +7,7 @@ import '../../Styles/validation.css';
 import { PageLoader } from '../../Layout/Loader';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import Auth from '../../Layout/Authentication';
+import MetaDataModel from '../Model/MetaDataModelComponent';
 
 export default class NewConnector extends Component {
   constructor(props) {
@@ -26,7 +27,10 @@ export default class NewConnector extends Component {
       loadEditDetails: false,
       testConnection: false,
       metaDataConnection: false,
-      saveConnector: false
+      saveConnector: false,
+      metModelOpen: false,
+      metaData: []
+
     }
     this.baseState = this.state;
   }
@@ -152,8 +156,8 @@ export default class NewConnector extends Component {
         body: JSON.stringify(this.generateTestData())
       }).then(resp => resp.json())
         .then(response => {
-          this.setState({metaDataConnection: false})
-          console.log(response);
+          const data = JSON.parse(response)
+          this.setState({metaDataConnection: false, metModelOpen: true, metaData: data.tables})
           console.log(JSON.parse(response));
           // if(response === 'failure') {
           //   return false;
@@ -258,7 +262,7 @@ export default class NewConnector extends Component {
   }
 
   render() {
-    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector, loadEditDetails, testConnection, metaDataConnection, saveConnector} = this.state;
+    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector, loadEditDetails, testConnection, metaDataConnection, saveConnector, metModelOpen, metaData} = this.state;
     const buttonStyle = {
       fontSize: '12px',
       textTransform: 'capitalize'
@@ -464,6 +468,9 @@ export default class NewConnector extends Component {
             </Grid>
           </Grid>
         </Box>
+        {metModelOpen && 
+          <MetaDataModel isOpen={metModelOpen} metaData={metaData}/>
+        }
       </div>
     )
   }
