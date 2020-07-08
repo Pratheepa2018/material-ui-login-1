@@ -18,6 +18,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Header from './Layout/HeaderComponent';
 import Auth from './Layout/Authentication';
 import PipelineUI from './Components/CIPipeline/PipelineUIComponent';
+import ConnectorType from './Components/Connectors/ConnectorsTypeComponent';
 
 
 //Pipeline imports
@@ -75,6 +76,7 @@ function App(props) {
                 <PrivateRoute restricted={true} component={Profile} path="/dashboard/CDP/cdp-connector-profile/profiles" exact />
                 <PrivateRoute restricted={false} component={CollaberaDevOpsPlatform} path="/dashboard/CDP" exact />
                 <PrivateRoute restricted={false} component={CDPConnectorProfileDashboard} path="/dashboard/CDP/cdp-connector-profile" exact />
+                <PrivateRoute restricted={false} component={ConnectorType} path="/dashboard/CDP/cdp-connector-profile/connectors/connector-type" exact />
                 <PrivateRoute restricted={false} component={NewConnector} path="/dashboard/CDP/cdp-connector-profile/connectors/new-connector" exact />
                 <PrivateRoute restricted={false} component={NewProfile} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile-old" exact />
                 <PrivateRoute restricted={false} component={NewProfileLayout} path="/dashboard/CDP/cdp-connector-profile/profiles/new-profile" exact />

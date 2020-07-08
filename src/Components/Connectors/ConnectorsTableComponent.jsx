@@ -138,7 +138,7 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
           <div className={classes.title}>
-            <Button href="/dashboard/CDP/cdp-connector-profile/connectors/new-connector" aria-label="Add" variant="outlined" color="primary">
+            <Button href="/dashboard/CDP/cdp-connector-profile/connectors/connector-type" aria-label="Add" variant="outlined" color="primary">
               <AddBox />
               Add New Connectors
             </Button>
