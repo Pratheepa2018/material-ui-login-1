@@ -304,28 +304,19 @@ export default function EnhancedTable(props) {
     const editUrl = `/dashboard/CDP/cdp-connector-profile/profiles/new-profile?edit=${id}`
     props.history.push(editUrl)
   }
-  const setDeleteData = () => {
-    if(selected.length > 1) {
-      const dataToDelete = []
-      selected.forEach(item => {
-        const obj = {};
-        obj["profileId"] = item;
-        dataToDelete.push(obj);
-      });
-    } else {
-      const sendData = `profileId=${selected[0]}`
-      return sendData;
-    }
-  }
+   
 
   const onDeleteHandle = (modelState=true) =>{
     openModel(modelState);
   }
-  const deleteProfile = async () =>{
-    const deleteProfileURL = `${common.profile_url}?${setDeleteData()}`;
+  const deleteProfile = () =>{
+     
+    const deletedList=[];
+    selected.map((item)=>{
+    const deleteProfileURL = `${common.profile_url}?profileId=${item}`;
     console.log(deleteProfileURL);
     try {
-      await fetch(deleteProfileURL, {
+       fetch(deleteProfileURL, {
         method: 'DELETE',
         headers: {
           "Content-Type": "application/json",
@@ -334,12 +325,20 @@ export default function EnhancedTable(props) {
       }).then(resp => resp.json())
       .then(data => {
         if(data.status === 'Success') {
-          window.location.reload(false)
+          
+          deletedList.push(item);
+         
+          if(selected.length === (deletedList.length)){
+            window.location.reload(false)
+          }
+          
         }
       })
     } catch (e) { 
       console.log(e);
     }
+    })
+    
   }
 
   const handleFilter = (e) => {
