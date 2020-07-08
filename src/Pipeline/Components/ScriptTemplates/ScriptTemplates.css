@@ -13,6 +13,15 @@
   .title h2 {
     padding: 3px;
   }
+  .scriptlabel{
+    padding: 12px !important;
+    color: inherit !important;
+  }
+  .flexdiv{
+    display: flex;
+    margin: 4px;
+    padding: 5px;
+  }
   button.rightButton {
     position: absolute;
     right: 20px;  
