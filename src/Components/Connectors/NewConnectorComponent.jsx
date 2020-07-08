@@ -55,42 +55,6 @@ export default class NewConnector extends Component {
     this.setState(this.baseState);
   }
 
-  handleUpdate = async () => {
-    const saveConnectorURL = `${common.api_url}/connector`;
-    const { connectorId, connector_name, connector_desc, connector_type, tenant_id, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
-    const fields = {
-      "connectorId": connectorId,
-      "connector_name": connector_name,
-      "connector_desc": connector_desc,
-      "connector_type": connector_type,
-      "tenant_id": tenant_id,
-      "server_address": server_address,
-      "server_port": server_port,
-      "clientdb": clientdb,
-      "dbuser": dbuser,
-      "dbpassword": dbpassword
-    }
-    try {
-      await fetch(saveConnectorURL, {
-        method: 'PUT',
-        crossDomain: true,
-        compress: true,
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(fields),
-      }).then(resp => resp.json())
-      .then(data => {
-        if(data.status === 'Success') {
-          NotificationManager.success(data.message);
-          this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
-        }
-      })
-    } catch (e) {
-      console.log(e, 'Something went wrong');
-    }
-  }
   generateTestData = () => {
     const { server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
     const data = {
@@ -103,41 +67,75 @@ export default class NewConnector extends Component {
     return data;
   }
 
-  handleTestConnection = async () => {
+  handleTestConnection = async (loaderStatus = true) => {
     const testURL = "https://cdpmysqlconnector.azurewebsites.net/mysql/testConnection";
-    this.setState({testConnection: true});
-    console.log(this.generateTestData());
-    try {
-      await fetch(testURL, {
-        method: 'POST',
-        crossDomain: true,
-        compress: true,
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify(this.generateTestData())
-      }).then(resp => resp.json())
-        .then(response => {
-          this.setState({testConnection: false});
-          if (response === 'failure') {
-            return false;
-          } else if (response === 'success') {
-            return true;
+    if(loaderStatus) {
+      this.setState({testConnection: true});
+    }
+    return fetch(testURL, {
+      method: 'POST',
+      crossDomain: true,
+      compress: true,
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(this.generateTestData())
+    }).then(resp => resp.json())
+    .then(response => {
+      this.setState({testConnection: false});
+      if (response === 'failure') {
+        NotificationManager.error('The connection got failed')
+        return false;
+      } else if (response === 'success') {
+        NotificationManager.success('Connection Varified Successfully!');
+        return true;
+      }
+    })
+
+  }
+  handleUpdate = async () => {
+    if (await this.handleTestConnection(false)) {
+      const saveConnectorURL = `${common.api_url}/connector`;
+      const { connectorId, connector_name, connector_desc, connector_type, tenant_id, server_address, server_port, clientdb, dbuser, dbpassword } = this.state;
+      const fields = {
+        "connectorId": connectorId,
+        "connector_name": connector_name,
+        "connector_desc": connector_desc,
+        "connector_type": connector_type,
+        "tenant_id": tenant_id,
+        "server_address": server_address,
+        "server_port": server_port,
+        "clientdb": clientdb,
+        "dbuser": dbuser,
+        "dbpassword": dbpassword
+      }
+      try {
+        await fetch(saveConnectorURL, {
+          method: 'PUT',
+          crossDomain: true,
+          compress: true,
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(fields),
+        }).then(resp => resp.json())
+        .then(data => {
+          if(data.status === 'Success') {
+            NotificationManager.success(data.message);
+            this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
           }
         })
-    } catch (e) {
-      this.setState({testConnection: false});
-      NotificationManager.error('Error! Check the fields');
-      return false;
-    }
-
+      } catch (e) {
+        console.log(e, 'Something went wrong');
+      }
+    }  
   }
 
   handleMetadata = async () => {
     const metaURL = 'https://cdpmysqlconnector.azurewebsites.net/mysql/getMetaData';
     this.setState({metaDataConnection: true});
-    console.log(this.generateTestData());
     try {
       await fetch(metaURL, {
         method: 'POST',
@@ -176,9 +174,7 @@ export default class NewConnector extends Component {
     if (getKey === 'edit') {
       this.handleUpdate();
     } else {
-      if (this.handleTestConnection()) {
-
-        NotificationManager.success('Connection Varified Successfully!');
+      if (await this.handleTestConnection(false)) {
         const saveConnectorURL = `${common.api_url}/connector`;
         try {
           await fetch(saveConnectorURL, {
@@ -210,6 +206,7 @@ export default class NewConnector extends Component {
       }
     }
   }
+
   componentDidMount() {
     this.setState({ tenant_id: Auth.getTenentID() });
     const searchKey = window.location.search;
@@ -438,13 +435,7 @@ export default class NewConnector extends Component {
                         </Grid>
                         <Grid item xs={3} className={`${saveConnector ? 'section-loader': ''}`}>
                           { !saveConnector ? 
-                            <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>
-                              {!editConnector ?
-                                `Save Connector`
-                                :
-                                `Update Connector`
-                              }
-                            </Button>
+                            <Button type="submit" variant="contained" color="primary" fullWidth style={buttonStyle}>Save Connector</Button>
                           :
                             <PageLoader />
                           }
