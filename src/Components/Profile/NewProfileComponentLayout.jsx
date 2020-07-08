@@ -106,7 +106,9 @@ class NewProfileComponentLayout extends React.Component {
   };
 
   saveProfileDataFormate() {
-    let sourceTable = Object.keys(this.state.sourceTableName).map((tableName) => {
+    let selectedSourceTable=Object.keys(this.state.sourceTableName).filter((tableName) =>  this.state.sourceTableName[tableName].length > 0);
+    let selectedTargetTable=Object.keys(this.state.targetTableName).filter((tableName) =>  this.state.targetTableName[tableName].length > 0);
+    let sourceTable = selectedSourceTable.map((tableName) => {
       return {
         tableName: tableName,
         orderByColumn: "ID",
@@ -114,7 +116,7 @@ class NewProfileComponentLayout extends React.Component {
       }
     })
 
-    let targetTable = Object.keys(this.state.targetTableName).map((tableName) => {
+    let targetTable = selectedTargetTable.map((tableName) => {
       return {
         tableName: tableName,
         orderByColumn: "ID",
