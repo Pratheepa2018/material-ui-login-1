@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { Box, Grid, Card, CardContent, Typography, CardActions, Button } from '@material-ui/core/';
-import '../../Styles/connectorsType.scss';
 import { PageLoader } from '../../Layout/Loader';
+import '../../Styles/connectorsType.scss';
 
-// const data = [
-//   {id: 1, title: 'DevOps Automation', description: '', image: '../assets/images/dashboard1.jpg', learnMorelink: '', letsGolink: '/dashboard' }
-// ]
 export default class ConnectorType extends Component {
   constructor(props) {
     super(props);

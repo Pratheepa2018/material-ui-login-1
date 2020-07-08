@@ -88,7 +88,7 @@ export default class NewConnector extends Component {
         NotificationManager.error('The connection got failed')
         return false;
       } else if (response === 'success') {
-        NotificationManager.success('Connection Varified Successfully!');
+        NotificationManager.success('Connection verified successfully!');
         return true;
       }
     })
@@ -191,6 +191,7 @@ export default class NewConnector extends Component {
               this.setState({saveConnector: false});
               if (data.status === 'Success') {
                 NotificationManager.success('Connection Saved Successfully!');
+                sessionStorage.removeItem('connector-id');
                 this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
               } else {
                 console.log('Something went wrong!');
@@ -206,40 +207,51 @@ export default class NewConnector extends Component {
       }
     }
   }
-
+  componentWillMount() {
+    const connectorId = sessionStorage.getItem('connector-id');
+    if(connectorId) {
+      this.setState({connector_type: connectorId});
+    } else {
+      this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors/connector-type');
+    }
+  }
   componentDidMount() {
-    this.setState({ tenant_id: Auth.getTenentID() });
-    const searchKey = window.location.search;
-    if (searchKey.length > 0) {
-      const getKey = window.location.search.split('?')[1].split('=')[0];
-      if (getKey === 'edit') {
-        this.setState({ editConnector: true, loadEditDetails: true })
-        const id = window.location.search.split('?')[1].split('=')[1]
-        const connectorId = parseInt(id);
-        this.setState({ connectorId: connectorId })
-        const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}`
-        console.log(ConnectorsURL);
-        fetch(ConnectorsURL, {
-          method: 'GET',
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          }
-        }).then(resp => resp.json())
-          .then((data) => {
-            Object.keys(data).map(element => {
-              const flag = Object.keys(data[element][0])
-              flag.map(item => {
-
-                this.setState({ [item]: data[element][0][item], loadEditDetails: false });
+    const connectorId = sessionStorage.getItem('connector-id');
+    if(connectorId) {
+      this.setState({ tenant_id: Auth.getTenentID() });
+      const searchKey = window.location.search;
+      if (searchKey.length > 0) {
+        const getKey = window.location.search.split('?')[1].split('=')[0];
+        if (getKey === 'edit') {
+          this.setState({ editConnector: true, loadEditDetails: true })
+          const id = window.location.search.split('?')[1].split('=')[1]
+          const connectorId = parseInt(id);
+          this.setState({ connectorId: connectorId })
+          const ConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=${connectorId}`
+          console.log(ConnectorsURL);
+          fetch(ConnectorsURL, {
+            method: 'GET',
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            }
+          }).then(resp => resp.json())
+            .then((data) => {
+              Object.keys(data).map(element => {
+                const flag = Object.keys(data[element][0])
+                flag.map(item => {
+  
+                  this.setState({ [item]: data[element][0][item], loadEditDetails: false });
+                  return false;
+                })
                 return false;
               })
               return false;
-            })
-            return false;
-          });
+            });
+        }
       }
     }
+
   }
 
   render() {
@@ -318,7 +330,7 @@ export default class NewConnector extends Component {
                             value={connector_type}
                             validators={['required', 'matchRegexp:^[0-9]*$']}
                             errorMessages={['This field is required', 'Only integers are allowed']}
-                            onChange={this.handleChanges}
+                            disabled
                           />
                         </Grid>
                         <Grid item xs={6}>
