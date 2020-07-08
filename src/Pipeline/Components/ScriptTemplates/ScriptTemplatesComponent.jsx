@@ -1,7 +1,8 @@
 import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
 import { AddBox } from '@material-ui/icons';
-import { Checkbox, Card, CardActions, FormControlLabel, Button, Grid, Typography,Divider  } from '@material-ui/core';
+import { Checkbox, Card, CardActions, FormControlLabel, Button,
+   Grid, Typography,Divider,FormLabel   } from '@material-ui/core';
 import './ScriptTemplates.css';
 
 export default function ScriptTemplates() {
@@ -27,10 +28,8 @@ export default function ScriptTemplates() {
             <AddBox />Add Script Templates</Button>
         </Grid>
         <Grid item xs={12}>
-        <div style={{display:'flex'}}>
-        <Typography >
-                    Script Category
-        </Typography>        
+        <div className= 'flexdiv'>
+                  <FormLabel className="scriptlabel">Script Category:  </FormLabel>
                   <FormControlLabel
                     value="Build"
                     control={<Checkbox color="primary" />}
@@ -50,9 +49,9 @@ export default function ScriptTemplates() {
             <Grid key={proj.id} item>
               <Card>
                 <div className="title">
-                <div style={{display:'flex'}}>
+                <div className= 'flexdiv'>
                 <img src={proj.img} alt={proj.name} />
-                  <Typography >
+                  <Typography className="scriptlabel">
                     {proj.name}
                   </Typography>
                   </div>
@@ -65,6 +64,7 @@ export default function ScriptTemplates() {
                   </Typography>
 
                 </div>
+                <Divider  style={{margin:'2px'}}/>
                 <CardActions className="buttons">
                   <Grid item xs={3}>
                   <Button size="small" color="primary">
