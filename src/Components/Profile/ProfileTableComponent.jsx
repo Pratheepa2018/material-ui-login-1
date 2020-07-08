@@ -452,7 +452,7 @@ export default function EnhancedTable(props) {
                     })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                      <TableCell />
+                      
                     </TableRow>
                   )}
                 </TableBody>
