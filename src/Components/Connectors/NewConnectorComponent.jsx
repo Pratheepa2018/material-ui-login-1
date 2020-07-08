@@ -122,15 +122,19 @@ export default class NewConnector extends Component {
           body: JSON.stringify(fields),
         }).then(resp => resp.json())
         .then(data => {
+          this.setState({saveConnector: false});
           if(data.status === 'Success') {
             NotificationManager.success(data.message);
+            sessionStorage.removeItem('connector-id');
             this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
           }
         })
       } catch (e) {
         console.log(e, 'Something went wrong');
       }
-    }  
+    } else {
+      this.setState({saveConnector: false});
+    }
   }
 
   handleMetadata = async () => {
@@ -203,7 +207,6 @@ export default class NewConnector extends Component {
         }
       } else {
         this.setState({saveConnector: false});
-        NotificationManager.error('Connection Failed');
       }
     }
   }
