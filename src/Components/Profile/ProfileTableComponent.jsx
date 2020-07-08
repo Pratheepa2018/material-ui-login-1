@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import { Table, Box, Button, Grid, TableBody, TableCell, TableContainer,InputBase  } from '@material-ui/core';
+import { Table, Box, Button, Grid, TableBody, TableCell, TableContainer,InputBase,Divider,Tooltip  } from '@material-ui/core';
 
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -12,13 +12,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import Tooltip from '@material-ui/core/Tooltip';
 import { DeleteForever, AddBox, Edit } from '@material-ui/icons';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
 import Model from '../Model/ModelComponent';
 import { PageLoader } from '../../Layout/Loader';
 import SearchIcon from '@material-ui/icons/Search';
+import CheckIcon from '@material-ui/icons/Check';
+import { NotificationManager } from 'react-notifications';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -305,6 +306,41 @@ export default function EnhancedTable(props) {
     props.history.push(editUrl)
   }
    
+  const handleExecute = (event, id) => {
+    const dataToSend = {
+      "TenantId" :  1,
+      "ProfileID" : id
+    }
+
+    try {
+      fetch(`https://cdpexecuteprofile.azurewebsites.net/executeprofile`, {
+        method: 'POST',
+        crossDomain: true,
+        compress: true,
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(dataToSend),
+      }).then(resp => resp.json())
+        .then(data => {
+          if (data.status === 'Success') {
+            NotificationManager.success(data.message);
+          } else {
+            return NotificationManager.warning(data.message);
+          }
+        })
+        .catch ((error) =>  {                        // catch
+          return NotificationManager.warning('500 error');
+        })
+    } catch (e) {
+      return {
+        responseStatus: false,
+        responseMessage: "Something went wrong."
+      };
+    }
+  }
+ 
 
   const onDeleteHandle = (modelState=true) =>{
     openModel(modelState);
@@ -440,11 +476,19 @@ export default function EnhancedTable(props) {
                             {row.profileName}
                           </TableCell>
                           <TableCell align="left">{row.profileDescription}</TableCell>
-                          <TableCell align="right">
-                            <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.profileId)}>
+         
+                          <TableCell align="right" style ={{display: 'flex'}}>
+                          <Tooltip title="Execute" aria-label="Execute">
+                          <Button aria-label="Execute" variant="outlined" color="primary" onClick={(event) => handleExecute(event, row.profileId)}>
+                          <CheckIcon />
+                            </Button>
+                            </Tooltip>
+                            <Divider orientation="vertical" flexItem  style={{margin: '5px'}}/>
+                            <Tooltip title="Edit" aria-label="edit">
+                            <Button variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.profileId)}>
                               <Edit />
                             </Button>
-                            
+                            </Tooltip>
                           </TableCell>
                         </TableRow>
                       );
