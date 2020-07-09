@@ -15,16 +15,11 @@ const buttonStyle = {
 }
 
 export default function AlertDialog(props) {
-  const [open, setOpen] = useState(false);
+  const { open, onClose, deleteStatus } = props;
 
   const handleClose = () => {
-   // props.cancelModle(false);
-    setOpen(false);
+    onClose(deleteStatus);
   };
-
-  useEffect(() => {
-    setOpen(props.isOpen)
-  }, [props.isOpen]);
 
   return (
     <div>
