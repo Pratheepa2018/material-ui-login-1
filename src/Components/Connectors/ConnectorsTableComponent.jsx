@@ -21,6 +21,7 @@ import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
 import Model from '../Model/ModelComponent';
 import { PageLoader } from '../../Layout/Loader';
+import { NotificationManager } from 'react-notifications';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -315,24 +316,12 @@ export default function EnhancedTable(props) {
       props.history.push(editUrl)
     }, 300);
   }
-  const setDeleteData = () => {
-    if(selected.length > 1) {
-      const dataToDelete = []
-      selected.forEach(item => {
-        const obj = {};
-        obj["connecterId"] = item;
-        dataToDelete.push(obj);
-      });
-    } else {
-      const sendData = `connectorId=${selected[0]}`
-      return sendData;
-    }
+  const deleteModelClose = (value) => {
+    openModel(false);
+    setDeleteStatus(false);
   }
-  const onDeleteHandle = (modelState=true) =>{
-    openModel(modelState);
-  }
-  const deleteConnector = async () =>{
-    const delteConnecterURL = `${common.api_url}/connector?${setDeleteData()}`;
+  const deleteConnector = async (param) =>{
+    const delteConnecterURL = `${common.api_url}/connector?connectorId=${param}`;
     setDeleteStatus(true);
     console.log(delteConnecterURL);
     try {
@@ -346,6 +335,8 @@ export default function EnhancedTable(props) {
       .then(data => {
         setDeleteStatus(false)
         if(data.status === 'Success') {
+          deleteModelClose(false);
+          NotificationManager.success("Connector delted successfully");
           window.location.reload(false)
         }
       })
@@ -353,6 +344,26 @@ export default function EnhancedTable(props) {
       setDeleteStatus(false);
       console.log(e);
     }
+  }
+
+  const setDeleteData = () => {
+    if(selected.length > 1) {
+      selected.forEach(item => {
+        deleteConnector(item);
+        return false;
+      })
+      // const dataToDelete = []
+      // selected.forEach(item => {
+      //   const obj = {};
+      //   obj["connecterId"] = item;
+      //   dataToDelete.push(obj);
+      // });
+    } else {
+      deleteConnector(selected[0]);
+    }
+  }
+  const onDeleteHandle = (modelState=true) =>{
+    openModel(modelState);
   }
 
   const handleFilter = (e) => {
@@ -371,10 +382,8 @@ export default function EnhancedTable(props) {
     getData(item);
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
-  const deleteModelClose = (value) => {
-    openModel(false);
-    setDeleteStatus(false);
-  }
+
+  
 
   // const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   return (
@@ -486,7 +495,7 @@ export default function EnhancedTable(props) {
           } 
         </Paper>
       </Box>}
-      <Model open={isOpen} deleteEntry={deleteConnector} deleteStatus={deleteStatus} onClose={deleteModelClose} />
+      <Model open={isOpen} deleteEntry={setDeleteData} deleteStatus={deleteStatus} onClose={deleteModelClose} />
     </div>
   );
 }

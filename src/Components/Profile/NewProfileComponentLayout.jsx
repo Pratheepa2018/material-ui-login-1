@@ -15,7 +15,6 @@ import SaveIcon from '@material-ui/icons/Save';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { common } from '../../Utils/Api.env';
 import './NewProfileComponentLayout.css'
-import { wait } from '@testing-library/react';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
