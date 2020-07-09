@@ -55,7 +55,6 @@ export default function AddScriptTemplates() {
                         label="User Name"
                         name="userName"
                         size="small"
-                        autoFocus
                         fullWidth
                       />
                     </Grid>
@@ -71,7 +70,6 @@ export default function AddScriptTemplates() {
                         label="Password"
                         name="password"
                         size="small"
-                        autoFocus
                         fullWidth
                       />
                     </Grid>
