@@ -15,7 +15,7 @@
     color: inherit !important;
   }
 .maindiv{
-  background-color: #f4f3ff;
+  /* background-color: #f4f3ff; */
   border-color:grey.500;
   border: 1px solid;
   margin: 5px !important;

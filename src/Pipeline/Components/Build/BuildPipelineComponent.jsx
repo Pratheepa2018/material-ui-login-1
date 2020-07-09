@@ -2,7 +2,7 @@ import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
 import { AddBox } from '@material-ui/icons';
 import { FormControl, Card, CardActions, InputLabel, Button,
-   Grid, Typography,Divider,Select, MenuItem,     } from '@material-ui/core';
+   Grid, Typography,Divider,Select, MenuItem, Box     } from '@material-ui/core';
 import './Build.css';
 
 export default function ScriptTemplates() {
@@ -34,12 +34,14 @@ export default function ScriptTemplates() {
         imageText="Full Banner"
         exceptimage="../../../assets/images/learnmore.gif"
       />
+       <Box margin={5}>
       <Grid container className="container">
         <Grid direction="row" className="topbar">
           <Button href="/dashboard/CDP/pipeline/build-pipeline/create-build-pipeline" type="button" variant="outlined" color="primary">
             <AddBox />Create CI Build Pipeline</Button>
         </Grid>
         <Grid spacing={3} container direction="row" className='maindiv'>
+        <Grid item xs={2} ></Grid>
         <Grid item xs={4} >
                   <FormControl variant="outlined" >
                           <InputLabel id="demo-simple-select-outlined-label">Project List</InputLabel>
@@ -84,6 +86,7 @@ export default function ScriptTemplates() {
                         </FormControl>
                      
                     </Grid>
+                    <Grid item xs={2} ></Grid>
       </Grid>
         <Grid spacing={3} container direction="row">
           {myprojects.map((proj) => (
@@ -137,6 +140,7 @@ export default function ScriptTemplates() {
           ))}
         </Grid>
       </Grid>
+      </Box>
     </div>
   );
 }
