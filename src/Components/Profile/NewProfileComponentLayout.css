@@ -5,6 +5,7 @@
 body .MuiGrid-spacing-xs-1 > .MuiGrid-item{width: 100%;}
 body .selectAll{padding: 0px; text-transform: capitalize;}
 body div div.accordinheadding{padding-left: 6px;}
+.relative{position: relative; min-height: 400px;}
 @media(max-width: 767px){
   .lg_space{padding: 20px 0px;}
   .box_profile{padding: 20px 0px;}

@@ -262,7 +262,9 @@ class NewProfileComponentLayout extends React.Component {
           const sourceTableName = { ...this.state.sourceTableName };
           //const targetTableName = { ...this.state.targetTableName };
           data.tables.filter((table) => {
+            if(!sourceTableName[table.tableName]){
             sourceTableName[table.tableName] = [];
+            }
             //targetTableName[table.tableName] = [];
             return 0;
           })
@@ -305,9 +307,12 @@ class NewProfileComponentLayout extends React.Component {
           const targetTableName = { ...this.state.targetTableName };
           data.tables.filter((table) => {
            // sourceTableName[table.tableName] = [];
+           if(!this.state.targetTableName[table.tableName]){
             targetTableName[table.tableName] = [];
+           }
             return 0;
           })
+          console.log(targetTableName)
 
           this.setState({
             targetMasterTable: data.tables,
@@ -329,6 +334,7 @@ class NewProfileComponentLayout extends React.Component {
   }
 
   fetchEditProfileData = async  () => {
+    this.setState({ isLoading: true })
     if (this.state.isEdit) {
       const getProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${this.state.profileId}`
       try {
@@ -370,7 +376,7 @@ class NewProfileComponentLayout extends React.Component {
               }
               return false;
             })
-
+ 
             this.setState({
               profileId: updateData.profileId,
               tenant_id: updateData.tenant_id,
@@ -383,8 +389,10 @@ class NewProfileComponentLayout extends React.Component {
               isLoading: false,
               connecterSelected: connecterSource[0].connector_name,
             }, function(){
+              console.log(this.state.sourceTableName)
+
               this.getSourceMasterTablesDetails();
-              this.getTargetMasterTablesDetails();
+             this.getTargetMasterTablesDetails();
             })
           })
       } catch (e) {
@@ -459,7 +467,7 @@ class NewProfileComponentLayout extends React.Component {
 
           </Tabs>
         </AppBar>
-       
+       <div className="relative">
         {isLoading ? <PageLoader /> :
           <div className="box_profile">
              <ValidatorForm onSubmit={this.handleSaveProfile} > 
@@ -665,6 +673,7 @@ class NewProfileComponentLayout extends React.Component {
             </ValidatorForm>
           </div>
         }
+        </div>
       </div>
     );
   }
