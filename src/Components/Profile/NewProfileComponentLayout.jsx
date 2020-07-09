@@ -63,13 +63,15 @@ class NewProfileComponentLayout extends React.Component {
       connecterList: [],
       isEdit: false,
       connecterSelected: "",
-      masterTable: [],
+      sourceMasterTable: [],
+      targetMasterTable: [],
       saveConnector: false,
       profileId: '',
       isLoading: false
     })
   }
   handleChangeConnecter = (event) => {
+     
     const connecterList = [...this.state.connecterList];
 
     if (this.state.activeTab === 0) {
@@ -81,6 +83,8 @@ class NewProfileComponentLayout extends React.Component {
       })
       this.setState({
         sourceConnectorsId: connecterSource,
+      }, function(){
+        this.getSourceMasterTablesDetails()
       });
     } else {
       const connecterTarget = connecterList.filter((connecter) => {
@@ -91,6 +95,8 @@ class NewProfileComponentLayout extends React.Component {
       })
       this.setState({
         targetConnectorsId: connecterTarget,
+      }, function(){
+        this.getTargetMasterTablesDetails()
       });
     }
   };
@@ -137,6 +143,14 @@ class NewProfileComponentLayout extends React.Component {
     return dataPostformat;
   }
   handleSaveProfile = () => {
+    if(!this.state.sourceConnectorsId[0].connectorId){
+      NotificationManager.error('Please Select Source Connectors');
+      return false;
+    }
+    if(!this.state.targetConnectorsId[0].connectorId){
+      NotificationManager.error('Please Select Targe Connectors');
+      return false;
+    }
     //alert(JSON.stringify(this.saveProfileDataFormate()))
     this.setState({ isLoading: true });
     const profile_api_link = common.profile_url;
@@ -185,7 +199,7 @@ class NewProfileComponentLayout extends React.Component {
     this.setState({ [typedata]: checkedItems });
   };
 
-  createConnectorlist = () => {
+   createConnectorlist = async () => {
     const searchKey = window.location.search;
     let getKey;
     let queryStringpass;
@@ -200,7 +214,7 @@ class NewProfileComponentLayout extends React.Component {
     let GetConnectorstype = `${common.profile_url}/GetConnectors?tenant_Id=1`;
 
     try {
-      fetch(GetConnectorstype, {
+       fetch(GetConnectorstype, {
         method: 'GET',
         crossDomain: true,
         compress: true,
@@ -213,54 +227,102 @@ class NewProfileComponentLayout extends React.Component {
           this.setState({ connecterList: data.connectors, })
           if (!this.state.isEdit) {
             this.setState({ isLoading: false })
+          }else{
+            this.fetchEditProfileData()
+            this.getSourceMasterTablesDetails();
+            this.getTargetMasterTablesDetails();
           }
-          this.fetchEditProfileData();
+         
         })
+    } catch (e) {
+      
+      return false;
+    }
+  }
+
+
+  
+
+  getSourceMasterTablesDetails = () => {
+    
+    this.setState({ isLoading: true })
+    const connectorId=this.state.sourceConnectorsId[0].connectorId;
+    let ProfileURL = `${common.profile_url}/GetTablesDetails?tenant_Id=1&connectorId=${connectorId}`;
+     
+    try {
+      fetch(ProfileURL, {
+        method: 'GET',
+        crossDomain: true,
+        compress: true,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        }, 
+      }).then(resp => resp.json())
+        .then(data => {
+          const sourceTableName = { ...this.state.sourceTableName };
+          //const targetTableName = { ...this.state.targetTableName };
+          data.tables.filter((table) => {
+            sourceTableName[table.tableName] = [];
+            //targetTableName[table.tableName] = [];
+            return 0;
+          })
+
+          this.setState({
+            sourceMasterTable: data.tables,
+            //targetTableName,
+            sourceTableName
+          })
+
+          this.setState({ isLoading: false })
+          
+
+        }).catch((err) => {
+            NotificationManager.error('Invalid connecter details, please check your connecter details and tryi again.');
+            console.log(err);
+            this.setState({ isLoading: false })
+          });
     } catch (e) {
       return false;
     }
   }
 
-  getMasterTablesDetails = () => {
+  getTargetMasterTablesDetails = () => {
     this.setState({ isLoading: true })
-    let ProfileURL = `${common.profile_url}/GetTablesDetails`
-    const queryString = {
-      "server_address": "collaberamarketplace.mysql.database.azure.com",
-      "server_port": "3306",
-      "clientdb": "world",
-      "dbuser": "cmpadmin@collaberamarketplace",
-      "dbpassword": "collabera@123"
-    };
+    const connectorId=this.state.targetConnectorsId[0].connectorId;
+    let ProfileURL = `${common.profile_url}/GetTablesDetails?tenant_Id=1&connectorId=${connectorId}`
 
     try {
       fetch(ProfileURL, {
-        method: 'POST',
+        method: 'GET',
         crossDomain: true,
         compress: true,
         headers: {
           'Content-Type': 'application/json; charset=utf-8'
-        },
-        body: JSON.stringify(queryString),
+        }, 
       }).then(resp => resp.json())
         .then(data => {
-          const sourceTableName = { ...this.state.sourceTableName };
+          //const sourceTableName = { ...this.state.sourceTableName };
           const targetTableName = { ...this.state.targetTableName };
           data.tables.filter((table) => {
-            sourceTableName[table.tableName] = [];
+           // sourceTableName[table.tableName] = [];
             targetTableName[table.tableName] = [];
             return 0;
           })
 
           this.setState({
-            masterTable: data.tables,
+            targetMasterTable: data.tables,
             targetTableName,
-            sourceTableName
+            //sourceTableName
           })
 
-          this.createConnectorlist();
+          this.setState({ isLoading: false })
+           
 
-
-        })
+        }).catch((err) => {
+          NotificationManager.error('Invalid connecter details, please check your connecter details and tryi again.');
+          console.log(err);
+          this.setState({ isLoading: false })
+        });
     } catch (e) {
       return false;
     }
@@ -331,8 +393,8 @@ class NewProfileComponentLayout extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.getMasterTablesDetails();
+  componentDidMount() { 
+    this.createConnectorlist();
   }
 
   handleSelectAll = (table) => e =>{
@@ -357,7 +419,7 @@ class NewProfileComponentLayout extends React.Component {
     e.stopPropagation(); 
     return false
   }
-  render() {
+  render() { 
     const {
       activeTab,
       sourceTableName,
@@ -368,7 +430,8 @@ class NewProfileComponentLayout extends React.Component {
       targetConnectorsId,
       connecterList,
       isEdit,
-      masterTable,
+      sourceMasterTable,
+      targetMasterTable,
       isLoading
     } = this.state
 
@@ -376,8 +439,7 @@ class NewProfileComponentLayout extends React.Component {
       activeTab === 0 ? sourceConnectorsId[0].connectorId :
         targetConnectorsId[0].connectorId;
 
-    activeConnecter = activeConnecter ? activeConnecter : "";
-    //alert("render")
+    activeConnecter = activeConnecter ? activeConnecter : ""; 
 
     return (
       <div className="profilepage">
@@ -472,7 +534,7 @@ class NewProfileComponentLayout extends React.Component {
 
             </Grid>
             <TabPanel hidden={activeTab === 1} value={activeTab} index={0} padding={1}>
-              {masterTable.map((table, index) => {
+              {sourceMasterTable.map((table, index) => {
                 return (
 
                   <Accordion key={index}>
@@ -489,16 +551,12 @@ class NewProfileComponentLayout extends React.Component {
                           inputProps={{ 'aria-label': 'all items selected' }}
                           onClick={this.handleSelectAll(table)}
                           color="primary"
-                          checked={activeTab ===0 ? sourceTableName[table.tableName].length ===table.columns.length  :
-                            targetTableName[table.tableName].length === table.columns.length
-                           }
+                          checked={sourceTableName[table.tableName].length ===table.columns.length }
                         />
                       }
                         title={table.tableName}
                         subheader={`${table.columns.length} Columns/ 
-                        ${activeTab ===0 ? sourceTableName[table.tableName].length :
-                          targetTableName[table.tableName].length
-                         }
+                        ${ sourceTableName[table.tableName].length }
                          Selected Columns `}
                          
                       />
@@ -530,7 +588,7 @@ class NewProfileComponentLayout extends React.Component {
 
             </TabPanel>
             <TabPanel hidden={activeTab === 0} value={activeTab} index={1}>
-              {masterTable.map((table, index) => {
+              {targetMasterTable.map((table, index) => {
                 return (
 
                   <Accordion key={index}>
@@ -546,16 +604,12 @@ class NewProfileComponentLayout extends React.Component {
                           inputProps={{ 'aria-label': 'all items selected' }}
                           onClick={this.handleSelectAll(table)}
                           color="primary"
-                          checked={activeTab ===0 ? sourceTableName[table.tableName].length ===table.columns.length  :
-                            targetTableName[table.tableName].length === table.columns.length
-                           }
+                          checked={ targetTableName[table.tableName].length === table.columns.length }
                         />
                       }
                         title={table.tableName}
                         subheader={`${table.columns.length} Columns/ 
-                        ${activeTab ===0 ? sourceTableName[table.tableName].length :
-                          targetTableName[table.tableName].length
-                         }
+                        ${ targetTableName[table.tableName].length  }
                          Selected Columns `}
                          
                       />
