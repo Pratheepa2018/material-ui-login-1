@@ -4,6 +4,9 @@
   }
   .title {
     padding: 10px;
+    h2 {
+      padding: 3px;
+    }
   }
   .title h2 {
     padding: 3px;
@@ -12,6 +15,10 @@
     padding: 12px !important;
     color: inherit !important;
   }
+.maindiv{
+  background-color: #f4f3ff;
+  border-color:grey.500;
+}
   .flexdiv{
     display: flex;
     margin: 4px;

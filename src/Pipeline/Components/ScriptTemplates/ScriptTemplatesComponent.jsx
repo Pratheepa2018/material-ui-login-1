@@ -1,15 +1,16 @@
 import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
 import { AddBox } from '@material-ui/icons';
-import { Checkbox, Card, CardActions, FormControlLabel, Button, Grid, Typography,Divider  } from '@material-ui/core';
+import { Checkbox, Card, CardActions, FormControlLabel, Button,
+   Grid, Typography,Divider,FormLabel   } from '@material-ui/core';
 import './ScriptTemplates.css';
 
 export default function ScriptTemplates() {
   const myprojects = [
-    { id: 1, img: '../../assets/images/aspdotnet.png',name:'ASP.Net', type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 2, img: '../../assets/images/aspdotnetcore.png',name:'ASP.Net Core', type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 3, img: '../../assets/images/dotnet.png', name:'.Net Desktop',type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 1, img: '../../assets/images/dotnetcore.png',name:'Install .Net Core Runtime', type: 'Release', details: 'Yaml Script Skeleton Details' },
+    { id: 1, img: '../../../assets/images/aspdotnet.png',name:'ASP.Net', type: 'Build', details: 'Yaml Script Skeleton Details' },
+    { id: 2, img: '../../../assets/images/aspdotnetcore.png',name:'ASP.Net Core', type: 'Build', details: 'Yaml Script Skeleton Details' },
+    { id: 3, img: '../../../assets/images/dotnet.png', name:'.Net Desktop',type: 'Build', details: 'Yaml Script Skeleton Details' },
+    { id: 1, img: '../../../assets/images/dotnetcore.png',name:'Install .Net Core Runtime', type: 'Release', details: 'Yaml Script Skeleton Details' },
  
   ];
 
@@ -17,20 +18,18 @@ export default function ScriptTemplates() {
     <div id="myprojects">
       <FullWidthBanner
         title="Script Templates"
-        image="../../assets/images/globle.jpg"
+        image="../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage="../../assets/images/learnmore.gif"
+        exceptimage="../../../assets/images/learnmore.gif"
       />
       <Grid container className="container">
         <Grid direction="row" className="topbar">
-          <Button href="/pipeline/ScriptTemplates/AddScriptTemplates" type="button" variant="outlined" color="primary">
+          <Button href="/dashboard/CDP/pipeline/script-templates/add-script-templates" type="button" variant="outlined" color="primary">
             <AddBox />Add Script Templates</Button>
         </Grid>
         <Grid item xs={12}>
-        <div style={{display:'flex'}}>
-        <Typography >
-                    Script Category
-        </Typography>        
+        <div className= 'flexdiv'>
+                  <FormLabel className="scriptlabel">Script Category:  </FormLabel>
                   <FormControlLabel
                     value="Build"
                     control={<Checkbox color="primary" />}
@@ -50,7 +49,7 @@ export default function ScriptTemplates() {
             <Grid key={proj.id} item>
               <Card>
                 <div className="title">
-                <div style={{display:'flex'}}>
+                <div className= 'flexdiv'>
                 <img src={proj.img} alt={proj.name} />
                   <Typography >
                     {proj.name}
@@ -65,6 +64,7 @@ export default function ScriptTemplates() {
                   </Typography>
 
                 </div>
+                <Divider  style={{margin:'2px'}}/>
                 <CardActions className="buttons">
                   <Grid item xs={3}>
                   <Button size="small" color="primary">
