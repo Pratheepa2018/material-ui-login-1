@@ -2,7 +2,7 @@ import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
 import { AddBox } from '@material-ui/icons';
 import { Checkbox, Card, CardActions, FormControlLabel, Button,
-   Grid, Typography,Divider,FormLabel   } from '@material-ui/core';
+   Grid, Typography,Divider,FormLabel, Box   } from '@material-ui/core';
 import './ScriptTemplates.css';
 
 export default function ScriptTemplates() {
@@ -22,6 +22,7 @@ export default function ScriptTemplates() {
         imageText="Full Banner"
         exceptimage="../../../assets/images/learnmore.gif"
       />
+      <Box margin={5}>
       <Grid container className="container">
         <Grid direction="row" className="topbar">
           <Button href="/dashboard/CDP/pipeline/script-templates/add-script-templates" type="button" variant="outlined" color="primary">
@@ -85,6 +86,7 @@ export default function ScriptTemplates() {
           ))}
         </Grid>
       </Grid>
+      </Box>
     </div>
   );
 }

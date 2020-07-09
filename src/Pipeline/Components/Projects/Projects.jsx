@@ -2,7 +2,7 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
-import Button from '@material-ui/core/Button';
+import {Button, Box} from '@material-ui/core/';
 import Typography from '@material-ui/core/Typography';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
 
@@ -28,9 +28,10 @@ export default function Projects() {
         imageText="Full Banner"
         exceptimage="../../../assets/images/learnmore.gif"
       />
-      <Grid container className="container">
+      <Box margin={5}>
+      <Grid container className="container" >
         <section>
-          <Button href="/pipeline/projects/add-project" type="button" variant="outlined" color="primary">
+          <Button href="/dashboard/CDP/pipeline/projects/add-project" type="button" variant="outlined" color="primary">
           <AddBox/>Add Projects</Button>          
         </section>
         <section>
@@ -100,6 +101,7 @@ export default function Projects() {
           </Grid>
         </section>
       </Grid>
+      </Box>
     </div>
   );
 }

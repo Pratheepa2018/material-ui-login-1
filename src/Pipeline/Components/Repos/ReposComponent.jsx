@@ -82,6 +82,9 @@ export default function AddScriptTemplates() {
                     <Grid item xs={3}>
                     <Button  variant="contained" color="primary" fullWidth >SignIn</Button>
                     </Grid>
+                    <Grid item xs={3}>
+                    <Button href="/dashboard/CDP/pipeline/repos/repos-details"  variant="contained" color="primary" fullWidth >Sign UP</Button>
+                    </Grid>
                     <Grid item xs={2}>
                       
                       </Grid>

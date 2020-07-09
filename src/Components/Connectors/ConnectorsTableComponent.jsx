@@ -233,6 +233,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
+
 export default function EnhancedTable(props) {
   const classes = useStyles();
   const [order, setOrder] = useState('asc');
@@ -247,7 +248,8 @@ export default function EnhancedTable(props) {
   const [isOpen, openModel] = useState();
   const [deleteStatus, setDeleteStatus] = useState(false);
   const [filterData, getFilterData] = useState();
-  const allConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=-1`
+  const allConnectorsURL = `${common.api_url}/connector?tenant_Id=1&connectorId=-1`;
+
   useEffect(() => {
     fetch(allConnectorsURL, {
       method: 'GET',
@@ -369,6 +371,10 @@ export default function EnhancedTable(props) {
     getData(item);
   }
   const isSelected = (name) => selected.indexOf(name) !== -1;
+  const deleteModelClose = (value) => {
+    openModel(false);
+    setDeleteStatus(false);
+  }
 
   // const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   return (
@@ -480,7 +486,7 @@ export default function EnhancedTable(props) {
           } 
         </Paper>
       </Box>}
-      <Model isOpen={isOpen} deleteEntry={deleteConnector} deleteStatus={deleteStatus} />
+      <Model open={isOpen} deleteEntry={deleteConnector} deleteStatus={deleteStatus} onClose={deleteModelClose} />
     </div>
   );
 }
