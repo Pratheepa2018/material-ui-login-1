@@ -68,7 +68,7 @@ export default function DevopsTools() {
       />
       <Grid container className="container">
         <Grid item xs={3}>
-        <Button href="/pipeline/repos/release-details" type="button" variant="outlined" color="primary">
+        <Button href="/dashboard/CDP/pipeline/repos/release-details" type="button" variant="outlined" color="primary">
           <AddBox/> Add Release Pipeline</Button>
           <FormControl variant="outlined" className="selectProject">
             <InputLabel id="selectProject">Select the Project</InputLabel>

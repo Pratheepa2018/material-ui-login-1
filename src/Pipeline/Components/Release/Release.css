@@ -1,3 +1,6 @@
+.container {
+  padding: 20px 40px;
+}
 .selectProject {
   background: #fff;
 }
@@ -9,4 +12,7 @@
 .projectTable th {
   font-weight: bold;
   padding: 2px 16px !important;
+}
+.red {
+  color: #c00;
 }
