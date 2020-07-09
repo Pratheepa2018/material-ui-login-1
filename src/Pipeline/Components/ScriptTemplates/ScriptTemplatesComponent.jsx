@@ -7,10 +7,10 @@ import './ScriptTemplates.css';
 
 export default function ScriptTemplates() {
   const myprojects = [
-    { id: 1, img: '../../assets/images/aspdotnet.png',name:'ASP.Net', type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 2, img: '../../assets/images/aspdotnetcore.png',name:'ASP.Net Core', type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 3, img: '../../assets/images/dotnet.png', name:'.Net Desktop',type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 1, img: '../../assets/images/dotnetcore.png',name:'Install .Net Core Runtime', type: 'Release', details: 'Yaml Script Skeleton Details' },
+    { id: 1, img: '../../../assets/images/aspdotnet.png',name:'ASP.Net', type: 'Build', details: 'Yaml Script Skeleton Details' },
+    { id: 2, img: '../../../assets/images/aspdotnetcore.png',name:'ASP.Net Core', type: 'Build', details: 'Yaml Script Skeleton Details' },
+    { id: 3, img: '../../../assets/images/dotnet.png', name:'.Net Desktop',type: 'Build', details: 'Yaml Script Skeleton Details' },
+    { id: 1, img: '../../../assets/images/dotnetcore.png',name:'Install .Net Core Runtime', type: 'Release', details: 'Yaml Script Skeleton Details' },
  
   ];
 
@@ -18,13 +18,13 @@ export default function ScriptTemplates() {
     <div id="myprojects">
       <FullWidthBanner
         title="Script Templates"
-        image="../../assets/images/globle.jpg"
+        image="../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage="../../assets/images/learnmore.gif"
+        exceptimage="../../../assets/images/learnmore.gif"
       />
       <Grid container className="container">
         <Grid direction="row" className="topbar">
-          <Button href="/pipeline/script-templates/add-script-templates" type="button" variant="outlined" color="primary">
+          <Button href="/dashboard/CDP/pipeline/script-templates/add-script-templates" type="button" variant="outlined" color="primary">
             <AddBox />Add Script Templates</Button>
         </Grid>
         <Grid item xs={12}>

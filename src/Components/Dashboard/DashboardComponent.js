@@ -14,7 +14,7 @@ const cards = [
   { id: 2, title: 'Healthcare Life Sciences', description: '', image: '../assets/images/dashboard7.jpg', learnMorelink: '', letsGolink: '' },
   { id: 3, title: 'Payments Processing', description: '', image: '../assets/images/dashboard6.jpg', learnMorelink: '', letsGolink: '' },
   { id: 4, title: 'Retail & SCM', description: '', image: '../assets/images/dashboard8.jpg', learnMorelink: '', letsGolink: '' },
-  { id: 4, title: 'Pipeline Automation', description: '', image: '../assets/images/dashboard9.jpg', learnMorelink: '', letsGolink: '/pipeline' },
+ 
 ]
 class DashboardComponent extends Component {
 

@@ -15,15 +15,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AddScriptTemplates() {
     const classes = useStyles();
-    const branchDetails = [
-        'Master',
-        'Master-copy'
+
+    const projectList = [
+        'All',
+        'Project1',
+        'Pipeline Proj'
       ];
 
-      const reposDetails = [
-        'MarketPlace',
-        'DQE-Azure',
-        'Pipeline-Azure'
+      const DevOpsBuildTools = [
+        'All',
+        'Azure',
+        'Jenkins'
       ];
 
       const handleChanges = (e) => {
@@ -38,6 +40,7 @@ export default function AddScriptTemplates() {
         imageText="Full Banner"
         exceptimage="../../assets/images/learnmore.gif"
       />
+      
       <Box marginY={5}>
         <Grid container spacing={3} direction="row" alignItems="center" justify="center">
           <Grid item xs={7}>
@@ -48,18 +51,18 @@ export default function AddScriptTemplates() {
                     
                   <Grid item xs={6} >
                   <FormControl variant="outlined" >
-                          <InputLabel id="demo-simple-select-outlined-label">Repositary Details</InputLabel>
+                          <InputLabel id="demo-simple-select-outlined-label">Project List</InputLabel>
                           <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
                             onChange={handleChanges}
                             fullWidth
-                            label="Repositary Details"
+                            label="Project List"
                             size="small"
-                            name="repoDetails"
+                            name="projectList"
                             required
                           >
-                          {reposDetails.map((name) => (
+                          {projectList.map((name) => (
                             <MenuItem key={name} value={name} >
                               {name}
                             </MenuItem>
@@ -70,18 +73,18 @@ export default function AddScriptTemplates() {
                     </Grid>
                     <Grid item xs={6} >
                   <FormControl variant="outlined" >
-                          <InputLabel id="demo-simple-select-outlined-label">Branch Details</InputLabel>
+                          <InputLabel id="demo-simple-select-outlined-label">DevOps Build Tools</InputLabel>
                           <Select
                             labelId="demo-simple-select-outlined-label"
                             id="demo-simple-select-outlined"
                             onChange={handleChanges}
                             fullWidth
-                            label="Branch Details"
+                            label="DevOps Build Tools"
                             size="small"
-                            name="branchDetails"
+                            name="DevOpsBuildTools"
                             required
                           >
-                          {branchDetails.map((name) => (
+                          {DevOpsBuildTools.map((name) => (
                             <MenuItem key={name} value={name} >
                               {name}
                             </MenuItem>

@@ -89,19 +89,20 @@ function App(props) {
                 <PrivateRoute restricted={false} component={PipelineUI} path="/dashboard/CDP/api-pipeline" exact />
                 
                 {/* Devops Pipeline Code  */}
-                <PrivateRoute restricted={false} component={PipelineDashboard} path="/pipeline" exact />
-                <PrivateRoute restricted={false} component={Projects} path="/pipeline/projects" exact />
-                <PrivateRoute restricted={false} component={AddNewProject} path="/pipeline/projects/add-project" exact />
-                <PrivateRoute restricted={false} component={DevopsTools} path="/pipeline/devopstools" exact />
-                <PrivateRoute restricted={false} component={AddDevopsTool} path="/pipeline/devopstools/add-devops-tool" exact />
-                <PrivateRoute restricted={false} component={ScriptTemplates} path="/pipeline/script-templates" exact />
-                <PrivateRoute restricted={false} component={AddScriptTemplates} path="/pipeline/script-templates/add-script-templates" exact />
-                <PrivateRoute restricted={false} component={Repos} path="/pipeline/repos" exact />
-                <PrivateRoute restricted={false} component={ReposDetails} path="/pipeline/repos/repos-details" exact />
-                <PrivateRoute restricted={false} component={BuildPipeline} path="/pipeline/build-pipeline" exact />
-                <PrivateRoute restricted={false} component={CreateBuildPipeline} path="/pipeline/build-pipeline/create-build-pipeline" exact />
-                <PrivateRoute restricted={false} component={Release} path="/pipeline/release" exact />
-                <PrivateRoute restricted={false} component={AddReleaseDetails} path="/pipeline/repos/release-details" exact />
+                <PrivateRoute restricted={false} component={PipelineDashboard} path="/dashboard/CDP/pipeline" exact />
+                <PrivateRoute restricted={false} component={Projects} path="/dashboard/CDP/pipeline/projects" exact />
+                <PrivateRoute restricted={false} component={AddNewProject} path="/dashboard/CDP/pipeline/projects/add-project" exact />
+                <PrivateRoute restricted={false} component={DevopsTools} path="/dashboard/CDP/pipeline/devopstools" exact />
+                <PrivateRoute restricted={false} component={AddDevopsTool} path="/dashboard/CDP/pipeline/devopstools/add-devops-tool" exact />
+                <PrivateRoute restricted={false} component={ScriptTemplates} path="/dashboard/CDP/pipeline/script-templates" exact />
+                <PrivateRoute restricted={false} component={AddScriptTemplates} path="/dashboard/CDP/pipeline/script-templates/add-script-templates" exact />
+                <PrivateRoute restricted={false} component={Repos} path="/dashboard/CDP/pipeline/repos" exact />
+                <PrivateRoute restricted={false} component={ReposDetails} path="/dashboard/CDP/pipeline/repos/repos-details" exact />
+                <PrivateRoute restricted={false} component={BuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline" exact />
+                <PrivateRoute restricted={false} component={CreateBuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline/create-build-pipeline" exact />
+                <PrivateRoute restricted={false} component={Release} path="/dashboard/CDP/pipeline/release" exact />
+                <PrivateRoute restricted={false} component={AddReleaseDetails} path="/dashboard/CDP/pipeline/repos/release-details" exact />
+      
                 
                 <PublicRoute
                   restricted={false}
