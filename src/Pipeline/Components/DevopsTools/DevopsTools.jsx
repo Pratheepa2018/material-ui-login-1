@@ -1,7 +1,7 @@
 import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
 import { AddBox } from '@material-ui/icons';
-import { Checkbox, Card, CardActions, FormControlLabel, Button, Grid, Typography } from '@material-ui/core';
+import { Checkbox, Card, CardActions, FormControlLabel, Button, Grid, Typography , Box} from '@material-ui/core';
 import './DevopsTools.css';
 
 export default function DevopsTools() {
@@ -19,6 +19,7 @@ export default function DevopsTools() {
         imageText="Full Banner"
         exceptimage="../../../assets/images/learnmore.gif"
       />
+       <Box margin={5}>
       <Grid container className="container">
         <Grid direction="row" className="topbar">
           <Button href="/dashboard/CDP/pipeline/devopstools/add-devops-tool" type="button" variant="outlined" color="primary">
@@ -72,6 +73,7 @@ export default function DevopsTools() {
           ))}
         </Grid>
       </Grid>
+      </Box>
     </div>
   );
 }

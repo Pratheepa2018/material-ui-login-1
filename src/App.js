@@ -22,7 +22,7 @@ import ConnectorType from './Components/Connectors/ConnectorsTypeComponent';
 
 
 //Pipeline imports
-import PipelineDashboard from './Pipeline/Components/Dashboard/PipelineDashboard';
+import PipelineDashboard from './Pipeline/Components/Dashboard/DemoDashboard';
 import Projects from './Pipeline/Components/Projects/Projects';
 import AddNewProject from './Pipeline/Components/Projects/AddNewProject';
 import DevopsTools from './Pipeline/Components/DevopsTools/DevopsTools';
@@ -88,9 +88,9 @@ function App(props) {
                 {/* Devops Pipeline Code  */}
                 <PrivateRoute restricted={false} component={PipelineDashboard} path="/dashboard/CDP/pipeline" exact />
                 <PrivateRoute restricted={false} component={Projects} path="/dashboard/CDP/pipeline/Projects" exact />
-                <PrivateRoute restricted={false} component={AddNewProject} path="/dashboard/CDP/pipeline/Projects/AddNewProject" exact />
-                <PrivateRoute restricted={false} component={DevopsTools} path="/dashboard/CDP/pipeline/DevopsTools" exact />
-                <PrivateRoute restricted={false} component={AddDevopsTool} path="/dashboard/CDP/pipeline/DevopsTools/AddDevopsTool" exact />
+                <PrivateRoute restricted={false} component={AddNewProject} path="/dashboard/CDP/pipeline/projects/add-project" exact />
+                <PrivateRoute restricted={false} component={DevopsTools} path="/dashboard/CDP/pipeline/devopstools" exact />
+                <PrivateRoute restricted={false} component={AddDevopsTool} path="/dashboard/CDP/pipeline/devopstools/add-devops-tool" exact />
                 <PrivateRoute restricted={false} component={ScriptTemplates} path="/dashboard/CDP/pipeline/script-templates" exact />
                 <PrivateRoute restricted={false} component={AddScriptTemplates} path="/dashboard/CDP/pipeline/script-templates/add-script-templates" exact />
                 <PrivateRoute restricted={false} component={Repos} path="/dashboard/CDP/pipeline/repos" exact />
