@@ -64,7 +64,7 @@ export default function AddNewProject() {
                       <Button type="clear" variant="contained" color="primary" fullWidth >Save</Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="outlined" color="primary" fullWidth href="/pipeline/Projects" >Cancel</Button>
+                      <Button variant="outlined" color="primary" fullWidth href="/pipeline/projects" >Cancel</Button>
                     </Grid>
 
                   </Grid>

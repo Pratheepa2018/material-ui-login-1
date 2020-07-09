@@ -115,7 +115,7 @@ export default function AddDevopsTool() {
                       <Button type="clear" variant="contained" color="primary" fullWidth >Save</Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="outlined" color="primary" fullWidth href="/pipeline/DevopsTools" >Cancel</Button>
+                      <Button variant="outlined" color="primary" fullWidth href="/pipeline/devopstools" >Cancel</Button>
                     </Grid>
 
                   </Grid>
