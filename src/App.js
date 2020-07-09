@@ -31,6 +31,8 @@ import ScriptTemplates from './Pipeline/Components/ScriptTemplates/ScriptTemplat
 import AddScriptTemplates from './Pipeline/Components/ScriptTemplates/AddScriptTemplate';
 import Repos from './Pipeline/Components/Repos/ReposComponent';
 import ReposDetails from './Pipeline/Components/Repos/ReposDetails';
+import BuildPipeline from './Pipeline/Components/Build/BuildPipelineComponent';
+import CreateBuildPipeline from './Pipeline/Components/Build/CreateBuildPipeline';
 import './Styles/main.scss';
 
 const styles = theme => ({
@@ -89,10 +91,13 @@ function App(props) {
                 <PrivateRoute restricted={false} component={AddNewProject} path="/pipeline/Projects/AddNewProject" exact />
                 <PrivateRoute restricted={false} component={DevopsTools} path="/pipeline/DevopsTools" exact />
                 <PrivateRoute restricted={false} component={AddDevopsTool} path="/pipeline/DevopsTools/AddDevopsTool" exact />
-                <PrivateRoute restricted={false} component={ScriptTemplates} path="/pipeline/ScriptTemplates" exact />
-                <PrivateRoute restricted={false} component={AddScriptTemplates} path="/pipeline/ScriptTemplates/AddScriptTemplates" exact />
+                <PrivateRoute restricted={false} component={ScriptTemplates} path="/pipeline/script-templates" exact />
+                <PrivateRoute restricted={false} component={AddScriptTemplates} path="/pipeline/script-templates/add-script-templates" exact />
                 <PrivateRoute restricted={false} component={Repos} path="/pipeline/repos" exact />
-                <PrivateRoute restricted={false} component={ReposDetails} path="/pipeline/repos/repos-Details" exact />
+                <PrivateRoute restricted={false} component={ReposDetails} path="/pipeline/repos/repos-details" exact />
+                <PrivateRoute restricted={false} component={BuildPipeline} path="/pipeline/build-pipeline" exact />
+                <PrivateRoute restricted={false} component={CreateBuildPipeline} path="/pipeline/build-pipeline/create-build-pipeline" exact />
+                
                 
                 <PublicRoute
                   restricted={false}

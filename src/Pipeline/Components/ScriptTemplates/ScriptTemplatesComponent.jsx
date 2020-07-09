@@ -24,7 +24,7 @@ export default function ScriptTemplates() {
       />
       <Grid container className="container">
         <Grid direction="row" className="topbar">
-          <Button href="/pipeline/ScriptTemplates/AddScriptTemplates" type="button" variant="outlined" color="primary">
+          <Button href="/pipeline/script-templates/add-script-templates" type="button" variant="outlined" color="primary">
             <AddBox />Add Script Templates</Button>
         </Grid>
         <Grid item xs={12}>
