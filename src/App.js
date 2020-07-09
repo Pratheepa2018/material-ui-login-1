@@ -29,7 +29,8 @@ import DevopsTools from './Pipeline/Components/DevopsTools/DevopsTools';
 import AddDevopsTool from './Pipeline/Components/DevopsTools/AddDevopsTool';
 import ScriptTemplates from './Pipeline/Components/ScriptTemplates/ScriptTemplatesComponent';
 import AddScriptTemplates from './Pipeline/Components/ScriptTemplates/AddScriptTemplate';
-
+import Repos from './Pipeline/Components/Repos/ReposComponent';
+import ReposDetails from './Pipeline/Components/Repos/ReposDetails';
 import './Styles/main.scss';
 
 const styles = theme => ({
@@ -90,6 +91,8 @@ function App(props) {
                 <PrivateRoute restricted={false} component={AddDevopsTool} path="/pipeline/DevopsTools/AddDevopsTool" exact />
                 <PrivateRoute restricted={false} component={ScriptTemplates} path="/pipeline/ScriptTemplates" exact />
                 <PrivateRoute restricted={false} component={AddScriptTemplates} path="/pipeline/ScriptTemplates/AddScriptTemplates" exact />
+                <PrivateRoute restricted={false} component={Repos} path="/pipeline/repos" exact />
+                <PrivateRoute restricted={false} component={ReposDetails} path="/pipeline/repos/repos-Details" exact />
                 
                 <PublicRoute
                   restricted={false}
