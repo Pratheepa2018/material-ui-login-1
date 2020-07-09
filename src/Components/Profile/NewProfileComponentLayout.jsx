@@ -15,6 +15,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { common } from '../../Utils/Api.env';
 import './NewProfileComponentLayout.css'
+import { wait } from '@testing-library/react';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -199,7 +200,7 @@ class NewProfileComponentLayout extends React.Component {
     this.setState({ [typedata]: checkedItems });
   };
 
-   createConnectorlist = async () => {
+   createConnectorlist =  () => {
     const searchKey = window.location.search;
     let getKey;
     let queryStringpass;
@@ -229,8 +230,7 @@ class NewProfileComponentLayout extends React.Component {
             this.setState({ isLoading: false })
           }else{
             this.fetchEditProfileData()
-            this.getSourceMasterTablesDetails();
-            this.getTargetMasterTablesDetails();
+           
           }
          
         })
@@ -328,11 +328,11 @@ class NewProfileComponentLayout extends React.Component {
     }
   }
 
-  fetchEditProfileData = () => {
+  fetchEditProfileData = async  () => {
     if (this.state.isEdit) {
       const getProfileURL = `${common.profile_url}/?tenant_Id=1&profileId=${this.state.profileId}`
       try {
-        fetch(getProfileURL, {
+        await fetch(getProfileURL, {
           method: 'GET',
           crossDomain: true,
           compress: true,
@@ -382,6 +382,9 @@ class NewProfileComponentLayout extends React.Component {
               targetTableName,
               isLoading: false,
               connecterSelected: connecterSource[0].connector_name,
+            }, function(){
+              this.getSourceMasterTablesDetails();
+              this.getTargetMasterTablesDetails();
             })
           })
       } catch (e) {
