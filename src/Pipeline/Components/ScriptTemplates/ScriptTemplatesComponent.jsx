@@ -51,7 +51,7 @@ export default function ScriptTemplates() {
                 <div className="title">
                 <div className= 'flexdiv'>
                 <img src={proj.img} alt={proj.name} />
-                  <Typography className="scriptlabel">
+                  <Typography >
                     {proj.name}
                   </Typography>
                   </div>

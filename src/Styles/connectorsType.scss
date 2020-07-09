@@ -1,0 +1,27 @@
+@import './utils/mixins';
+
+.grid_img{max-width: 100%;}
+.grid_card {height: 100%;}
+.center{text-align:center;}
+.center *{justify-content: center;}
+.connector-type-wrapper {
+  min-height: 400px;
+  position: relative;
+  
+  .ct-coneciner {
+    margin: 0;
+    width: 100%;
+
+    figure {
+      &.no-image {
+        background-color: #f2f2f2;
+      }
+    }
+
+    .ct-grid-action {
+      &.center {
+        justify-content: center;
+      }
+    }
+  }
+}
