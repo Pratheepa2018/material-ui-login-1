@@ -9,7 +9,10 @@ export default function ScriptTemplates() {
   const myprojects = [
     { id: 1, img: '../../../assets/images/aspdotnet.png',name:'ASP.Net', title: 'Template Title', details: 'Yaml Script Details', isActive: 'Yes', DevOpsTools: 'Azure', project: 'Project One' },
     { id: 2, img: '../../../assets/images/aspdotnetcore.png',name:'ASP.Net Core',  title: 'Template Title', details: 'Yaml Script Details', isActive: 'No', DevOpsTools: 'Jenkins', project: 'Project Two'  },
-     ];
+    
+    { id: 1, img: '../../../assets/images/aspdotnet.png',name:'ASP.Net', title: 'Template Title', details: 'Yaml Script Details', isActive: 'Yes', DevOpsTools: 'Azure', project: 'Project three' },
+    { id: 2, img: '../../../assets/images/aspdotnetcore.png',name:'ASP.Net Core',  title: 'Template Title', details: 'Yaml Script Details', isActive: 'No', DevOpsTools: 'Jenkins', project: 'Project Four'  },
+    ];
   const projectList = [
     'All',
     'Project1',
@@ -40,7 +43,7 @@ export default function ScriptTemplates() {
           <Button href="/dashboard/CDP/pipeline/build-pipeline/create-build-pipeline" type="button" variant="outlined" color="primary">
             <AddBox />Create CI Build Pipeline</Button>
         </Grid>
-        <Grid spacing={3} container direction="row" className='maindiv'>
+        <Grid spacing={3} container direction="row" className='selectDiv'>
         <Grid item xs={2} ></Grid>
         <Grid item xs={4} >
                   <FormControl variant="outlined" >
@@ -128,6 +131,13 @@ export default function ScriptTemplates() {
                       </svg>
                     </Button>
                   </Grid>
+                  <Grid item xs={3}>
+                  <Button size="small" color="primary" >
+                      <svg viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M8,12H16V14H8V12M10,20H6V4H13V9H18V12.1L20,10.1V8L14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H10V20M8,18H12.1L13,17.1V16H8V18M20.2,13C20.3,13 20.5,13.1 20.6,13.2L21.9,14.5C22.1,14.7 22.1,15.1 21.9,15.3L20.9,16.3L18.8,14.2L19.8,13.2C19.9,13.1 20,13 20.2,13M20.2,16.9L14.1,23H12V20.9L18.1,14.8L20.2,16.9Z" />
+                      </svg>
+                    </Button>
+                    </Grid>
                   <Grid item xs={3}>
                   <Button size="small" color="secondary">
                       <svg viewBox="0 0 24 24">
