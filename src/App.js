@@ -33,6 +33,9 @@ import Repos from './Pipeline/Components/Repos/ReposComponent';
 import ReposDetails from './Pipeline/Components/Repos/ReposDetails';
 import BuildPipeline from './Pipeline/Components/Build/BuildPipelineComponent';
 import CreateBuildPipeline from './Pipeline/Components/Build/CreateBuildPipeline';
+import Release from './Pipeline/Components/Release/ReleaseDashboard';
+import AddReleaseDetails from './Pipeline/Components/Release/AddReleaseDetails'
+
 import './Styles/main.scss';
 
 const styles = theme => ({
@@ -87,17 +90,19 @@ function App(props) {
                 
                 {/* Devops Pipeline Code  */}
                 <PrivateRoute restricted={false} component={PipelineDashboard} path="/dashboard/CDP/pipeline" exact />
-                <PrivateRoute restricted={false} component={Projects} path="/dashboard/CDP/pipeline/Projects" exact />
-                <PrivateRoute restricted={false} component={AddNewProject} path="/dashboard/CDP/pipeline/Projects/AddNewProject" exact />
-                <PrivateRoute restricted={false} component={DevopsTools} path="/dashboard/CDP/pipeline/DevopsTools" exact />
-                <PrivateRoute restricted={false} component={AddDevopsTool} path="/dashboard/CDP/pipeline/DevopsTools/AddDevopsTool" exact />
+                <PrivateRoute restricted={false} component={Projects} path="/dashboard/CDP/pipeline/projects" exact />
+                <PrivateRoute restricted={false} component={AddNewProject} path="/dashboard/CDP/pipeline/projects/add-project" exact />
+                <PrivateRoute restricted={false} component={DevopsTools} path="/dashboard/CDP/pipeline/devopstools" exact />
+                <PrivateRoute restricted={false} component={AddDevopsTool} path="/dashboard/CDP/pipeline/devopstools/add-devops-tool" exact />
                 <PrivateRoute restricted={false} component={ScriptTemplates} path="/dashboard/CDP/pipeline/script-templates" exact />
                 <PrivateRoute restricted={false} component={AddScriptTemplates} path="/dashboard/CDP/pipeline/script-templates/add-script-templates" exact />
                 <PrivateRoute restricted={false} component={Repos} path="/dashboard/CDP/pipeline/repos" exact />
                 <PrivateRoute restricted={false} component={ReposDetails} path="/dashboard/CDP/pipeline/repos/repos-details" exact />
                 <PrivateRoute restricted={false} component={BuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline" exact />
                 <PrivateRoute restricted={false} component={CreateBuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline/create-build-pipeline" exact />
-                
+                <PrivateRoute restricted={false} component={Release} path="/dashboard/CDP/pipeline/release" exact />
+                <PrivateRoute restricted={false} component={AddReleaseDetails} path="/dashboard/CDP/pipeline/repos/release-details" exact />
+      
                 
                 <PublicRoute
                   restricted={false}

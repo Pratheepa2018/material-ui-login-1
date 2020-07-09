@@ -21,7 +21,7 @@ export default function DevopsTools() {
       />
       <Grid container className="container">
         <Grid direction="row" className="topbar">
-          <Button href="/dashboard/CDP/pipeline/DevopsTools/AddDevopsTool" type="button" variant="outlined" color="primary">
+          <Button href="/dashboard/CDP/pipeline/devopstools/add-devops-tool" type="button" variant="outlined" color="primary">
             <AddBox />Add Devops Tool</Button>
         </Grid>
         <Grid spacing={3} container direction="row">
@@ -61,10 +61,10 @@ export default function DevopsTools() {
                 </div>
                 <CardActions className="buttons">
                   <Grid item xs={3}>
-                    <Button variant="contained" color="primary" fullWidth href="/dashboard/CDP/pipeline/DevopsTools/AddDevopsTool">Edit</Button>
+                    <Button variant="contained" color="primary" fullWidth href="/dashboard/CDP/pipeline/devopstools/add-devops-tool">Edit</Button>
                   </Grid>
                   <Grid item xs={3}>
-                    <Button variant="outlined" color="primary" fullWidth href="/Projects" >Delete</Button>
+                    <Button variant="outlined" color="primary" fullWidth >Delete</Button>
                   </Grid>
                 </CardActions>
               </Card>

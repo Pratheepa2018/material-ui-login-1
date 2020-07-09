@@ -7,9 +7,10 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import {  Grid, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
+import {  Grid,Button, FormControl, InputLabel, Select, MenuItem} from '@material-ui/core';
+import { AddBox } from '@material-ui/icons';
 
-import './PipelineDashboard.css';
+import './Release.css';
 
 
 const useStyles = makeStyles({
@@ -37,14 +38,14 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const dashboard = [
-  { id: 1, build: '202001519.2', release: 'Release - 02', branch: 'master', dev: '../../assets/images/alpha-x-circle.svg', test: '...', preProd: '...', prod: '...' },
-  { id: 1, build: '202001512.1', release: 'Release - 03', branch: 'pipeline-02', dev: '../../assets/images/check-circle.svg', test: '...', preProd: '...', prod: '...' },
-  { id: 1, build: '202001512.0', release: 'Release - 04', branch: 'pipeline-03', dev: '...', test: '../../assets/images/alpha-x-circle.svg', preProd: '...', prod: '...' },
-  { id: 1, build: '202001513.2', release: 'Release - 05', branch: 'pipeline-04', dev: '../../assets/images/check-circle.svg', test: '...', preProd: '../../assets/images/alpha-x-circle.svg', prod: '../../assets/images/alpha-x-circle.svg' }
+  { id: 1, build: '202001519.2', release: 'Release - 02', branch: 'master', dev: '../../assets/images/alpha-x-circle.svg', test: 'Deploy', preProd: 'Deploy', prod: 'Deploy' },
+  { id: 1, build: '202001512.1', release: 'Release - 03', branch: 'pipeline-02', dev: '../../assets/images/check-circle.svg', test: '../../assets/images/check-circle.svg', preProd: '../../assets/images/check-circle.svg', prod: '../../assets/images/check-circle.svg' },
+  { id: 1, build: '202001512.0', release: 'Release - 04', branch: 'pipeline-03', dev: '../../assets/images/check-circle.svg', test: '../../assets/images/alpha-x-circle.svg', preProd: 'Deploy', prod: 'Deploy' },
+  { id: 1, build: '202001513.2', release: 'Release - 05', branch: 'pipeline-04', dev: '../../assets/images/check-circle.svg', test: 'Deploy', preProd: '../../assets/images/alpha-x-circle.svg', prod: '../../assets/images/alpha-x-circle.svg' }
 ];
 
 const projList = [
-  'Project 1',
+  'All/Project 1',
   'Project 2',
   'Project 3',
 ];
@@ -60,13 +61,15 @@ export default function DevopsTools() {
   return (
     <div id="myprojects">
       <FullWidthBanner
-        title="Pipeline Dashboard"
+        title="CD Release Pipeline"
         image="../../assets/images/globle.jpg"
         imageText="Full Banner"
         exceptimage="../../assets/images/learnmore.gif"
       />
       <Grid container className="container">
         <Grid item xs={3}>
+        <Button href="/pipeline/repos/release-details" type="button" variant="outlined" color="primary">
+          <AddBox/> Add Release Pipeline</Button>
           <FormControl variant="outlined" className="selectProject">
             <InputLabel id="selectProject">Select the Project</InputLabel>
             <Select
@@ -74,7 +77,7 @@ export default function DevopsTools() {
               id="selectProject"
               onChange={handleChanges}
               fullWidth
-              label="Select the Project"
+              label="Project List"
               size="small"
               name="selectProject"
               required
@@ -109,10 +112,10 @@ export default function DevopsTools() {
                 <StyledTableCell >{row.build}</StyledTableCell>
                 <StyledTableCell >{row.release}</StyledTableCell>
                 <StyledTableCell >{row.branch}</StyledTableCell>
-                <StyledTableCell >{ row.dev === '...' ? '...' : <img src={row.dev} alt='' />}</StyledTableCell>
-                <StyledTableCell >{ row.test === '...' ? '...' : <img src={row.test} alt='' />}</StyledTableCell>
-                <StyledTableCell >{ row.preProd === '...' ? '...' : <img src={row.preProd} alt='' />}</StyledTableCell>
-                <StyledTableCell >{ row.prod === '...' ? '...' : <img src={row.prod} alt='' />}</StyledTableCell>
+                <StyledTableCell >{ row.dev === 'Deploy' ? <button> Deploy</button> : <img src={row.dev} alt='' />}</StyledTableCell>
+                <StyledTableCell >{ row.test === 'Deploy' ? <button> Deploy</button> : <img src={row.test} alt='' />}</StyledTableCell>
+                <StyledTableCell >{ row.preProd === 'Deploy' ? <button> Deploy</button> : <img src={row.preProd} alt='' />}</StyledTableCell>
+                <StyledTableCell >{ row.prod === 'Deploy' ? <button> Deploy</button> : <img src={row.prod} alt='' />}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>
