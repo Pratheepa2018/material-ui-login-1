@@ -257,6 +257,7 @@ export default function EnhancedTable(props) {
       }
     }).then(resp => resp.json())
       .then((data) => {
+        console.log(data);
         Object.keys(data).map((el, index) => {
           getData(data[el]);
           setDefaultRow(data[el]);
@@ -305,9 +306,12 @@ export default function EnhancedTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleEdit = (event, id) => {
-    const editUrl = `/dashboard/CDP/cdp-connector-profile/connectors/new-connector?edit=${id}`
-    props.history.push(editUrl)
+  const handleEdit = (event, id, connectorType) => {
+    sessionStorage.setItem('connector-id', connectorType);
+    setTimeout(() => {
+      const editUrl = `/dashboard/CDP/cdp-connector-profile/connectors/new-connector?edit=${id}`
+      props.history.push(editUrl)
+    }, 300);
   }
   const setDeleteData = () => {
     if(selected.length > 1) {
@@ -448,7 +452,7 @@ export default function EnhancedTable(props) {
                           </TableCell>
                           <TableCell align="left">{row.connector_desc}</TableCell>
                           <TableCell align="right">
-                            <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.connectorId)}>
+                            <Button aria-label="edit" variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.connectorId, row.connector_type)}>
                               <Edit />
                             </Button>
                             

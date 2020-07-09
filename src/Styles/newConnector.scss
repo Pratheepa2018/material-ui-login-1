@@ -1,0 +1,29 @@
+.model-inner-wrapper {
+  padding-bottom: 25px;
+  width: 500px;
+
+  .model-title {
+    position: relative;
+
+    .model-close-icon {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+
+  .meta-model-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    li {
+      display: inline-block;
+      padding: 0 5px 5px;
+    }
+  }
+}

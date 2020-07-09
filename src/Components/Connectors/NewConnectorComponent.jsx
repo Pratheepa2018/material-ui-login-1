@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Typography, Box, Button } from '@material-ui/core';
+import { Grid, Typography, Box, Button, Dialog, DialogTitle, DialogContent, Accordion, AccordionSummary, AccordionDetails, IconButton } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { common } from '../../Utils/Api.env';
 import { NotificationManager } from 'react-notifications';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -7,6 +9,7 @@ import '../../Styles/validation.css';
 import { PageLoader } from '../../Layout/Loader';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import Auth from '../../Layout/Authentication';
+import '../../Styles/newConnector.scss';
 
 export default class NewConnector extends Component {
   constructor(props) {
@@ -26,7 +29,10 @@ export default class NewConnector extends Component {
       loadEditDetails: false,
       testConnection: false,
       metaDataConnection: false,
-      saveConnector: false
+      saveConnector: false,
+      metaModelOpen: false,
+      metaData: []
+
     }
     this.baseState = this.state;
   }
@@ -122,15 +128,19 @@ export default class NewConnector extends Component {
           body: JSON.stringify(fields),
         }).then(resp => resp.json())
         .then(data => {
+          this.setState({saveConnector: false});
           if(data.status === 'Success') {
             NotificationManager.success(data.message);
+            sessionStorage.removeItem('connector-id');
             this.props.history.push('/dashboard/CDP/cdp-connector-profile/connectors');
           }
         })
       } catch (e) {
         console.log(e, 'Something went wrong');
       }
-    }  
+    } else {
+      this.setState({saveConnector: false});
+    }
   }
 
   handleMetadata = async () => {
@@ -148,14 +158,8 @@ export default class NewConnector extends Component {
         body: JSON.stringify(this.generateTestData())
       }).then(resp => resp.json())
         .then(response => {
-          this.setState({metaDataConnection: false})
-          console.log(response);
-          console.log(JSON.parse(response));
-          // if(response === 'failure') {
-          //   return false;
-          // } else if (response === 'success') {
-          //   return true;
-          // }
+          const data = JSON.parse(response)
+          this.setState({metaDataConnection: false, metaModelOpen: true, metaData: data})
         })
     } catch (e) {
       this.setState({metaDataConnection: false});
@@ -163,7 +167,7 @@ export default class NewConnector extends Component {
       return false;
     }
   }
-
+  
   handelSave = async () => {
     this.setState({saveConnector: true});
     const searchKey = window.location.search;
@@ -203,7 +207,6 @@ export default class NewConnector extends Component {
         }
       } else {
         this.setState({saveConnector: false});
-        NotificationManager.error('Connection Failed');
       }
     }
   }
@@ -254,11 +257,72 @@ export default class NewConnector extends Component {
 
   }
 
+  handleMetaClose = (value) => {
+    this.setState({metaModelOpen: false, metaData: value})
+  }
+
   render() {
-    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, loadEditDetails, testConnection, metaDataConnection, saveConnector} = this.state;
+    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, loadEditDetails, testConnection, metaDataConnection, saveConnector, metaModelOpen, metaData} = this.state;
     const buttonStyle = {
       fontSize: '12px',
       textTransform: 'capitalize'
+    }
+    const MetaDialog = (props) => {
+      const { onClose, open, metaDatavalues } = props;
+      const handleModelClose = () => {
+        onClose(metaDatavalues)
+      };
+      return (
+        <div class="model-outer">
+          <Dialog
+            open={open}
+            onClose={handleModelClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <div class="model-inner-wrapper">
+              <DialogTitle disableTypography id="alert-dialog-title" className="model-title">
+                <Typography variant="h6">
+                  View Meta Data
+                </Typography>
+                {onClose ? (
+                    <IconButton aria-label="close" onClick={handleModelClose} className="model-close-icon">
+                      <CloseIcon />
+                    </IconButton>
+                  ) : null
+                }
+              </DialogTitle>
+              <DialogContent>
+                { open &&
+                  metaDatavalues.map((item, index) => (
+                    <Accordion>
+                      <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1a-content"
+                        id="panel1a-header"
+                        key={index}
+                      >
+                        <Typography >{item.tableName}</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <ul className="meta-model-list">
+                          {
+                            item.columns.map((data, Index) => (
+                              <li key={Index}>
+                                {data}, 
+                              </li>
+                            ))
+                          }
+                        </ul>
+                      </AccordionDetails>
+                    </Accordion>
+                  ))
+                }
+              </DialogContent>
+            </div>
+          </Dialog>
+        </div>
+      )
     }
     return (
       <div className="new-connector">
@@ -461,6 +525,9 @@ export default class NewConnector extends Component {
             </Grid>
           </Grid>
         </Box>
+        { metaModelOpen &&
+          <MetaDialog onClose={this.handleMetaClose} open={metaModelOpen} metaDatavalues={metaData.tables} />
+        }
       </div>
     )
   }

@@ -7,12 +7,9 @@ import './Build.css';
 
 export default function ScriptTemplates() {
   const myprojects = [
-    { id: 1, img: '../../../assets/images/aspdotnet.png',name:'ASP.Net', title: 'Template Title', details: 'Yaml Script Skeleton Details' },
-    { id: 2, img: '../../../assets/images/aspdotnetcore.png',name:'ASP.Net Core',  title: 'Template Title', details: 'Yaml Script Skeleton Details' },
-    { id: 3, img: '../../../assets/images/dotnet.png', name:'.Net Desktop', title: 'Template Title', details: 'Yaml Script Skeleton Details' },
-    { id: 1, img: '../../../assets/images/dotnetcore.png',name:'Install .Net Core Runtime',  title: 'Template Title', details: 'Yaml Script Skeleton Details' },
- 
-  ];
+    { id: 1, img: '../../../assets/images/aspdotnet.png',name:'ASP.Net', title: 'Template Title', details: 'Yaml Script Details', isActive: 'Yes', DevOpsTools: 'Azure', project: 'Project One' },
+    { id: 2, img: '../../../assets/images/aspdotnetcore.png',name:'ASP.Net Core',  title: 'Template Title', details: 'Yaml Script Details', isActive: 'No', DevOpsTools: 'Jenkins', project: 'Project Two'  },
+     ];
   const projectList = [
     'All',
     'Project1',
@@ -39,10 +36,10 @@ export default function ScriptTemplates() {
       />
       <Grid container className="container">
         <Grid direction="row" className="topbar">
-          <Button href="/dashboard/CDP/pipeline/script-templates/add-script-templates" type="button" variant="outlined" color="primary">
+          <Button href="/dashboard/CDP/pipeline/build-pipeline/create-build-pipeline" type="button" variant="outlined" color="primary">
             <AddBox />Create CI Build Pipeline</Button>
         </Grid>
-        <Grid spacing={3} container direction="row">
+        <Grid spacing={3} container direction="row" className='maindiv'>
         <Grid item xs={4} >
                   <FormControl variant="outlined" >
                           <InputLabel id="demo-simple-select-outlined-label">Project List</InputLabel>
@@ -96,23 +93,24 @@ export default function ScriptTemplates() {
                 <Typography variant="h6" component="h2" color="blue">
                   {proj.title}
                   </Typography>
-                  <Typography variant="h6" component="h2" color="blue">
-                  Project: {proj.title}
+                  <Typography  color="blue">
+                  Project: {proj.project}
                   </Typography>
-                  <Typography variant="h6" component="h2" color="blue">
-                  DevOps Tool: {proj.title}
+                  <Typography color="blue">
+                  DevOps Tool: {proj.DevOpsTools}
                   </Typography>
-                  <Typography variant="h6" component="h2" color="blue">
-                  Is Active: {proj.title}
+                  <Typography color="blue">
+                  Is Active: {proj.isActive}
                   </Typography>
+                  <Divider  style={{margin:'20px'}}/>
                 <div className= 'flexdiv'>
                 <img src={proj.img} alt={proj.name} />
-                  <Typography >
+                  <Typography  className= 'flexdiv'>
                     {proj.name}
                   </Typography>
                   </div>
                   
-                  <Divider  style={{margin:'20px'}}/>
+                 
                   <Typography color="blue">
                     {proj.details}
                   </Typography>
