@@ -63,10 +63,7 @@ export default function AddScriptTemplates() {
                         label="Script Template Title"
                         name="Script_Template_Title"
                         size="small"
-                        autoFocus
                         fullWidth
-                        validators={['required', 'matchRegexp:^[A-Za-z]+']}
-                        errorMessages={['This field is require', 'Enter proper name!']}
                       />
                     </Grid>
                     <Grid item xs={12}>
