@@ -153,7 +153,7 @@ export default function AddScriptTemplates() {
                       <Button type="clear" variant="contained" color="primary" fullWidth >Save</Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="outlined" color="primary" fullWidth href="/dashboard/CDP/pipeline/script-templates" >Cancel</Button>
+                      <Button variant="outlined" color="primary" fullWidth href="/dashboard/CDP/pipeline/build-pipeline" >Cancel</Button>
                     </Grid>
                     <Grid item xs={3}></Grid>
                   </Grid>
