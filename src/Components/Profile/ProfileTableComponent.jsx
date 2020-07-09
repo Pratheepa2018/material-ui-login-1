@@ -396,7 +396,9 @@ export default function EnhancedTable(props) {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
+  const deleteModelClose = (value) => {
+    openModel(false)
+  }
   return (
     <div className={classes.root}>
       <FullWidthBanner
@@ -518,7 +520,7 @@ export default function EnhancedTable(props) {
           } 
         </Paper>
       </Box>}
-      <Model isOpen={isOpen} deleteEntry={deleteProfile}   />
+      <Model open={isOpen} deleteEntry={deleteProfile} onClose={deleteModelClose} />
     </div>
   );
 }
