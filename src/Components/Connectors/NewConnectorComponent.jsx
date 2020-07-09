@@ -255,7 +255,7 @@ export default class NewConnector extends Component {
   }
 
   render() {
-    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, editConnector, loadEditDetails, testConnection, metaDataConnection, saveConnector} = this.state;
+    const { connector_name, connector_desc, connector_type, server_address, server_port, clientdb, dbuser, dbpassword, loadEditDetails, testConnection, metaDataConnection, saveConnector} = this.state;
     const buttonStyle = {
       fontSize: '12px',
       textTransform: 'capitalize'

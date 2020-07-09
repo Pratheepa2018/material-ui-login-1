@@ -348,31 +348,32 @@ export default function EnhancedTable(props) {
   const deleteProfile = () =>{
      
     const deletedList=[];
-    selected.map((item)=>{
-    const deleteProfileURL = `${common.profile_url}?profileId=${item}`;
-    console.log(deleteProfileURL);
-    try {
-       fetch(deleteProfileURL, {
-        method: 'DELETE',
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        }
-      }).then(resp => resp.json())
-      .then(data => {
-        if(data.status === 'Success') {
-          
-          deletedList.push(item);
-         
-          if(selected.length === (deletedList.length)){
-            window.location.reload(false)
+    selected.map((item) => {
+      const deleteProfileURL = `${common.profile_url}?profileId=${item}`;
+      console.log(deleteProfileURL);
+      try {
+        fetch(deleteProfileURL, {
+          method: 'DELETE',
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
           }
+        }).then(resp => resp.json())
+        .then(data => {
+          if(data.status === 'Success') {
+            
+            deletedList.push(item);
           
-        }
-      })
-    } catch (e) { 
-      console.log(e);
-    }
+            if(selected.length === (deletedList.length)){
+              window.location.reload(false)
+            }
+            
+          }
+        })
+      } catch (e) { 
+        console.log(e);
+      }
+      return false;
     })
     
   }
