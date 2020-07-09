@@ -43,7 +43,7 @@ const dashboard = [
   { id: 1, build: '202001513.2', release: 'Release - 05', branch: 'pipeline-04', dev: '../../assets/images/check-circle.svg', test: '...', preProd: '../../assets/images/alpha-x-circle.svg', prod: '../../assets/images/alpha-x-circle.svg' }
 ];
 
-const templateCategory = [
+const projList = [
   'Project 1',
   'Project 2',
   'Project 3',
@@ -66,8 +66,8 @@ export default function DevopsTools() {
         exceptimage="../../assets/images/learnmore.gif"
       />
       <Grid container className="container">
-        <Grid item xs={3} className="selectProject">
-          <FormControl variant="outlined">
+        <Grid item xs={3}>
+          <FormControl variant="outlined" className="selectProject">
             <InputLabel id="selectProject">Select the Project</InputLabel>
             <Select
               labelId="selectProject"
@@ -79,7 +79,7 @@ export default function DevopsTools() {
               name="selectProject"
               required
             >
-              {templateCategory.map((name) => (
+              {projList.map((name) => (
                 <MenuItem key={name} value={name} >
                   {name}
                 </MenuItem>
