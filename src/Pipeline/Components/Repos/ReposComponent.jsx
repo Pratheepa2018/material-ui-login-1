@@ -10,9 +10,9 @@ export default function AddScriptTemplates() {
     <div>
       <FullWidthBanner
         title="Source Control Integration"
-        image="../../assets/images/globle.jpg"
+        image="../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage="../../assets/images/learnmore.gif"
+        exceptimage="../../../assets/images/learnmore.gif"
       />
       <Box marginY={5}>
         <Grid container spacing={3} direction="row" alignItems="center" justify="center">

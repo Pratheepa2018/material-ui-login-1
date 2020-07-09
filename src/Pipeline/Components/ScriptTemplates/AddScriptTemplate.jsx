@@ -41,9 +41,9 @@ export default function AddScriptTemplates() {
     <div id="addNewProject">
       <FullWidthBanner
         title="Add Script Templates"
-        image="../../assets/images/globle.jpg"
+        image="../../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage="../../assets/images/learnmore.gif"
+        exceptimage="../../../../assets/images/learnmore.gif"
       />
       <Box marginY={5}>
         <Grid container spacing={3} direction="row" alignItems="center" justify="center">
@@ -140,7 +140,7 @@ export default function AddScriptTemplates() {
                       <Button type="clear" variant="contained" color="primary" fullWidth >Save</Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="outlined" color="primary" fullWidth href="/pipeline/script-templates" >Cancel</Button>
+                      <Button variant="outlined" color="primary" fullWidth href="/dashboard/CDP/pipeline/script-templates" >Cancel</Button>
                     </Grid>
 
                   </Grid>

@@ -6,22 +6,22 @@ import './DevopsTools.css';
 
 export default function DevopsTools() {
   const myprojects = [
-    { id: 1, img: '../../assets/images/git-logo.png', name: 'Git', details: 'Git Details' },
-    { id: 2, img: '../../assets/images/TFS-logo.png', name: 'TFS', details: 'TFS Details' },
-    { id: 3, img: '../../assets/images/jenkins.png', name: 'Jenkins', details: 'Jenkins Details' }
+    { id: 1, img: '../../../assets/images/git-logo.png', name: 'Git', details: 'Git Details' },
+    { id: 2, img: '../../../assets/images/TFS-logo.png', name: 'TFS', details: 'TFS Details' },
+    { id: 3, img: '../../../assets/images/jenkins.png', name: 'Jenkins', details: 'Jenkins Details' }
   ];
 
   return (
     <div id="myprojects">
       <FullWidthBanner
         title="Devops Tools"
-        image="../../assets/images/globle.jpg"
+        image="../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage="../../assets/images/learnmore.gif"
+        exceptimage="../../../assets/images/learnmore.gif"
       />
       <Grid container className="container">
         <Grid direction="row" className="topbar">
-          <Button href="/pipeline/DevopsTools/AddDevopsTool" type="button" variant="outlined" color="primary">
+          <Button href="/dashboard/CDP/pipeline/DevopsTools/AddDevopsTool" type="button" variant="outlined" color="primary">
             <AddBox />Add Devops Tool</Button>
         </Grid>
         <Grid spacing={3} container direction="row">
@@ -61,7 +61,7 @@ export default function DevopsTools() {
                 </div>
                 <CardActions className="buttons">
                   <Grid item xs={3}>
-                    <Button variant="contained" color="primary" fullWidth href="/pipeline/DevopsTools/AddDevopsTool">Edit</Button>
+                    <Button variant="contained" color="primary" fullWidth href="/dashboard/CDP/pipeline/DevopsTools/AddDevopsTool">Edit</Button>
                   </Grid>
                   <Grid item xs={3}>
                     <Button variant="outlined" color="primary" fullWidth href="/Projects" >Delete</Button>
