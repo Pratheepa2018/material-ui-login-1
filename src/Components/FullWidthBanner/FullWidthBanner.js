@@ -8,7 +8,7 @@ import Breadcrumbs from '../../Layout/BreadCrumbs';
 class FullWidthBanner extends React.Component {
 
   render() {
-    const { image, imageText, title } = this.props; //description, linkText
+    const { image, imageText, title, exceptimage } = this.props; //description, linkText
     const bannerStyle = {
       backgroundImage: `url(${image})`
     }
@@ -17,6 +17,9 @@ class FullWidthBanner extends React.Component {
         <Box className='banner_body' style={bannerStyle} p={{ xs: 4, sm: 6, md: 8 }}>
           {<img style={{ display: 'none' }} src={image} alt={imageText} />}
           <Typography component="h1" variant="h2" className="main-head" align="center">{title}</Typography>
+          <div className="float-image">
+            <img src={exceptimage} alt="Except" />
+          </div>
         </Box>
         <div className="breadcrumbs-wrapper">
           <Breadcrumbs />
