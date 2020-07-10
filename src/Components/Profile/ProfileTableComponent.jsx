@@ -241,6 +241,7 @@ export default function EnhancedTable(props) {
   const [defaultRows, setDefaultRow] = useState();
   const [isOpen, openModel] = useState();
   const [filterData, getFilterData] = useState();
+  const [isGettingStatus, setisGetStatus] =useState(false)
   const allprofilesURL = `${common.profile_url}/?tenant_Id=1&profileId=-1`
 
   useEffect(() => {
@@ -309,7 +310,7 @@ export default function EnhancedTable(props) {
   }
 
   const handleExecute = (event, id) => {
-    getStatus(false);
+    setisGetStatus(true);
     const dataToSend = {
       "TenantId": 1,
       "ProfileID": id
@@ -329,18 +330,18 @@ export default function EnhancedTable(props) {
         .then(data => {
           if (data.status === 'Success') {
             NotificationManager.success(data.message);
-            getStatus(true)
+            setisGetStatus(false)
           } else {
-            getStatus(true)
+            setisGetStatus(false)
             return NotificationManager.warning(data.message);
           }
         })
         .catch((error) => {                        // catch
-          getStatus(true)
+          setisGetStatus(false)
           return NotificationManager.warning('500 error');
         })
     } catch (e) {
-      getStatus(true)
+      setisGetStatus(false)
       return {
         responseStatus: false,
         responseMessage: "Something went wrong."
@@ -440,7 +441,11 @@ export default function EnhancedTable(props) {
               <Grid item xs={`${selected.length > 0 ? 12 : ''}`}>
                 <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle} />
               </Grid>
-              {selected.length <= 0 &&
+              {isGettingStatus ? 
+              <Grid item className="relative_lod section-loader"> <PageLoader /> </Grid>
+              :
+              selected.length <= 0 &&
+              
                 <Grid item>
                   <div className={classes.search}>
                     <div className={classes.searchIcon}>

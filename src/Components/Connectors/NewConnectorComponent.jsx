@@ -436,8 +436,8 @@ export default class NewConnector extends Component {
                         <Grid item xs={3}>
                           <Button type="clear" variant="outlined" color="primary" fullWidth style={buttonStyle} onClick={this.handleClear}>Clear All</Button>
                         </Grid>
-                        <Grid item xs={3} className={`${testConnection ? 'section-loader': ''}`}>
-                          { !testConnection ? 
+                        <Grid item xs={3} className={`${testConnection ? 'section-loader': 'section-loader'}`}>
+                          { testConnection ? 
                             <Button type="button" variant="contained" color="primary" fullWidth style={buttonStyle} onClick={this.handleTestConnection}>Test Connection</Button>
                             :
                             <PageLoader />
