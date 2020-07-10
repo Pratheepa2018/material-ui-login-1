@@ -8,8 +8,8 @@ import './Repos.css';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-      height: 140,
       width: '100%',
+      padding: '10px 10px 0'
     },
   }));
 
@@ -92,12 +92,15 @@ export default function AddScriptTemplates() {
                     </Grid>
 
                     <Grid item xs={12} className='maindiv' >
-
-                    <Paper className={classes.paper} >
-                    <InputLabel>Fetching YAML files here</InputLabel>
-                        </Paper>
+                      <Paper className={classes.paper} >
+                        <InputLabel>Fetching YAML files here</InputLabel>
+                        <pre><code>
+                          <object width="100%" height="300" type="text/plain" data="../../../../assets/images/ASP.NetCore_Yaml.txt" border="0" >
+                          </object>
+                        </code></pre>
+                      </Paper>
                     </Grid>
-                  
+
                   </Grid>
                 </ValidatorForm>
               </Box>

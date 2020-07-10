@@ -33,6 +33,7 @@ export default function AddScriptTemplates() {
                   {YAMLScript.map((task) => (
                         <Grid item xs={12} >
                           <FormControlLabel
+                            name="yamlscript"
                             value={task}
                             control={<Radio color="primary" />}
                             label={<span className="label"><img src={task.icon} alt={task.name} /> {task.name}</span>}
