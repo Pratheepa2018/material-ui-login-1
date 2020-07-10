@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles, withStyles } from '@material-ui/core/styles';
-import { Table, Box, Button, Grid, TableBody, TableCell, TableContainer,InputBase,Divider,Tooltip  } from '@material-ui/core';
+import { Table, Box, Button, Grid, TableBody, TableCell, TableContainer, InputBase, Divider, Tooltip } from '@material-ui/core';
 
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
@@ -12,7 +12,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import { DeleteForever, AddBox, Edit } from '@material-ui/icons';
+import { DeleteForever, AddBox, Edit, Info } from '@material-ui/icons';
 import FullWidthBanner from '../FullWidthBanner/FullWidthBanner';
 import { common } from '../../Utils/Api.env';
 import Model from '../Model/ModelComponent';
@@ -20,6 +20,7 @@ import { PageLoader } from '../../Layout/Loader';
 import SearchIcon from '@material-ui/icons/Search';
 import CheckIcon from '@material-ui/icons/Check';
 import { NotificationManager } from 'react-notifications';
+import './ProfileTableComponent.css';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -66,6 +67,7 @@ function EnhancedTableHead(props) {
     body: {
       fontSize: 14,
     },
+     
   }))(TableCell);
 
   return (
@@ -160,7 +162,7 @@ const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
-  
+
   onDelete: PropTypes.func.isRequired
 };
 
@@ -235,10 +237,11 @@ export default function EnhancedTable(props) {
   const [dense] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dataStatus, getStatus] = useState(false)
-  const [rows, getData] = useState(false);  
+  const [rows, getData] = useState(false);
   const [defaultRows, setDefaultRow] = useState();
-  const [isOpen, openModel] = useState();  
-  const [filterData, getFilterData] = useState();  
+  const [isOpen, openModel] = useState();
+  const [filterData, getFilterData] = useState();
+  const [isGettingStatus, setisGetStatus] =useState(false)
   const allprofilesURL = `${common.profile_url}/?tenant_Id=1&profileId=-1`
 
   useEffect(() => {
@@ -249,7 +252,7 @@ export default function EnhancedTable(props) {
         "Accept": "application/json"
       }
     }).then(resp => resp.json())
-      .then((data) => {        
+      .then((data) => {
         Object.keys(data).map((el, index) => {
           getData(data[el]);
           setDefaultRow(data[el]);
@@ -305,11 +308,12 @@ export default function EnhancedTable(props) {
     const editUrl = `/dashboard/CDP/cdp-connector-profile/profiles/new-profile?edit=${id}`
     props.history.push(editUrl)
   }
-   
+
   const handleExecute = (event, id) => {
+    setisGetStatus(true);
     const dataToSend = {
-      "TenantId" :  1,
-      "ProfileID" : id
+      "TenantId": 1,
+      "ProfileID": id
     }
 
     try {
@@ -326,28 +330,32 @@ export default function EnhancedTable(props) {
         .then(data => {
           if (data.status === 'Success') {
             NotificationManager.success(data.message);
+            setisGetStatus(false)
           } else {
+            setisGetStatus(false)
             return NotificationManager.warning(data.message);
           }
         })
-        .catch ((error) =>  {                        // catch
+        .catch((error) => {                        // catch
+          setisGetStatus(false)
           return NotificationManager.warning('500 error');
         })
     } catch (e) {
+      setisGetStatus(false)
       return {
         responseStatus: false,
         responseMessage: "Something went wrong."
       };
     }
   }
- 
 
-  const onDeleteHandle = (modelState=true) =>{
+
+  const onDeleteHandle = (modelState = true) => {
     openModel(modelState);
   }
-  const deleteProfile = () =>{
-     
-    const deletedList=[];
+  const deleteProfile = () => {
+
+    const deletedList = [];
     selected.map((item) => {
       const deleteProfileURL = `${common.profile_url}?profileId=${item}`;
       console.log(deleteProfileURL);
@@ -359,23 +367,41 @@ export default function EnhancedTable(props) {
             "Accept": "application/json"
           }
         }).then(resp => resp.json())
-        .then(data => {
-          if(data.status === 'Success') {
-            
-            deletedList.push(item);
-          
-            if(selected.length === (deletedList.length)){
-              window.location.reload(false)
+          .then(data => {
+            if (data.status === 'Success') {
+
+              deletedList.push(item);
+
+              if (selected.length === (deletedList.length)) {
+                window.location.reload(false)
+              }
+
             }
-            
-          }
-        })
-      } catch (e) { 
+          })
+      } catch (e) {
         console.log(e);
       }
       return false;
     })
-    
+
+  }
+
+  const getByTitle = (data) => {
+     
+
+    const sourcF =data.tables.map((table) =>
+      <div className="listbox">
+        <h4> Table Name: { table.tableName} </h4>
+        {table.columns.map((coll) =>
+          <Box component="div" display="inline" className="listitem">{coll}</Box>
+        )}
+        <div className="cls"></div>
+      </div>
+    )
+
+   
+
+    return sourcF;
   }
 
   const handleFilter = (e) => {
@@ -384,9 +410,9 @@ export default function EnhancedTable(props) {
     getFilterData(e.target.value);
     let search = e.target.value.trim().toLowerCase();
     let item = defaultRows.filter((data) => {
-      if(search.length <= 0) {
+      if (search.length <= 0) {
         return defaultRows;
-      } else if(data.profileName.toLowerCase().includes(search) || data.profileDescription.toLowerCase().includes(search)) {
+      } else if (data.profileName.toLowerCase().includes(search) || data.profileDescription.toLowerCase().includes(search)) {
         return data;
       }
       return null;
@@ -405,54 +431,58 @@ export default function EnhancedTable(props) {
         title="My Profiles"
         image="../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage ="../../../assets/images/learnmore.gif"
+        exceptimage="../../../assets/images/learnmore.gif"
       />
       {!dataStatus ? <div className="loader-wrapper"><PageLoader /></div>
-      : 
-      <Box padding={6}>
-        <Paper className={classes.paper}>
-          <Grid container alignItems="center" justify="space-between">
-            <Grid item xs={`${selected.length > 0 ? 12 : ''}`}>
-              <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle}  />
-            </Grid>
-          { selected.length <= 0 &&
-              <Grid item>
-                <div className={classes.search}>
-                  <div className={classes.searchIcon}>
-                    <SearchIcon />
-                  </div>
-                  <InputBase
-                    type="text"
-                    placeholder="Search…"
-                    classes={{
-                      root: classes.inputRoot,
-                      input: classes.inputInput,
-                    }}
-                    value={filterData}
-                    inputProps={{ 'aria-label': 'search' }}
-                    onChange={handleFilter}
-                  />
-                 </div>
+        :
+        <Box padding={6}>
+          <Paper className={classes.paper}>
+            <Grid container alignItems="center" justify="space-between">
+              <Grid item xs={`${selected.length > 0 ? 12 : ''}`}>
+                <EnhancedTableToolbar numSelected={selected.length} onDelete={onDeleteHandle} />
               </Grid>
-            }
-          </Grid>
-          <TableContainer>
-            <Table
-              className={classes.table}
-              aria-labelledby="tableTitle"
-              size={dense ? 'small' : 'medium'}
-              aria-label="enhanced table"
-            >
-              <EnhancedTableHead
-                classes={classes}
-                numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
-                onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
-                rowCount={rows.length}
-              />
-             
+              {isGettingStatus ? 
+              <Grid item className="relative_lod section-loader"> <PageLoader /> </Grid>
+              :
+              selected.length <= 0 &&
+              
+                <Grid item>
+                  <div className={classes.search}>
+                    <div className={classes.searchIcon}>
+                      <SearchIcon />
+                    </div>
+                    <InputBase
+                      type="text"
+                      placeholder="Search…"
+                      classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                      }}
+                      value={filterData}
+                      inputProps={{ 'aria-label': 'search' }}
+                      onChange={handleFilter}
+                    />
+                  </div>
+                </Grid>
+              }
+            </Grid>
+            <TableContainer>
+              <Table
+                className={classes.table}
+                aria-labelledby="tableTitle"
+                size={dense ? 'small' : 'medium'}
+                aria-label="enhanced table"
+              >
+                <EnhancedTableHead
+                  classes={classes}
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={rows.length}
+                />
+
                 <TableBody>
                   {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -476,21 +506,31 @@ export default function EnhancedTable(props) {
                             />
                           </TableCell>
                           <TableCell component="th" id={labelId} scope="row" padding="none" >
+
+                            <Tooltip  title={<div className="tooltip">
+                              <h3>Source</h3>
+                              {getByTitle(JSON.parse(row.source_profile_data))}
+                               <h3>Target</h3>
+                              {getByTitle(JSON.parse(row.target_profile_data))}
+                              </div>
+                               }>
+                              <Info />
+                            </Tooltip>
                             {row.profileName}
                           </TableCell>
                           <TableCell align="left">{row.profileDescription}</TableCell>
-         
-                          <TableCell align="right" style ={{display: 'flex'}}>
-                          <Tooltip title="Execute" aria-label="Execute">
-                          <Button aria-label="Execute" variant="outlined" color="primary" onClick={(event) => handleExecute(event, row.profileId)}>
-                          <CheckIcon />
-                            </Button>
+
+                          <TableCell align="right" style={{ display: 'flex' }}>
+                            <Tooltip title="Execute" aria-label="Execute">
+                              <Button aria-label="Execute" variant="outlined" color="primary" onClick={(event) => handleExecute(event, row.profileId)}>
+                                <CheckIcon />
+                              </Button>
                             </Tooltip>
-                            <Divider orientation="vertical" flexItem  style={{margin: '5px'}}/>
+                            <Divider orientation="vertical" flexItem style={{ margin: '5px' }} />
                             <Tooltip title="Edit" aria-label="edit">
-                            <Button variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.profileId)}>
-                              <Edit />
-                            </Button>
+                              <Button variant="outlined" color="primary" onClick={(event) => handleEdit(event, row.profileId)}>
+                                <Edit />
+                              </Button>
                             </Tooltip>
                           </TableCell>
                         </TableRow>
@@ -498,28 +538,28 @@ export default function EnhancedTable(props) {
                     })}
                   {emptyRows > 0 && (
                     <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                      
+
                     </TableRow>
                   )}
                 </TableBody>
-            </Table>
-            {rows.length <= 0 && 
-              <p className="empty-message">There is no connector! Please add new.</p>
+              </Table>
+              {rows.length <= 0 &&
+                <p className="empty-message">There is no connector! Please add new.</p>
+              }
+            </TableContainer>
+            {rows.length > 0 &&
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
             }
-          </TableContainer>
-          {rows.length > 0 && 
-          <TablePagination           
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={rows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-          } 
-        </Paper>
-      </Box>}
+          </Paper>
+        </Box>}
       <Model open={isOpen} deleteEntry={deleteProfile} onClose={deleteModelClose} />
     </div>
   );
