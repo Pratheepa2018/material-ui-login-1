@@ -10,15 +10,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import './Release.css';
 
-export default function ScriptTemplates() {
-  const myprojects = [
-    { id: 1, img: '../../assets/images/aspdotnet.png', name: 'ASP.Net', type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 2, img: '../../assets/images/aspdotnetcore.png', name: 'ASP.Net Core', type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 3, img: '../../assets/images/dotnet.png', name: '.Net Desktop', type: 'Build', details: 'Yaml Script Skeleton Details' },
-    { id: 1, img: '../../assets/images/dotnetcore.png', name: 'Install .Net Core Runtime', type: 'Release', details: 'Yaml Script Skeleton Details' },
-
-  ];
-
+export default function AddReleaseDetails() {
   const projList = [
     'Project 1',
     'Project 2',
