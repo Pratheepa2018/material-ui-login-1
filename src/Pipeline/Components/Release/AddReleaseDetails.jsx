@@ -37,10 +37,11 @@ export default function ScriptTemplates() {
     '2020003.2',
     '2020002.2',
   ];
+
   const tasks = [
-    { id: 1, icon: '../../assets/images/azure-key-vault-icon-24x24.png', name: 'Azure Key Vault' },
-    { id: 2, icon: '../../assets/images/azure-app-service-deploy-icon-24x24.png', name: 'Azure App Service Deploy' },
-    { id: 3, icon: '../../../assets/images/alpha-x-circle.svg', name: 'NuGet authenticate' }
+    { id: 1, icon: '../../../../assets/images/azure-key-vault-icon-24x24.png', name: 'Azure Key Vault' },
+    { id: 2, icon: '../../../../assets/images/azure-app-service-deploy-icon-24x24.png', name: 'Azure App Service Deploy' },
+    { id: 3, icon: '../../../../../assets/images/asp-net-core-logo-24x24.png', name: 'NuGet authenticate' }
   ];
 
   const handleChanges = (e) => {
@@ -156,7 +157,7 @@ export default function ScriptTemplates() {
                           <FormControlLabel
                             value={task}
                             control={<Checkbox color="primary" />}
-                            label={task.name}
+                            label={<span className="label"><img src={task.icon} alt={task.name} /> {task.name}</span>}
                             labelPlacement="end"
                           />
                         </Grid>
@@ -169,7 +170,7 @@ export default function ScriptTemplates() {
                           <IconButton aria-label="delete">
                             <DeleteIcon className="red" />
                           </IconButton>
-                          <span variant="subtitle1">{task.name}</span>
+                          <span className="label"><img src={task.icon} alt={task.name} /> {task.name}</span>
 
                         </Grid>
                       ))}
