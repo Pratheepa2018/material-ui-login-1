@@ -311,7 +311,7 @@ export default class NewConnector extends Component {
                             id="connector_desc"
                             label="Connector Desc"
                             name="connector_desc"
-                            autoFocus
+                            
                             fullWidth
                             size="small"
                             value={connector_desc}
@@ -330,7 +330,7 @@ export default class NewConnector extends Component {
                             label="Connector Type"
                             name="connector_type"
                             size="small"
-                            autoFocus
+                            
                             fullWidth
                             value={connector_type}
                             validators={['required', 'matchRegexp:^[0-9]*$']}
@@ -348,7 +348,7 @@ export default class NewConnector extends Component {
                             label="Client DB"
                             name="clientdb"
                             size="small"
-                            autoFocus
+                            
                             fullWidth
                             value={clientdb}
                             validators={['required']}
@@ -366,7 +366,7 @@ export default class NewConnector extends Component {
                             label="Server Address"
                             name="server_address"
                             size="small"
-                            autoFocus
+                            
                             fullWidth
                             value={server_address}
                             validators={['required']}
@@ -384,7 +384,7 @@ export default class NewConnector extends Component {
                             label="Server Port"
                             name="server_port"
                             size="small"
-                            autoFocus
+                            
                             fullWidth
                             value={server_port}
                             validators={['required', 'matchRegexp:^[0-9]*$']}
@@ -402,7 +402,7 @@ export default class NewConnector extends Component {
                             label="DB User Name"
                             name="dbuser"
                             size="small"
-                            autoFocus
+                            
                             fullWidth
                             value={dbuser}
                             validators={['required']}
@@ -420,7 +420,7 @@ export default class NewConnector extends Component {
                             label="DB Password"
                             name="dbpassword"
                             size="small"
-                            autoFocus
+                            
                             fullWidth
                             value={dbpassword}
                             onChange={this.handleChanges}
