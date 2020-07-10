@@ -172,7 +172,7 @@ export default function AddReleaseDetails() {
                       <Button type="clear" variant="contained" color="primary" fullWidth >Save</Button>
                     </Grid>
                     <Grid item xs={3}>
-                      <Button variant="outlined" color="primary" fullWidth href="/dashboard/CDP/pipeline/projects" >Cancel</Button>
+                      <Button variant="outlined" color="primary" fullWidth href="/dashboard/CDP/pipeline/release" >Cancel</Button>
                     </Grid>
 
                   </Grid>
