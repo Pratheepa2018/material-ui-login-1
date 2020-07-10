@@ -8,7 +8,7 @@ import Breadcrumbs from '../../Layout/BreadCrumbs';
 class FullWidthBanner extends React.Component {
 
   render() {
-    const { image, imageText, title, exceptimage } = this.props; //description, linkText
+    const { image, imageText, title } = this.props; //description, linkText
     const bannerStyle = {
       backgroundImage: `url(${image})`
     }

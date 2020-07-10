@@ -168,7 +168,7 @@ export default function MiniDrawer(props) {
       >
         <div className={classes.toolbar}>
           <figure>
-            <img src="../../../assets/images/learnmore.gif" />
+            <img src="/assets/images/learnmore.gif" alt="Expect more"/>
           </figure>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
