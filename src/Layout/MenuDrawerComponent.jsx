@@ -106,6 +106,7 @@ export default function MiniDrawer(props) {
   const theme = useTheme();
   const [drawOpen, setDrawOpen] = useState(false);
   const [open, setOpen] = useState(false);
+  const [childOpen, setChildOpen] = useState(false);  
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -119,6 +120,11 @@ export default function MiniDrawer(props) {
   const handleClick = () => {
     setOpen(!open);
   };
+  const handleChildClick = () => {
+    console.log('here')
+    setChildOpen(!childOpen);
+  };
+  
   const handleDrawerOpen = () => {
     setDrawOpen(true);
     props.open();
@@ -190,9 +196,24 @@ export default function MiniDrawer(props) {
                 <ListItem button className={classes.nested}>
                   <ListItemText primary="Collabera Information Platform (CIP)" />
                 </ListItem>
-                <ListItem button className={classes.nested}>
+                <ListItem button className={classes.nested}  onClick={handleChildClick}>                  
                   <ListItemText primary="Collabera DevOps Platform (CDP)" />
+                  {childOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
+                
+                <Collapse in={childOpen} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button className={classes.nested}>
+                  <ListItemText primary="Data Testing Framework" />
+                </ListItem>
+                <ListItem button className={classes.nested} >                  
+                  <ListItemText primary="Application Testing Framework" />
+                </ListItem>
+                <ListItem button className={classes.nested}>
+                  <ListItemText primary="Pipeline Auromation" />
+                </ListItem>
+              </List>
+            </Collapse>
                 <ListItem button className={classes.nested}>
                   <ListItemText primary="Collabera Connectors MarketPlace (CCM)" />
                 </ListItem>

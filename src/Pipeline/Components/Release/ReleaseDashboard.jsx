@@ -62,13 +62,13 @@ export default function DevopsTools() {
     <div id="myprojects">
       <FullWidthBanner
         title="CD Release Pipeline"
-        image="../../assets/images/globle.jpg"
+        image="../../../assets/images/globle.jpg"
         imageText="Full Banner"
-        exceptimage="../../assets/images/learnmore.gif"
+        exceptimage="../../../assets/images/learnmore.gif"
       />
       <Grid container className="container">
         <Grid item xs={3}>
-        <Button href="/dashboard/CDP/pipeline/repos/release-details" type="button" variant="outlined" color="primary">
+        <Button href="/dashboard/CDP/pipeline/release/release-details" type="button" variant="outlined" color="primary">
           <AddBox/> Add Release Pipeline</Button>
           <FormControl variant="outlined" className="selectProject">
             <InputLabel id="selectProject">Select the Project</InputLabel>

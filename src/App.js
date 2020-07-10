@@ -101,7 +101,7 @@ function App(props) {
                 <PrivateRoute restricted={false} component={BuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline" exact />
                 <PrivateRoute restricted={false} component={CreateBuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline/create-build-pipeline" exact />
                 <PrivateRoute restricted={false} component={Release} path="/dashboard/CDP/pipeline/release" exact />
-                <PrivateRoute restricted={false} component={AddReleaseDetails} path="/dashboard/CDP/pipeline/repos/release-details" exact />
+                <PrivateRoute restricted={false} component={AddReleaseDetails} path="/dashboard/CDP/pipeline/release/release-details" exact />
                     
                 <PublicRoute
                   restricted={false}
