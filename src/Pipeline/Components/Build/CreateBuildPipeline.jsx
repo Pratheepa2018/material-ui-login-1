@@ -1,6 +1,6 @@
 import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
-import {  FormControl, Select, Grid, Box,InputLabel, MenuItem, FormGroup , Checkbox,
+import {  FormControl, Select, Grid, Box,InputLabel, MenuItem, Checkbox,
      FormControlLabel, FormLabel, Button   } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { makeStyles } from '@material-ui/core/styles';
@@ -28,10 +28,24 @@ export default function AddScriptTemplates() {
         'Azure',
         'Jenkins'
       ];
+      
+      const YAMLScript = [
+        { id: 1, icon: '../../../../assets/images/pipeline/aspdotnet.png', name: 'ASP.Net' },
+        { id: 2, icon: '../../../../assets/images/pipeline/aspdotnetcore.png', name: 'ASP.Net Core' },
+        { id: 3, icon: '../../../../../assets/images/asp-net-core-logo-24x24.png', name: '.Net Desktop' }
+      ];
+      
       const handleChanges = (e) => {
         const { name, value } = e.target;
        console.log(name, value)
       }
+
+      const otherPackages = [
+        { id: 1, icon: '../../../../assets/images/pipeline/azurefilecopy.png', name: 'Azure File Copy  ' },
+        { id: 2, icon: '../../../../assets/images/azure-app-service-deploy-icon-24x24.png', name: 'Cache' },
+        { id: 3, icon: '../../../../../assets/images/pipeline/npm-logo.png', name: 'npm' }
+      ];
+    
 
   return (
     <div>
@@ -109,45 +123,37 @@ export default function AddScriptTemplates() {
                       />
                     </Grid>
 
-                    <Grid item xs={6}  >
+                    <Grid item xs={6}>
                     <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Select the YAML Script Template</FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox  name="ASPNet" />}
-            label="ASP.Net"
-          />
-          <FormControlLabel
-            control={<Checkbox  name="ASPNetCore" />}
-            label="ASP.Net Core"
-           
-          />
-          <FormControlLabel
-            control={<Checkbox name="NetDesktop" />}
-            label=".Net Desktop"
-          />
-        </FormGroup>
-      </FormControl>
+                    <FormLabel component="legend">Select the YAML Script Template</FormLabel>
+                      {YAMLScript.map((task) => (
+                        <Grid item xs={12}>
+                          <FormControlLabel
+                            value={task}
+                            control={<Checkbox color="primary" />}
+                            label={<span className="label"><img src={task.icon} alt={task.name} /> {task.name}</span>}
+                            labelPlacement="end"
+                          />
+                        </Grid>
+                      ))}
+                      </FormControl>
                     </Grid>
-                    <Grid item xs={6}  >
+                    <Grid item xs={6}>
                     <FormControl component="fieldset" className={classes.formControl}>
-        <FormLabel component="legend">Other Packages</FormLabel>
-        <FormGroup>
-          <FormControlLabel
-            control={<Checkbox  name="azure" />}
-            label="Azure File Copy"
-          />
-          <FormControlLabel
-            control={<Checkbox  name="cache" />}
-            label="Cache"
-          />
-          <FormControlLabel
-            control={<Checkbox name="npm" />}
-            label="npm"
-          />
-        </FormGroup>
-      </FormControl>
-                 </Grid>
+                    <FormLabel component="legend">Other Packages</FormLabel>
+                      {otherPackages.map((task) => (
+                        <Grid item xs={12}>
+                          <FormControlLabel
+                            value={task}
+                            control={<Checkbox color="primary" />}
+                            label={<span className="label"><img src={task.icon} alt={task.name} /> {task.name}</span>}
+                            labelPlacement="end"
+                          />
+                        </Grid>
+                      ))}
+                    </FormControl>
+                    </Grid>
+                    
                  <Grid item xs={3}></Grid>
                  <Grid item xs={3}>
                       <Button type="clear" variant="contained" color="primary" fullWidth >Save</Button>

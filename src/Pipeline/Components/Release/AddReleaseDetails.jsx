@@ -1,8 +1,8 @@
 import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
 import {
-  Checkbox, Card, CardActions, FormControlLabel, Button, Box,
-  Grid, Typography, Divider, TextField, FormLabel, FormControl, InputLabel, Select, MenuItem
+  Checkbox, FormControlLabel, Button, Box,
+  Grid, Typography, FormControl, InputLabel, Select, MenuItem
 } from '@material-ui/core';
 
 import IconButton from '@material-ui/core/IconButton';

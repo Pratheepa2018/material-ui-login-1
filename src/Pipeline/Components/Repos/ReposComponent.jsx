@@ -1,11 +1,16 @@
 import React from 'react';
 import FullWidthBanner from '../../../Components/FullWidthBanner/FullWidthBanner';
-import { Radio,  FormControlLabel, Typography, Grid, Box, Button, RadioGroup } from '@material-ui/core';
+import { Radio,  FormControlLabel, Typography, Grid, Box, Button } from '@material-ui/core';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import './Repos.css';
 
 export default function AddScriptTemplates() {
 
+  const YAMLScript = [
+    { id: 1, icon: '../../../../assets/images/pipeline/azurerepos.png', name: 'Azure Repos' },
+    { id: 2, icon: '../../../../assets/images/pipeline/tfs.png', name: 'TFS' },
+    { id: 3, icon: '../../../../../assets/images/pipeline/giticon.png', name: 'GitHub' }
+  ];
   return (
     <div>
       <FullWidthBanner
@@ -23,26 +28,19 @@ export default function AddScriptTemplates() {
                 <ValidatorForm>
                   <Grid container spacing={3} direction="row" justify="space-between" alignItems="center" alignContent="center">
                     
-                  <Grid item xs={12} >
+                  <Grid item xs={12} style={{display:'flex'}}>
              
-                  <RadioGroup aria-label="sourceControl" name="sourceControl" style={{display:'block'}} >
-                  <FormControlLabel
-                        value="Azure Repos"
-                        control={<Radio color="primary"  />}
-                        label="Azure Repos"
-                      />
-                       <FormControlLabel
-                        value="TFS"
-                        control={<Radio color="primary"  />}
-                        label="TFS"
-                      />
-                       <FormControlLabel
-                        value="GitHub"
-                        control={<Radio color="primary" />}
-                        label="GitHub"
-                      />
-                   </RadioGroup>
-                     
+                  {YAMLScript.map((task) => (
+                        <Grid item xs={12} >
+                          <FormControlLabel
+                            value={task}
+                            control={<Radio color="primary" />}
+                            label={<span className="label"><img src={task.icon} alt={task.name} /> {task.name}</span>}
+                            labelPlacement="end"
+                          />
+                        </Grid>
+                      ))}
+                                                 
                     </Grid>
                     <Grid item xs={2}></Grid>
                     <Grid item xs={8}>
