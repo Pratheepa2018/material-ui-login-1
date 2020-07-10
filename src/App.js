@@ -33,6 +33,9 @@ import Repos from './Pipeline/Components/Repos/ReposComponent';
 import ReposDetails from './Pipeline/Components/Repos/ReposDetails';
 import BuildPipeline from './Pipeline/Components/Build/BuildPipelineComponent';
 import CreateBuildPipeline from './Pipeline/Components/Build/CreateBuildPipeline';
+import Release from './Pipeline/Components/Release/ReleaseDashboard';
+import AddReleaseDetails from './Pipeline/Components/Release/AddReleaseDetails'
+
 import './Styles/main.scss';
 
 const styles = theme => ({
@@ -97,8 +100,9 @@ function App(props) {
                 <PrivateRoute restricted={false} component={ReposDetails} path="/dashboard/CDP/pipeline/repos/repos-details" exact />
                 <PrivateRoute restricted={false} component={BuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline" exact />
                 <PrivateRoute restricted={false} component={CreateBuildPipeline} path="/dashboard/CDP/pipeline/build-pipeline/create-build-pipeline" exact />
-                
-                
+                <PrivateRoute restricted={false} component={Release} path="/dashboard/CDP/pipeline/release" exact />
+                <PrivateRoute restricted={false} component={AddReleaseDetails} path="/dashboard/CDP/pipeline/repos/release-details" exact />
+                    
                 <PublicRoute
                   restricted={false}
                   path="*"
