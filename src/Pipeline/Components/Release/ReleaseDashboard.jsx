@@ -38,10 +38,10 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const dashboard = [
-  { id: 1, build: '202001519.2', release: 'Release - 02', branch: 'master', dev: '../../assets/images/alpha-x-circle.svg', test: 'Deploy', preProd: 'Deploy', prod: 'Deploy' },
-  { id: 1, build: '202001512.1', release: 'Release - 03', branch: 'pipeline-02', dev: '../../assets/images/check-circle.svg', test: '../../assets/images/check-circle.svg', preProd: '../../assets/images/check-circle.svg', prod: '../../assets/images/check-circle.svg' },
-  { id: 1, build: '202001512.0', release: 'Release - 04', branch: 'pipeline-03', dev: '../../assets/images/check-circle.svg', test: '../../assets/images/alpha-x-circle.svg', preProd: 'Deploy', prod: 'Deploy' },
-  { id: 1, build: '202001513.2', release: 'Release - 05', branch: 'pipeline-04', dev: '../../assets/images/check-circle.svg', test: 'Deploy', preProd: '../../assets/images/alpha-x-circle.svg', prod: '../../assets/images/alpha-x-circle.svg' }
+  { id: 1, build: '202001519.2', release: 'Release - 02', branch: 'master', dev: '../../../../assets/images/alpha-x-circle.svg', test: 'Deploy', preProd: 'Deploy', prod: 'Deploy' },
+  { id: 1, build: '202001512.1', release: 'Release - 03', branch: 'pipeline-02', dev: '../../../../assets/images/check-circle.svg', test: '../../../../assets/images/check-circle.svg', preProd: '../../../../assets/images/check-circle.svg', prod: '../../../../assets/images/check-circle.svg' },
+  { id: 1, build: '202001512.0', release: 'Release - 04', branch: 'pipeline-03', dev: '../../../../assets/images/check-circle.svg', test: '../../../../assets/images/alpha-x-circle.svg', preProd: 'Deploy', prod: 'Deploy' },
+  { id: 1, build: '202001513.2', release: 'Release - 05', branch: 'pipeline-04', dev: '../../../../assets/images/check-circle.svg', test: 'Deploy', preProd: '../../../../assets/images/alpha-x-circle.svg', prod: '../../../../assets/images/alpha-x-circle.svg' }
 ];
 
 const projList = [

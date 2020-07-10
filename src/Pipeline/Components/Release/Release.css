@@ -16,3 +16,9 @@
 .red {
   color: #c00;
 }
+.label {
+  font-size: 14px;
+}
+.label img {
+  vertical-align: middle;
+}
